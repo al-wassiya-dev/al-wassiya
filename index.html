@@ -3,27 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al Wassiya - Testament Islamique</title>
+    <title>Al Wassiya - Votre Testament Islamique Simplifié</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bleu-nuit: #0A1428;
-            --bleu-marine: #1A2E40;
-            --bleu-medium: #2D4C68;
-            --bleu-clair: #3A5F7E;
-            --dore: #C9B178;
-            --dore-fonce: #A89262;
-            --dore-clair: #E6D6A8;
-            --blanc: #FFFFFF;
-            --gris-clair: #F5F7FA;
-            --texte: #2D3436;
-            --texte-clair: #7F8C8D;
-            --success: #27AE60;
+            --primary: #C9B178;
+            --primary-dark: #A89262;
+            --secondary: #2D4C68;
+            --accent: #3A5F7E;
+            --light: #F8F5EE;
+            --dark: #1E1E24;
+            --success: #4CAF50;
             --error: #E74C3C;
-            --radius: 12px;
-            --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            --transition: all 0.3s ease;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -34,8 +29,8 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--bleu-nuit) 0%, var(--bleu-marine) 100%);
-            color: var(--blanc);
+            background: linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%);
+            color: var(--dark);
             line-height: 1.7;
             min-height: 100vh;
         }
@@ -58,15 +53,14 @@
             font-family: 'Playfair Display', serif;
             font-size: 3.5rem;
             font-weight: 700;
-            color: var(--dore);
+            color: var(--primary);
             margin-bottom: 10px;
             letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .subtitle {
             font-size: 1.2rem;
-            color: var(--dore-clair);
+            color: var(--secondary);
             margin-bottom: 25px;
             font-weight: 400;
             max-width: 600px;
@@ -76,50 +70,23 @@
 
         .bismillah {
             font-size: 2.2rem;
-            color: var(--dore);
+            color: var(--primary);
             margin: 25px 0;
             font-weight: 600;
         }
 
-        /* Language Selector */
-        .language-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .lang-btn {
-            background: rgba(201, 177, 120, 0.2);
-            border: 1px solid var(--dore);
-            color: var(--dore-clair);
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        .lang-btn:hover, .lang-btn.active {
-            background: var(--dore);
-            color: var(--bleu-nuit);
-        }
-
         /* Progress Section */
         .progress-container {
-            background: rgba(26, 46, 64, 0.7);
+            background: white;
             border-radius: var(--radius);
             padding: 25px;
             margin-bottom: 30px;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(201, 177, 120, 0.2);
         }
 
         .progress-bar {
             height: 8px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #EDE8DD;
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 15px;
@@ -127,7 +94,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--dore), var(--dore-fonce));
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
             width: 15%;
             border-radius: 4px;
             transition: var(--transition);
@@ -135,23 +102,22 @@
 
         .step-indicator {
             font-size: 1.1rem;
-            color: var(--dore-clair);
+            color: var(--secondary);
             font-weight: 500;
         }
 
         /* Quranic Verse */
         .quranic-verse {
             background: linear-gradient(135deg, rgba(201, 177, 120, 0.1) 0%, rgba(168, 146, 98, 0.1) 100%);
-            border-left: 4px solid var(--dore);
+            border-left: 4px solid var(--primary);
             padding: 25px;
             margin: 30px 0;
             border-radius: 0 var(--radius) var(--radius) 0;
             font-style: italic;
-            color: var(--dore-clair);
+            color: var(--secondary);
             font-size: 1.1rem;
             line-height: 1.8;
             text-align: center;
-            backdrop-filter: blur(5px);
         }
 
         .arabic-verse {
@@ -159,13 +125,12 @@
             margin-bottom: 20px;
             line-height: 2;
             font-weight: 600;
-            color: var(--dore);
-            direction: rtl;
+            color: var(--primary-dark);
         }
 
         .translation-note {
             font-size: 0.9rem;
-            color: var(--dore);
+            color: var(--primary-dark);
             margin-top: 10px;
             font-style: italic;
         }
@@ -184,25 +149,22 @@
         }
 
         .form-section {
-            background: rgba(26, 46, 64, 0.7);
+            background: white;
             border-radius: var(--radius);
             padding: 30px;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(201, 177, 120, 0.2);
         }
 
         .form-section:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border-color: rgba(201, 177, 120, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.6rem;
-            color: var(--dore);
+            color: var(--secondary);
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 2px solid rgba(201, 177, 120, 0.3);
@@ -212,7 +174,7 @@
         }
 
         .section-title i {
-            color: var(--dore);
+            color: var(--primary);
             font-size: 1.4rem;
         }
 
@@ -223,7 +185,7 @@
         .form-group label {
             display: block;
             margin-bottom: 10px;
-            color: var(--dore-clair);
+            color: var(--secondary);
             font-weight: 500;
             font-size: 1.05rem;
         }
@@ -233,10 +195,10 @@
         .form-group select {
             width: 100%;
             padding: 16px;
-            border: 2px solid rgba(201, 177, 120, 0.3);
+            border: 2px solid #EDE8DD;
             border-radius: 10px;
-            background: rgba(10, 20, 40, 0.5);
-            color: var(--blanc);
+            background: #FCFAF7;
+            color: var(--dark);
             font-size: 1rem;
             transition: var(--transition);
         }
@@ -245,7 +207,7 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--dore);
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(201, 177, 120, 0.2);
         }
 
@@ -256,12 +218,10 @@
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: #A0A0A0;
         }
 
         .form-group select option {
-            background: var(--bleu-marine);
-            color: var(--blanc);
             padding: 12px;
         }
 
@@ -293,8 +253,8 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--dore), var(--dore-fonce));
-            color: var(--bleu-nuit);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
         }
 
         .btn-primary:hover {
@@ -304,30 +264,28 @@
 
         .btn-secondary {
             background: transparent;
-            color: var(--dore);
-            border: 2px solid var(--dore);
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
         .btn-secondary:hover {
-            background: var(--dore);
-            color: var(--bleu-nuit);
+            background: var(--primary);
+            color: white;
         }
 
         /* Share Buttons */
         .share-section {
             text-align: center;
             margin: 30px 0;
-            background: rgba(26, 46, 64, 0.7);
+            background: white;
             padding: 25px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(201, 177, 120, 0.2);
         }
 
         .share-title {
             font-size: 1.2rem;
-            color: var(--dore);
+            color: var(--secondary);
             margin-bottom: 20px;
             font-weight: 600;
         }
@@ -363,18 +321,16 @@
 
         /* Footer */
         .footer-note {
-            background: rgba(26, 46, 64, 0.7);
+            background: white;
             border-radius: var(--radius);
             padding: 30px;
             margin-top: 50px;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(201, 177, 120, 0.2);
         }
 
         .footer-note p {
             margin-bottom: 15px;
-            color: var(--dore-clair);
+            color: var(--secondary);
         }
 
         .footer-note p:last-child {
@@ -420,14 +376,6 @@
                 height: 50px;
                 font-size: 1.2rem;
             }
-            
-            .language-selector {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-bottom: 20px;
-            }
         }
 
         /* Animations */
@@ -466,138 +414,132 @@
     
     <div class="container">
         <div class="header">
-            <div class="language-selector">
-                <button class="lang-btn active" data-lang="fr">FR</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="ar">AR</button>
-            </div>
-            
             <div class="logo">Al Wassiya</div>
-            <div class="subtitle" data-i18n="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
             <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-            <p data-i18n="description">Créez facilement un testament islamique respectant le Coran et la Sunna</p>
+            <p>Créez facilement un testament islamique respectant le Coran et la Sunna</p>
         </div>
 
         <div class="progress-container">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="step-indicator" id="stepIndicator" data-i18n="step1">
+            <div class="step-indicator" id="stepIndicator">
                 Étape 1 sur 7 : Informations personnelles et volontés générales
             </div>
         </div>
 
         <div class="quranic-verse">
             <div class="arabic-verse">كُتِبَ عَلَيْكُمْ إِذَا حَضَرَ أَحَدَكُمُ الْمَوْتُ إِن تَرَكَ خَيْرًا الْوَصِيَّةُ لِلْوَالِدَيْنِ وَالْأَقْرَبِينَ بِالْمَعْرُوفِ ۖ حَقًّا عَلَى الْمُتَّقِينَ</div>
-            <div data-i18n="verse">"Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux." - Sourate Al-Baqara, verset 180</div>
-            <div class="translation-note" data-i18n="translation_note">(c'est une traduction rapprochée)</div>
+            <div>"Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux." - Sourate Al-Baqara, verset 180</div>
+            <div class="translation-note">(c'est une traduction rapprochée)</div>
         </div>
 
         <form id="testamentForm">
             <div class="form-container">
                 <div class="form-section">
-                    <h2 class="section-title"><i class="fas fa-user"></i> <span data-i18n="identity_title">Identité du défunt</span></h2>
+                    <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
                     
                     <div class="form-group">
-                        <label for="sexe" data-i18n="gender_label">Sexe <span class="required">*</span></label>
+                        <label for="sexe">Sexe <span class="required">*</span></label>
                         <select id="sexe" name="sexe" required onchange="toggleConjointField()">
-                            <option value="" data-i18n="select">Sélectionner</option>
-                            <option value="homme" data-i18n="man">Homme</option>
-                            <option value="femme" data-i18n="woman">Femme</option>
+                            <option value="">Sélectionner</option>
+                            <option value="homme">Homme</option>
+                            <option value="femme">Femme</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="prenom" data-i18n="firstname_label">Prénom <span class="required">*</span></label>
-                        <input type="text" id="prenom" name="prenom" required data-i18n-placeholder="firstname_placeholder" placeholder="Votre prénom">
+                        <label for="prenom">Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
                     </div>
 
                     <div class="form-group">
-                        <label for="nom" data-i18n="lastname_label">Nom de famille <span class="required">*</span></label>
-                        <input type="text" id="nom" name="nom" required data-i18n-placeholder="lastname_placeholder" placeholder="Votre nom de famille">
+                        <label for="nom">Nom de famille <span class="required">*</span></label>
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
                     </div>
 
                     <div class="form-group">
-                        <label for="dateNaissance" data-i18n="birthdate_label">Date de naissance <span class="required">*</span></label>
+                        <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
                         <input type="date" id="dateNaissance" name="dateNaissance" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="lieuNaissance" data-i18n="birthplace_label">Lieu de naissance</label>
-                        <input type="text" id="lieuNaissance" name="lieuNaissance" data-i18n-placeholder="birthplace_placeholder" placeholder="Ville et pays de naissance">
+                        <label for="lieuNaissance">Lieu de naissance</label>
+                        <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
                     </div>
 
                     <div class="form-group">
-                        <label for="adresse" data-i18n="address_label">Adresse actuelle <span class="required">*</span></label>
-                        <textarea id="adresse" name="adresse" required data-i18n-placeholder="address_placeholder" placeholder="Votre adresse complète"></textarea>
+                        <label for="adresse">Adresse actuelle <span class="required">*</span></label>
+                        <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="nationalite" data-i18n="nationality_label">Nationalité</label>
-                        <input type="text" id="nationalite" name="nationalite" data-i18n-placeholder="nationality_placeholder" placeholder="Votre nationalité">
+                        <label for="nationalite">Nationalité</label>
+                        <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
                     </div>
 
                     <div class="form-group">
-                        <label for="situationFamiliale" data-i18n="marital_status_label">Situation familiale</label>
+                        <label for="situationFamiliale">Situation familiale</label>
                         <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
-                            <option value="" data-i18n="select">Sélectionner</option>
-                            <option value="celibataire" data-i18n="single">Célibataire</option>
-                            <option value="marie" data-i18n="married">Marié(e)</option>
-                            <option value="divorce" data-i18n="divorced">Divorcé(e)</option>
-                            <option value="veuf" data-i18n="widowed">Veuf/Veuve</option>
+                            <option value="">Sélectionner</option>
+                            <option value="celibataire">Célibataire</option>
+                            <option value="marie">Marié(e)</option>
+                            <option value="divorce">Divorcé(e)</option>
+                            <option value="veuf">Veuf/Veuve</option>
                         </select>
                     </div>
 
                     <div class="form-group" id="conjointGroup" style="display: none;">
-                        <label for="conjoint" id="conjointLabel" data-i18n="spouse_label">Identité de l'époux/épouse</label>
-                        <input type="text" id="conjoint" name="conjoint" data-i18n-placeholder="spouse_placeholder" placeholder="Nom et prénom du conjoint">
+                        <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
+                        <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h2 class="section-title"><i class="fas fa-scroll"></i> <span data-i18n="wishes_title">Volontés générales</span></h2>
+                    <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
                     
                     <div class="form-group">
-                        <label for="volontesObseques" data-i18n="funeral_wishes_label">Volontés concernant les obsèques</label>
-                        <textarea id="volontesObseques" name="volontesObseques" data-i18n-placeholder="funeral_wishes_placeholder" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
+                        <label for="volontesObseques">Volontés concernant les obsèques</label>
+                        <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="recommandationsFamille" data-i18n="family_recommendations_label">Recommandations à la famille</label>
-                        <textarea id="recommandationsFamille" name="recommandationsFamille" data-i18n-placeholder="family_recommendations_placeholder" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
+                        <label for="recommandationsFamille">Recommandations à la famille</label>
+                        <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="executeurTestament" data-i18n="executor_label">Exécuteur testamentaire suggéré</label>
-                        <input type="text" id="executeurTestament" name="executeurTestament" data-i18n-placeholder="executor_placeholder" placeholder="Nom de la personne de confiance">
+                        <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
+                        <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
                     </div>
 
                     <div class="form-group">
-                        <label for="contactExecuteur" data-i18n="executor_contact_label">Contact de l'exécuteur</label>
-                        <input type="text" id="contactExecuteur" name="contactExecuteur" data-i18n-placeholder="executor_contact_placeholder" placeholder="Téléphone ou email">
+                        <label for="contactExecuteur">Contact de l'exécuteur</label>
+                        <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
                     </div>
 
                     <div class="form-group">
-                        <label for="autresVolontes" data-i18n="other_wishes_label">Autres volontés ou instructions</label>
-                        <textarea id="autresVolontes" name="autresVolontes" data-i18n-placeholder="other_wishes_placeholder" placeholder="Toute autre instruction importante"></textarea>
+                        <label for="autresVolontes">Autres volontés ou instructions</label>
+                        <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="actions">
                 <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
-                    <i class="fas fa-save"></i> <span data-i18n="save_draft">Sauvegarder le brouillon</span>
+                    <i class="fas fa-save"></i> Sauvegarder le brouillon
                 </button>
                 <button type="button" class="btn btn-primary" onclick="genererPDF()">
-                    <i class="fas fa-file-pdf"></i> <span data-i18n="generate_pdf">Générer le PDF</span>
+                    <i class="fas fa-file-pdf"></i> Générer le PDF
                 </button>
                 <button type="button" class="btn btn-secondary" onclick="continuerEtapes()">
-                    <span data-i18n="continue">Continuer vers les actifs</span> <i class="fas fa-arrow-right"></i>
+                    Continuer vers les actifs <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
 
             <div class="share-section">
-                <div class="share-title" data-i18n="share_title">Partager cette application</div>
+                <div class="share-title">Partager cette application</div>
                 <div class="share-buttons">
                     <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
                         <i class="fab fa-whatsapp"></i>
@@ -616,185 +558,354 @@
         </form>
 
         <div class="footer-note">
-            <p><strong data-i18n="important_note">Note importante :</strong> <span data-i18n="note_text">Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.</span></p>
-            <p data-i18n="note_text2">Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
+            <p><strong>Note importante :</strong> Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). 
+            Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.</p>
+            <p>Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
         </div>
     </div>
 
     <script>
-        // ===== SYSTÈME DE TRADUCTION =====
-        const translations = {
-            fr: {
-                // Interface
-                "subtitle": "Votre Testament Islamique Simplifié",
-                "description": "Créez facilement un testament islamique respectant le Coran et la Sunna",
-                "step1": "Étape 1 sur 7 : Informations personnelles et volontés générales",
-                "verse": "\"Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux.\" - Sourate Al-Baqara, verset 180",
-                "translation_note": "(c'est une traduction rapprochée)",
-                "identity_title": "Identité du défunt",
-                "wishes_title": "Volontés générales",
-                "save_draft": "Sauvegarder le brouillon",
-                "generate_pdf": "Générer le PDF",
-                "continue": "Continuer vers les actifs",
-                "share_title": "Partager cette application",
-                "important_note": "Note importante :",
-                "note_text": "Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.",
-                "note_text2": "Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.",
-                
-                // Labels
-                "gender_label": "Sexe",
-                "firstname_label": "Prénom",
-                "lastname_label": "Nom de famille",
-                "birthdate_label": "Date de naissance",
-                "birthplace_label": "Lieu de naissance",
-                "address_label": "Adresse actuelle",
-                "nationality_label": "Nationalité",
-                "marital_status_label": "Situation familiale",
-                "spouse_label": "Identité de l'époux/épouse",
-                "funeral_wishes_label": "Volontés concernant les obsèques",
-                "family_recommendations_label": "Recommandations à la famille",
-                "executor_label": "Exécuteur testamentaire suggéré",
-                "executor_contact_label": "Contact de l'exécuteur",
-                "other_wishes_label": "Autres volontés ou instructions",
-                
-                // Options
-                "select": "Sélectionner",
-                "man": "Homme",
-                "woman": "Femme",
-                "single": "Célibataire",
-                "married": "Marié(e)",
-                "divorced": "Divorcé(e)",
-                "widowed": "Veuf/Veuve",
-                
-                // Placeholders
-                "firstname_placeholder": "Votre prénom",
-                "lastname_placeholder": "Votre nom de famille",
-                "birthplace_placeholder": "Ville et pays de naissance",
-                "address_placeholder": "Votre adresse complète",
-                "nationality_placeholder": "Votre nationalité",
-                "spouse_placeholder": "Nom et prénom du conjoint",
-                "funeral_wishes_placeholder": "Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc.",
-                "family_recommendations_placeholder": "Messages, conseils ou recommandations pour votre famille",
-                "executor_placeholder": "Nom de la personne de confiance",
-                "executor_contact_placeholder": "Téléphone ou email",
-                "other_wishes_placeholder": "Toute autre instruction importante"
-            },
-            en: {
-                // Interface
-                "subtitle": "Your Simplified Islamic Will",
-                "description": "Easily create an Islamic will respecting the Quran and Sunnah",
-                "step1": "Step 1 of 7: Personal information and general wishes",
-                "verse": "\"It is prescribed for you, when death approaches any of you, if he leaves wealth, to make a will for parents and close relatives with justice. This is an obligation upon the righteous.\" - Surah Al-Baqarah, verse 180",
-                "translation_note": "(this is an approximate translation)",
-                "identity_title": "Deceased's Identity",
-                "wishes_title": "General Wishes",
-                "save_draft": "Save Draft",
-                "generate_pdf": "Generate PDF",
-                "continue": "Continue to Assets",
-                "share_title": "Share this application",
-                "important_note": "Important note:",
-                "note_text": "This will must be completed according to the rules of Islamic inheritance (Mirath). It is recommended to consult an Islamic law specialist to ensure compliance with local laws.",
-                "note_text2": "The provisions of this will can only concern one third (1/3) of the assets, the remaining two thirds being distributed according to Quranic inheritance rules.",
-                
-                // Labels
-                "gender_label": "Gender",
-                "firstname_label": "First Name",
-                "lastname_label": "Last Name",
-                "birthdate_label": "Date of Birth",
-                "birthplace_label": "Place of Birth",
-                "address_label": "Current Address",
-                "nationality_label": "Nationality",
-                "marital_status_label": "Marital Status",
-                "spouse_label": "Spouse's Identity",
-                "funeral_wishes_label": "Funeral Wishes",
-                "family_recommendations_label": "Recommendations to Family",
-                "executor_label": "Suggested Executor",
-                "executor_contact_label": "Executor's Contact",
-                "other_wishes_label": "Other Wishes or Instructions",
-                
-                // Options
-                "select": "Select",
-                "man": "Man",
-                "woman": "Woman",
-                "single": "Single",
-                "married": "Married",
-                "divorced": "Divorced",
-                "widowed": "Widowed",
-                
-                // Placeholders
-                "firstname_placeholder": "Your first name",
-                "lastname_placeholder": "Your last name",
-                "birthplace_placeholder": "City and country of birth",
-                "address_placeholder": "Your complete address",
-                "nationality_placeholder": "Your nationality",
-                "spouse_placeholder": "Spouse's full name",
-                "funeral_wishes_placeholder": "Indicate your wishes regarding burial, mosque for prayer, burial place, etc.",
-                "family_recommendations_placeholder": "Messages, advice or recommendations for your family",
-                "executor_placeholder": "Name of trusted person",
-                "executor_contact_placeholder": "Phone or email",
-                "other_wishes_placeholder": "Any other important instruction"
-            },
-            ar: {
-                // Interface
-                "subtitle": "وصيتك الإسلامية المبسطة",
-                "description": "أنشئ بسهولة وصية إسلامية تحترم القرآن والسنة",
-                "step1": "الخطوة 1 من 7: المعلومات الشخصية والرغبات العامة",
-                "verse": "«كُتِبَ عَلَيْكُمْ إِذَا حَضَرَ أَحَدَكُمُ الْمَوْتُ إِن تَرَكَ خَيْرًا الْوَصِيَّةُ لِلْوَالِدَيْنِ وَالْأَقْرَبِينَ بِالْمَعْرُوفِ ۖ حَقًّا عَلَى الْمُتَّقِينَ» - سورة البقرة، الآية 180",
-                "translation_note": "(هذه ترجمة تقريبية)",
-                "identity_title": "هوية المتوفى",
-                "wishes_title": "الرغبات العامة",
-                "save_draft": "حفظ المسودة",
-                "generate_pdf": "إنشاء PDF",
-                "continue": "المتابعة إلى الممتلكات",
-                "share_title": "شارك هذا التطبيق",
-                "important_note": "ملاحظة هامة:",
-                "note_text": "يجب إكمال هذه الوصية وفقًا لقواعد الميراث الإسلامي (الفرائض). يوصى باستشارة مختص في القانون الإسلامي لضمان الامتثال للقوانين المحلية.",
-                "note_text2": "لا يمكن أن تتعلق أحكام هذه الوصية إلا بثلث (1/3) الممتلكات، ويتم توزيع الثلثين المتبقيين وفقًا لقواعد الميراث القرآنية.",
-                
-                // Labels
-                "gender_label": "الجنس",
-                "firstname_label": "الاسم الأول",
-                "lastname_label": "اسم العائلة",
-                "birthdate_label": "تاريخ الميلاد",
-                "birthplace_label": "مكان الميلاد",
-                "address_label": "العنوان الحالي",
-                "nationality_label": "الجنسية",
-                "marital_status_label": "الحالة الاجتماعية",
-                "spouse_label": "هوية الزوج/الزوجة",
-                "funeral_wishes_label": "الرغبات regarding الجنازة",
-                "family_recommendations_label": "توصيات للعائلة",
-                "executor_label": "المنفذ المقترح",
-                "executor_contact_label": "اتصال المنفذ",
-                "other_wishes_label": "رغبات أو تعليمات أخرى",
-                
-                // Options
-                "select": "اختر",
-                "man": "رجل",
-                "woman": "امرأة",
-                "single": "أعزب/عزباء",
-                "married": "متزوج/ة",
-                "divorced": "مطلق/ة",
-                "widowed": "أرمل/ة",
-                
-                // Placeholders
-                "firstname_placeholder": "اسمك الأول",
-                "lastname_placeholder": "اسم عائلتك",
-                "birthplace_placeholder": "مدينة وبلد الميلاد",
-                "address_placeholder": "عنوانك الكامل",
-                "nationality_placeholder": "جنسيتك",
-                "spouse_placeholder": "الاسم الكامل للزوج/الزوجة",
-                "funeral_wishes_placeholder": "حدد رغباتك regarding الدفن، المسجد للصلاة، مكان الدفن، إلخ.",
-                "family_recommendations_placeholder": "رسائل، نصائح أو توصيات لعائلتك",
-                "executor_placeholder": "اسم الشخص الموثوق",
-                "executor_contact_placeholder": "هاتف أو بريد إلكتروني",
-                "other_wishes_placeholder": "أي تعليمات مهمة أخرى"
-            }
-        };
-
-        let currentLang = 'fr';
-
-        function changeLanguage(lang) {
-            currentLang = lang;
+        // Fonction pour afficher/masquer le champ conjoint
+        function toggleConjointField() {
+            const situationFamiliale = document.getElementById('situationFamiliale').value;
+            const conjointGroup = document.getElementById('conjointGroup');
+            const conjointLabel = document.getElementById('conjointLabel');
             
-            // Mettre à jour les textes
-            document.querySelectorAll('[data-i18n]').forEach
+            if (situationFamiliale === 'marie' || situationFamiliale === 'divorce') {
+                conjointGroup.style.display = 'block';
+                
+                if (situationFamiliale === 'marie') {
+                    conjointLabel.textContent = 'Identité de l\'époux/épouse';
+                    document.getElementById('conjoint').placeholder = 'Nom et prénom du conjoint';
+                } else if (situationFamiliale === 'divorce') {
+                    conjointLabel.textContent = 'Identité de l\'ex-époux/ex-épouse';
+                    document.getElementById('conjoint').placeholder = 'Nom et prénom de l\'ex-conjoint';
+                }
+            } else {
+                conjointGroup.style.display = 'none';
+                document.getElementById('conjoint').value = '';
+            }
+        }
+
+        function sauvegarderBrouillon() {
+            const formData = new FormData(document.getElementById('testamentForm'));
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            localStorage.setItem('testamentBrouillon', JSON.stringify(data));
+            alert('Brouillon sauvegardé avec succès !');
+        }
+
+        function genererPDF() {
+            const form = document.getElementById('testamentForm');
+            const formData = new FormData(form);
+            
+            // Vérifier les champs obligatoires
+            const sexe = formData.get('sexe');
+            const prenom = formData.get('prenom');
+            const nom = formData.get('nom');
+            const dateNaissance = formData.get('dateNaissance');
+            const adresse = formData.get('adresse');
+            
+            if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
+                alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *)');
+                return;
+            }
+
+            // Générer le contenu HTML formaté pour impression
+            const contenuHTML = genererContenuHTML(formData);
+            
+            // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
+            const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
+            nouvelleFenetre.document.write(contenuHTML);
+            nouvelleFenetre.document.close();
+            
+            // Instructions pour l'utilisateur
+            alert('Le testament s\'ouvre dans une nouvelle fenêtre.\n\nPour sauvegarder en PDF :\n1. Appuyez sur Ctrl+P (Cmd+P sur Mac)\n2. Choisissez "Enregistrer au format PDF"\n3. Cliquez sur "Enregistrer"');
+        }
+
+        function genererContenuHTML(formData) {
+            const date = new Date().toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Testament Islamique - Al Wassiya</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.7; 
+            margin: 0;
+            padding: 0;
+            color: #1A2E40;
+            background-color: #F8F5EE;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #C9B178;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #C9B178;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #2D4C68;
+            margin-bottom: 20px;
+        }
+        
+        .bismillah { 
+            font-size: 28px; 
+            color: #C9B178; 
+            font-weight: bold; 
+            margin: 20px 0;
+        }
+        
+        .title { 
+            font-size: 24px; 
+            font-weight: bold; 
+            margin: 15px 0;
+            color: #1A2E40;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .section { 
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #F8F5EE;
+            border-left: 4px solid #C9B178;
+        }
+        
+        .section-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #C9B178;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .field { 
+            margin: 12px 0;
+            display: flex;
+        }
+        
+        .field-label {
+            font-weight: 500;
+            min-width: 180px;
+        }
+        
+        .signature-section {
+            margin-top: 60px;
+            border-top: 1px solid #ddd;
+            padding-top: 30px;
+        }
+        
+        .verset {
+            font-style: italic;
+            text-align: center;
+            color: #2D4C68;
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #F8F5EE;
+            border: 1px dashed #C9B178;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #2D4C68;
+        }
+        
+        .decoration {
+            text-align: center;
+            margin: 30px 0;
+            color: #C9B178;
+            opacity: 0.5;
+        }
+        
+        @media print {
+            body { 
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Al Wassiya</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="title">TESTAMENT ISLAMIQUE (WASSIYA)</div>
+            <p>Date de rédaction : ${date}</p>
+        </div>
+
+        <div class="decoration">◆ ◆ ◆</div>
+
+        <div class="section">
+            <div class="section-title">IDENTITÉ DU TESTATEUR</div>
+            <div class="field"><span class="field-label">Sexe :</span> ${formData.get('sexe')}</div>
+            <div class="field"><span class="field-label">Nom :</span> ${formData.get('nom')}</div>
+            <div class="field"><span class="field-label">Prénom :</span> ${formData.get('prenom')}</div>
+            <div class="field"><span class="field-label">Date de naissance :</span> ${new Date(formData.get('dateNaissance')).toLocaleDateString('fr-FR')}</div>
+            <div class="field"><span class="field-label">Lieu de naissance :</span> ${formData.get('lieuNaissance') || 'Non précisé'}</div>
+            <div class="field"><span class="field-label">Adresse :</span> ${formData.get('adresse')}</div>
+            <div class="field"><span class="field-label">Nationalité :</span> ${formData.get('nationalite') || 'Non précisée'}</div>
+            <div class="field"><span class="field-label">Situation familiale :</span> ${formData.get('situationFamiliale') || 'Non précisée'}</div>
+            ${formData.get('conjoint') ? `<div class="field"><span class="field-label">Conjoint :</span> ${formData.get('conjoint')}</div>` : ''}
+        </div>
+
+        <div class="section">
+            <div class="section-title">VOLONTÉS CONCERNANT LES OBSÈQUES</div>
+            <p>${formData.get('volontesObseques') || 'Selon les traditions islamiques'}</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">RECOMMANDATIONS À LA FAMILLE</div>
+            <p>${formData.get('recommandationsFamille') || 'Que Allah vous bénisse et vous guide'}</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">EXÉCUTEUR TESTAMENTAIRE</div>
+            <div class="field"><span class="field-label">Personne suggérée :</span> ${formData.get('executeurTestament') || 'À désigner par la famille'}</div>
+            <div class="field"><span class="field-label">Contact :</span> ${formData.get('contactExecuteur') || 'Non précisé'}</div>
+        </div>
+
+        ${formData.get('autresVolontes') ? `
+        <div class="section">
+            <div class="section-title">AUTRES VOLONTÉS</div>
+            <p>${formData.get('autresVolontes')}</p>
+        </div>` : ''}
+
+        <div class="section">
+            <div class="section-title">DISPOSITIONS IMPORTANTES</div>
+            <ul>
+                <li>Ce testament respecte les règles de l'héritage islamique (Mirath)</li>
+                <li>Les dispositions ne concernent que le tiers (1/3) des biens maximum</li>
+                <li>Les deux tiers restants sont distribués selon les règles coraniques</li>
+                <li>Il est recommandé de faire valider ce testament par un spécialiste</li>
+            </ul>
+        </div>
+
+        <div class="verset">
+            "Et c'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156
+        </div>
+
+        <div class="signature-section">
+            <p><strong>Signature du testateur :</strong> _______________________ &nbsp;&nbsp;&nbsp; <strong>Date :</strong> ${date}</p>
+            <br>
+            <p><strong>Témoins (recommandé) :</strong></p>
+            <p>1. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
+            <p>2. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
+        </div>
+
+        <div class="footer">
+            <p>Qu'Allah accepte ce testament et facilite son exécution selon Sa volonté.</p>
+            <p>Généré par Al Wassiya - Testament Islamique Simplifié</p>
+        </div>
+    </div>
+</body>
+</html>`;
+        }
+
+        function partagerWhatsApp() {
+            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya. Découvrez ce service pratique pour préparer votre testament selon les principes islamiques.");
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        function partagerFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function partagerTwitter() {
+            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya - Un service pratique pour préparer son testament selon les principes islamiques");
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        }
+
+        function partagerEmail() {
+            const subject = encodeURIComponent("Testament Islamique avec Al Wassiya");
+            const body = encodeURIComponent("Je viens de créer mon testament islamique avec Al Wassiya. C'est un service pratique pour préparer son testament selon les principes islamiques.\n\nDécouvrez-le ici: " + window.location.href);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        function continuerEtapes() {
+            alert('Fonctionnalité à venir : Vous pourrez bientôt continuer avec les actifs, dettes, héritiers, etc.');
+        }
+
+        // Charger les données sauvegardées si elles existent
+        window.addEventListener('load', function() {
+            const savedData = localStorage.getItem('testamentBrouillon');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                for (const key in data) {
+                    if (document.getElementById(key)) {
+                        document.getElementById(key).value = data[key];
+                    }
+                }
+                
+                if (data.situationFamiliale) {
+                    document.getElementById('situationFamiliale').value = data.situationFamiliale;
+                    toggleConjointField();
+                }
+            }
+        });
+
+        // Sauvegarde automatique
+        setInterval(() => {
+            const form = document.getElementById('testamentForm');
+            const formData = new FormData(form);
+            let hasData = false;
+            
+            for (let [key, value] of formData.entries()) {
+                if (value.trim() !== '') {
+                    hasData = true;
+                    break;
+                }
+            }
+            
+            if (hasData) {
+                sauvegarderBrouillon();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
