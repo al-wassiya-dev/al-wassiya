@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Wassiya - Votre Testament Islamique Simplifié</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #d4af37;
+            --primary-dark: #b8941f;
+            --secondary-color: #1a1a2e;
+            --accent-color: #16213e;
+            --light-bg: #f8f9fa;
+            --text-dark: #2d3436;
+            --text-light: #f5f6fa;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(212, 175, 55, 0.12) 0%, transparent 40%), 
+                radial-gradient(circle at 85% 75%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
+            z-index: -2;
+        }
+
+        .islamic-pattern {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 280px;
+            color: var(--primary-color);
+            opacity: 0.03;
+            z-index: -1;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 500px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bismillah {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .form-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        .form-section {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .form-section:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            background: rgba(10, 10, 10, 0.4);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group select option {
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 10px;
+        }
+
+        .required {
+            color: var(--error-color);
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-share {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+        }
+
+        .btn-share:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            width: 15%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            color: #cccccc;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(10, 10, 10, 0.4);
+            border-radius: var(--border-radius);
+        }
+
+        .quranic-verse {
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 4px solid var(--primary-color);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .facebook {
+            background: #3b5998;
+        }
+
+        .twitter {
+            background: #1DA1F2;
+        }
+
+        .email {
+            background: #d44638;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .bismillah {
+                font-size: 1.7rem;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animation for form sections */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern">﷽</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">Al Wassiya</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+            <p>Créez facilement un testament islamique respectant le Coran et la Sunna</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="step-indicator" id="stepIndicator">
+                Étape 1 sur 7 : Informations personnelles et volontés générales
+            </div>
+        </div>
+
+        <div class="quranic-verse">
+            "Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux." - Sourate Al-Baqara, verset 180
+        </div>
+
+        <form id="testamentForm">
+            <div class="form-container">
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
+                    
+                    <div class="form-group">
+                        <label for="sexe">Sexe <span class="required">*</span></label>
+                        <select id="sexe" name="sexe" required>
+                            <option value="">Sélectionner</option>
+                            <option value="homme">Homme</option>
+                            <option value="femme">Femme</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nom">Nom de famille <span class="required">*</span></label>
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
+                        <input type="date" id="dateNaissance" name="dateNaissance" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lieuNaissance">Lieu de naissance</label>
+                        <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adresse">Adresse actuelle <span class="required">*</span></label>
+                        <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nationalite">Nationalité</label>
+                        <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="situationFamiliale">Situation familiale</label>
+                        <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
+                            <option value="">Sélectionner</option>
+                            <option value="celibataire">Célibataire</option>
+                            <option value="marie">Marié(e)</option>
+                            <option value="divorce">Divorcé(e)</option>
+                            <option value="veuf">Veuf/Veuve</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="conjointGroup" style="display: none;">
+                        <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
+                        <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
+                    
+                    <div class="form-group">
+                        <label for="volontesObseques">Volontés concernant les obsèques</label>
+                        <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recommandationsFamille">Recommandations à la famille</label>
+                        <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
+                        <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactExecuteur">Contact de l'exécuteur</label>
+                        <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="autresVolontes">Autres volontés ou instructions</label>
+                        <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
+                    <i class="fas fa-save"></i> Sauvegarder le brouillon
+                </button>
+                <button type="button" class="btn btn-primary" onclick="genererPDF()">
+                    <i class="fas fa-file-pdf"></i> Générer le PDF
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="continuerEtapes()">
+                    Continuer vers les actifs <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="share-buttons">
+                <p>Partager :</p>
+                <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="share-btn facebook" onclick="partagerFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="share-btn twitter" onclick="partagerTwitter()">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="share-btn email" onclick="partagerEmail()">
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+        </form>
+
+        <div class="footer-note">
+            <p><strong>Note importante :</strong> Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). 
+            Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.</p>
+            <p>Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleConjointField() {
+            const situationFamiliale = document.getElementById('situationFamiliale').value;
+            const conjointGroup = document.getElementById('conjointGroup');
+            const conjointLabel = document.getElementById('conjointLabel');
+            
+            if (situationFamiliale === 'marie' || situationFamiliale === 'divorce') {
+                conjointGroup.style.display = 'block';
+                
+                if (situationFamiliale === 'marie') {
+                    conjointLabel.textContent = 'Identité de l\'époux/épouse';
+                    document.getElementById('conjoint').placeholder = 'Nom et prénom du conjoint';
+                } else if (situationFamiliale === 'divorce') {
+                    conjointLabel.textContent = 'Identité de l\'ex-époux/ex-épouse';
+                    document.getElementById('conjoint').placeholder = 'Nom et prénom de l\'ex-conjoint';
+                }
+            } else {
+                conjointGroup.style.display = 'none';
+                document.getElementById('conjoint').value = '';
+            }
+        }
+
+        function sauvegarderBrouillon() {
+            const formData = new FormData(document.getElementById('testamentForm'));
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            localStorage.setItem('testamentBrouillon', JSON.stringify(data));
+            
+            // Afficher une notification de succès
+            alert('Brouillon sauvegardé avec succès !');
+        }
+
+        function genererPDF() {
+            const form = document.getElementById('testamentForm');
+            const formData = new FormData(form);
+            
+            // Vérifier les champs obligatoires
+            const sexe = formData.get('sexe');
+            const prenom = formData.get('prenom');
+            const nom = formData.get('nom');
+            const dateNaissance = formData.get('dateNaissance');
+            const adresse = formData.get('adresse');
+            
+            if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
+                alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *)');
+                return;
+            }
+
+            // Générer le contenu HTML formaté pour impression
+            const contenuHTML = genererContenuHTML(formData);
+            
+            // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
+            const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
+            nouvelleFenetre.document.write(contenuHTML);
+            nouvelleFenetre.document.close();
+            
+            // Instructions pour l'utilisateur
+            alert('Le testament s\'ouvre dans une nouvelle fenêtre.\n\nPour sauvegarder en PDF :\n1. Appuyez sur Ctrl+P (Cmd+P sur Mac)\n2. Choisissez "Enregistrer au format PDF"\n3. Cliquez sur "Enregistrer"');
+        }
+
+        function genererContenuHTML(formData) {
+            const date = new Date().toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Testament Islamique - Al Wassiya</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.7; 
+            margin: 0;
+            padding: 0;
+            color: #2d3436;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #d4af37;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #636e72;
+            margin-bottom: 20px;
+        }
+        
+        .bismillah { 
+            font-size: 28px; 
+            color: #d4af37; 
+            font-weight: bold; 
+            margin: 20px 0;
+        }
+        
+        .title { 
+            font-size: 24px; 
+            font-weight: bold; 
+            margin: 15px 0;
+            color: #2d3436;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .section { 
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #d4af37;
+        }
+        
+        .section-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .field { 
+            margin: 12px 0;
+            display: flex;
+        }
+        
+        .field-label {
+            font-weight: 500;
+            min-width: 180px;
+        }
+        
+        .signature-section {
+            margin-top: 60px;
+            border-top: 1px solid #ddd;
+            padding-top: 30px;
+        }
+        
+        .verset {
+            font-style: italic;
+            text-align: center;
+            color: #636e72;
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border: 1px dashed #d4af37;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #636e72;
+        }
+        
+        .decoration {
+            text-align: center;
+            margin: 30px 0;
+            color: #d4af37;
+            opacity: 0.5;
+        }
+        
+        @media print {
+            body { 
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Al Wassiya</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 500px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bismillah {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .form-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        .form-section {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .form-section:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            background: rgba(10, 10, 10, 0.4);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group select option {
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 10px;
+        }
+
+        .required {
+            color: var(--error-color);
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-share {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+        }
+
+        .btn-share:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            width: 15%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            color: #cccccc;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(10, 10, 10, 0.4);
+            border-radius: var(--border-radius);
+        }
+
+        .quranic-verse {
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 4px solid var(--primary-color);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .facebook {
+            background: #3b5998;
+        }
+
+        .twitter {
+            background: #1DA1F2;
+        }
+
+        .email {
+            background: #d44638;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .bismillah {
+                font-size: 1.7rem;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animation for form sections */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern">﷽</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">Al Wassiya</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+            <p>Créez facilement un testament islamique respectant le Coran et la Sunna</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="step-indicator" id="stepIndicator">
+                Étape 1 sur 7 : Informations personnelles et volontés générales
+            </div>
+        </div>
+
+        <div class="quranic-verse">
+            "Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux." - Sourate Al-Baqara, verset 180
+        </div>
+
+        <form id="testamentForm">
+            <div class="form-container">
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
+                    
+                    <div class="form-group">
+                        <label for="sexe">Sexe <span class="required">*</span></label>
+                        <select id="sexe" name="sexe" required>
+                            <option value="">Sélectionner</option>
+                            <option value="homme">Homme</option>
+                            <option value="femme">Femme</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nom">Nom de famille <span class="required">*</span></label>
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
+                        <input type="date" id="dateNaissance" name="dateNaissance" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lieuNaissance">Lieu de naissance</label>
+                        <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adresse">Adresse actuelle <span class="required">*</span></label>
+                        <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nationalite">Nationalité</label>
+                        <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="situationFamiliale">Situation familiale</label>
+                        <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
+                            <option value="">Sélectionner</option>
+                            <option value="celibataire">Célibataire</option>
+                            <option value="marie">Marié(e)</option>
+                            <option value="divorce">Divorcé(e)</option>
+                            <option value="veuf">Veuf/Veuve</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="conjointGroup" style="display: none;">
+                        <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
+                        <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
+                    
+                    <div class="form-group">
+                        <label for="volontesObseques">Volontés concernant les obsèques</label>
+                        <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recommandationsFamille">Recommandations à la famille</label>
+                        <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
+                        <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactExecuteur">Contact de l'exécuteur</label>
+                        <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="autresVolontes">Autres volontés ou instructions</label>
+                        <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
+                    <i class="fas fa-save"></i> Sauvegarder le brouillon
+                </button>
+                <button type="button" class="btn btn-primary" onclick="genererPDF()">
+                    <i class="fas fa-file-pdf"></i> Générer le PDF
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="continuerEtapes()">
+                    Continuer vers les actifs <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="share-buttons">
+                <p>Partager :</p>
+                <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="share-btn facebook" onclick="partagerFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="share-btn twitter" onclick="partagerTwitter()">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="share-btn email" onclick="partagerEmail()">
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+        </form>
+
+        <div class="footer-note">
+            <p><strong>Note importante :</strong> Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). 
+            Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.</p>
+            <p>Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleConjointField() {
+            const situationFamiliale = document.getElementById('situationFamiliale').value;
+            const conjointGroup = document.getElementById('conjointGroup');
+            const conjointLabel = document.getElementById('conjointLabel');
+            
+            if (situationFamiliale === 'marie' || situationFamiliale === 'divorce') {
+                conjointGroup.style.display = 'block';
+                
+                if (situationFamiliale === 'marie') {
+                    conjointLabel.textContent = 'Identité de l\'époux/épouse';
+                    document.getElementById('conjoint').placeholder = 'Nom et prénom du conjoint';
+                } else if (situationFamiliale === 'divorce') {
+                    conjointLabel.textContent = 'Identité de l\'ex-époux/ex-épouse';
+                    document.getElementById('conjoint').placeholder = 'Nom et prénom de l\'ex-conjoint';
+                }
+            } else {
+                conjointGroup.style.display = 'none';
+                document.getElementById('conjoint').value = '';
+            }
+        }
+
+        function sauvegarderBrouillon() {
+            const formData = new FormData(document.getElementById('testamentForm'));
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            localStorage.setItem('testamentBrouillon', JSON.stringify(data));
+            
+            // Afficher une notification de succès
+            alert('Brouillon sauvegardé avec succès !');
+        }
+
+        function genererPDF() {
+            const form = document.getElementById('testamentForm');
+            const formData = new FormData(form);
+            
+            // Vérifier les champs obligatoires
+            const sexe = formData.get('sexe');
+            const prenom = formData.get('prenom');
+            const nom = formData.get('nom');
+            const dateNaissance = formData.get('dateNaissance');
+            const adresse = formData.get('adresse');
+            
+            if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
+                alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *)');
+                return;
+            }
+
+            // Générer le contenu HTML formaté pour impression
+            const contenuHTML = genererContenuHTML(formData);
+            
+            // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
+            const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
+            nouvelleFenetre.document.write(contenuHTML);
+            nouvelleFenetre.document.close();
+            
+            // Instructions pour l'utilisateur
+            alert('Le testament s\'ouvre dans une nouvelle fenêtre.\n\nPour sauvegarder en PDF :\n1. Appuyez sur Ctrl+P (Cmd+P sur Mac)\n2. Choisissez "Enregistrer au format PDF"\n3. Cliquez sur "Enregistrer"');
+        }
+
+        function genererContenuHTML(formData) {
+            const date = new Date().toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Testament Islamique - Al Wassiya</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.7; 
+            margin: 0;
+            padding: 0;
+            color: #2d3436;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #d4af37;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #636e72;
+            margin-bottom: 20px;
+        }
+        
+        .bismillah { 
+            font-size: 28px; 
+            color: #d4af37; 
+            font-weight: bold; 
+            margin: 20px 0;
+        }
+        
+        .title { 
+            font-size: 24px; 
+            font-weight: bold; 
+            margin: 15px 0;
+            color: #2d3436;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .section { 
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #d4af37;
+        }
+        
+        .section-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .field { 
+            margin: 12px 0;
+            display: flex;
+        }
+        
+        .field-label {
+            font-weight: 500;
+            min-width: 180px;
+        }
+        
+        .signature-section {
+            margin-top: 60px;
+            border-top: 1px solid #ddd;
+            padding-top: 30px;
+        }
+        
+        .verset {
+            font-style: italic;
+            text-align: center;
+            color: #636e72;
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border: 1px dashed #d4af37;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #636e72;
+        }
+        
+        .decoration {
+            text-align: center;
+            margin: 30px 0;
+            color: #d4af37;
+            opacity: 0.5;
+        }
+        
+        @media print {
+            body { 
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Al Wassiya</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class
