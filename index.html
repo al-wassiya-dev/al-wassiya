@@ -10,8 +10,8 @@
         :root {
             --primary: #C9B178;
             --primary-dark: #A89262;
-            --secondary: #1A2E40;
-            --accent: #2D4C68;
+            --secondary: #2D4C68;
+            --accent: #3A5F7E;
             --light: #F8F5EE;
             --dark: #1E1E24;
             --success: #4CAF50;
@@ -117,6 +117,22 @@
             color: var(--secondary);
             font-size: 1.1rem;
             line-height: 1.8;
+            text-align: center;
+        }
+
+        .arabic-verse {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            line-height: 2;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .translation-note {
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            margin-top: 10px;
+            font-style: italic;
         }
 
         /* Form Styles */
@@ -261,12 +277,17 @@
         .share-section {
             text-align: center;
             margin: 30px 0;
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
         }
 
         .share-title {
             font-size: 1.2rem;
             color: var(--secondary);
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .share-buttons {
@@ -326,6 +347,10 @@
                 font-size: 1.8rem;
             }
             
+            .arabic-verse {
+                font-size: 1.4rem;
+            }
+            
             .form-section {
                 padding: 25px 20px;
             }
@@ -340,6 +365,16 @@
             
             .btn {
                 width: 100%;
+            }
+            
+            .share-buttons {
+                gap: 10px;
+            }
+            
+            .share-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
         }
 
@@ -395,7 +430,9 @@
         </div>
 
         <div class="quranic-verse">
-            "Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux." - Sourate Al-Baqara, verset 180
+            <div class="arabic-verse">كُتِبَ عَلَيْكُمْ إِذَا حَضَرَ أَحَدَكُمُ الْمَوْتُ إِن تَرَكَ خَيْرًا الْوَصِيَّةُ لِلْوَالِدَيْنِ وَالْأَقْرَبِينَ بِالْمَعْرُوفِ ۖ حَقًّا عَلَى الْمُتَّقِينَ</div>
+            <div>"Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux." - Sourate Al-Baqara, verset 180</div>
+            <div class="translation-note">(c'est une traduction rapprochée)</div>
         </div>
 
         <form id="testamentForm">
@@ -405,7 +442,7 @@
                     
                     <div class="form-group">
                         <label for="sexe">Sexe <span class="required">*</span></label>
-                        <select id="sexe" name="sexe" required>
+                        <select id="sexe" name="sexe" required onchange="toggleConjointField()">
                             <option value="">Sélectionner</option>
                             <option value="homme">Homme</option>
                             <option value="femme">Femme</option>
@@ -528,6 +565,7 @@
     </div>
 
     <script>
+        // Fonction pour afficher/masquer le champ conjoint
         function toggleConjointField() {
             const situationFamiliale = document.getElementById('situationFamiliale').value;
             const conjointGroup = document.getElementById('conjointGroup');
