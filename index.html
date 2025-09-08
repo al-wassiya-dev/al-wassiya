@@ -69,42 +69,11 @@
         }
 
         .bismillah {
+            font-family: 'Amiri', serif;
             font-size: 2.2rem;
             color: var(--primary);
             margin: 25px 0;
             font-weight: 600;
-        }
-
-        /* Navigation */
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: var(--radius);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .nav-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .step-info {
-            font-size: 1.1rem;
-            color: var(--secondary);
-            font-weight: 500;
         }
 
         /* Progress Section */
@@ -127,6 +96,7 @@
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            width: 30%;
             border-radius: 4px;
             transition: var(--transition);
         }
@@ -300,11 +270,6 @@
             .btn {
                 width: 100%;
             }
-            
-            .navigation {
-                flex-direction: column;
-                gap: 15px;
-            }
         }
 
         /* Animations */
@@ -404,15 +369,6 @@
         .toast.error {
             background: var(--error);
         }
-
-        /* Step container */
-        .step-container {
-            display: none;
-        }
-
-        .step-container.active {
-            display: block;
-        }
     </style>
 </head>
 <body>
@@ -426,250 +382,170 @@
             <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
         </div>
 
-        <!-- Navigation -->
-        <div class="navigation">
-            <a href="#" class="nav-btn" id="prevStepBtn" onclick="changeStep('prev')">
-                <i class="fas fa-arrow-left"></i> Étape précédente
-            </a>
-            <div class="step-info" id="stepInfo">Étape 1 sur 2</div>
-            <a href="#" class="nav-btn" id="nextStepBtn" onclick="changeStep('next')">
-                Étape suivante <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-
-        <!-- Progress Bar -->
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 50%;"></div>
+                <div class="progress-fill" id="progressFill"></div>
             </div>
             <div class="step-indicator" id="stepIndicator">
-                Étape 1 : Informations personnelles
+                Étape 2 sur 7 : Héritiers et famille
             </div>
         </div>
 
-        <!-- Étape 1: Informations personnelles -->
-        <div class="step-container active" id="step1">
-            <form id="personalForm">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-user"></i> Informations personnelles</h2>
-                        
-                        <div class="form-group">
-                            <label for="nomComplet">Nom complet <span class="required">*</span></label>
-                            <input type="text" id="nomComplet" name="nomComplet" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
-                            <input type="date" id="dateNaissance" name="dateNaissance" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lieuNaissance">Lieu de naissance <span class="required">*</span></label>
-                            <input type="text" id="lieuNaissance" name="lieuNaissance" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="adresse">Adresse complète <span class="required">*</span></label>
-                            <textarea id="adresse" name="adresse" required></textarea>
-                        </div>
+        <form id="heritageForm">
+            <div class="form-container">
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-users"></i> Enfants</h2>
+                    
+                    <div class="form-group">
+                        <label for="nombreEnfants">Nombre d'enfants</label>
+                        <select id="nombreEnfants" name="nombreEnfants" onchange="generateChildrenFields()">
+                            <option value="0">Aucun enfant</option>
+                            <option value="1">1 enfant</option>
+                            <option value="2">2 enfants</option>
+                            <option value="3">3 enfants</option>
+                            <option value="4">4 enfants</option>
+                            <option value="5">5 enfants</option>
+                            <option value="6">6 enfants</option>
+                            <option value="7">7 enfants</option>
+                            <option value="8">8 enfants</option>
+                            <option value="9">9 enfants</option>
+                            <option value="10">10 enfants ou plus</option>
+                        </select>
                     </div>
 
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-phone-alt"></i> Coordonnées</h2>
-                        
-                        <div class="form-group">
-                            <label for="telephone">Numéro de téléphone <span class="required">*</span></label>
-                            <input type="tel" id="telephone" name="telephone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Adresse email</label>
-                            <input type="email" id="email" name="email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="profession">Profession</label>
-                            <input type="text" id="profession" name="profession">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nationalite">Nationalité <span class="required">*</span></label>
-                            <input type="text" id="nationalite" name="nationalite" required>
-                        </div>
+                    <div id="childrenDetails" class="dynamic-section" style="display: none;">
+                        <!-- Les détails des enfants seront générés ici -->
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
-                        <i class="fas fa-save"></i> Sauvegarder le brouillon
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="genererPDF()">
-                        <i class="fas fa-file-pdf"></i> Générer le PDF
-                    </button>
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-user-friends"></i> Frères et Sœurs</h2>
+                    
+                    <div class="form-group">
+                        <label for="nombreFreres">Nombre de frères</label>
+                        <select id="nombreFreres" name="nombreFreres" onchange="generateSiblingsFields()">
+                            <option value="0">Aucun frère</option>
+                            <option value="1">1 frère</option>
+                            <option value="2">2 frères</option>
+                            <option value="3">3 frères</option>
+                            <option value="4">4 frères</option>
+                            <option value="5">5 frères</option>
+                            <option value="6">6 frères</option>
+                            <option value="7">7 frères</option>
+                            <option value="8">8 frères</option>
+                            <option value="9">9 frères</option>
+                            <option value="10">10 frères ou plus</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombreSoeurs">Nombre de sœurs</label>
+                        <select id="nombreSoeurs" name="nombreSoeurs" onchange="generateSiblingsFields()">
+                            <option value="0">Aucune sœur</option>
+                            <option value="1">1 sœur</option>
+                            <option value="2">2 sœurs</option>
+                            <option value="3">3 sœurs</option>
+                            <option value="4">4 sœurs</option>
+                            <option value="5">5 sœurs</option>
+                            <option value="6">6 sœurs</option>
+                            <option value="7">7 sœurs</option>
+                            <option value="8">8 sœurs</option>
+                            <option value="9">9 sœurs</option>
+                            <option value="10">10 sœurs ou plus</option>
+                        </select>
+                    </div>
+
+                    <div id="siblingsDetails" class="dynamic-section" style="display: none;">
+                        <!-- Les détails des frères et sœurs seront générés ici -->
+                    </div>
                 </div>
-            </form>
-        </div>
 
-        <!-- Étape 2: Héritiers et famille -->
-        <div class="step-container" id="step2">
-            <form id="heritageForm">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-users"></i> Enfants</h2>
-                        
-                        <div class="form-group">
-                            <label for="nombreEnfants">Nombre d'enfants</label>
-                            <select id="nombreEnfants" name="nombreEnfants" onchange="generateChildrenFields()">
-                                <option value="0">Aucun enfant</option>
-                                <option value="1">1 enfant</option>
-                                <option value="2">2 enfants</option>
-                                <option value="3">3 enfants</option>
-                                <option value="4">4 enfants</option>
-                                <option value="5">5 enfants</option>
-                                <option value="6">6 enfants</option>
-                                <option value="7">7 enfants</option>
-                                <option value="8">8 enfants</option>
-                                <option value="9">9 enfants</option>
-                                <option value="10">10 enfants ou plus</option>
-                            </select>
-                        </div>
-
-                        <div id="childrenDetails" class="dynamic-section" style="display: none;">
-                            <!-- Les détails des enfants seront générés ici -->
-                        </div>
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-heart"></i> Parents</h2>
+                    
+                    <div class="form-group">
+                        <label for="statutPere">Statut du père</label>
+                        <select id="statutPere" name="statutPere" onchange="toggleParentDetails('pere')">
+                            <option value="vivant">Vivant</option>
+                            <option value="decede">Décédé</option>
+                            <option value="inconnu">Inconnu</option>
+                        </select>
                     </div>
 
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-user-friends"></i> Frères et Sœurs</h2>
-                        
-                        <div class="form-group">
-                            <label for="nombreFreres">Nombre de frères</label>
-                            <select id="nombreFreres" name="nombreFreres" onchange="generateSiblingsFields()">
-                                <option value="0">Aucun frère</option>
-                                <option value="1">1 frère</option>
-                                <option value="2">2 frères</option>
-                                <option value="3">3 frères</option>
-                                <option value="4">4 frères</option>
-                                <option value="5">5 frères</option>
-                                <option value="6">6 frères</option>
-                                <option value="7">7 frères</option>
-                                <option value="8">8 frères</option>
-                                <option value="9">9 frères</option>
-                                <option value="10">10 frères ou plus</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nombreSoeurs">Nombre de sœurs</label>
-                            <select id="nombreSoeurs" name="nombreSoeurs" onchange="generateSiblingsFields()">
-                                <option value="0">Aucune sœur</option>
-                                <option value="1">1 sœur</option>
-                                <option value="2">2 sœurs</option>
-                                <option value="3">3 sœurs</option>
-                                <option value="4">4 sœurs</option>
-                                <option value="5">5 sœurs</option>
-                                <option value="6">6 sœurs</option>
-                                <option value="7">7 sœurs</option>
-                                <option value="8">8 sœurs</option>
-                                <option value="9">9 sœurs</option>
-                                <option value="10">10 sœurs ou plus</option>
-                            </select>
-                        </div>
-
-                        <div id="siblingsDetails" class="dynamic-section" style="display: none;">
-                            <!-- Les détails des frères et sœurs seront générés ici -->
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-heart"></i> Parents</h2>
-                        
-                        <div class="form-group">
-                            <label for="statutPere">Statut du père</label>
-                            <select id="statutPere" name="statutPere" onchange="toggleParentDetails('pere')">
-                                <option value="vivant">Vivant</option>
-                                <option value="decede">Décédé</option>
-                                <option value="inconnu">Inconnu</option>
-                            </select>
-                        </div>
-
-                        <div id="detailsPere" class="dynamic-item">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="nomPere">Nom du père</label>
-                                    <input type="text" id="nomPere" name="nomPere">
-                                </div>
-                                <div class="form-group">
-                                    <label for="telephonePere">Téléphone</label>
-                                    <input type="tel" id="telephonePere" name="telephonePere">
-                                </div>
+                    <div id="detailsPere" class="dynamic-item">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nomPere">Nom du père</label>
+                                <input type="text" id="nomPere" name="nomPere">
                             </div>
                             <div class="form-group">
-                                <label for="adressePere">Adresse</label>
-                                <textarea id="adressePere" name="adressePere" rows="3"></textarea>
+                                <label for="telephonePere">Téléphone</label>
+                                <input type="tel" id="telephonePere" name="telephonePere">
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label for="statutMere">Statut de la mère</label>
-                            <select id="statutMere" name="statutMere" onchange="toggleParentDetails('mere')">
-                                <option value="vivante">Vivante</option>
-                                <option value="decedee">Décédée</option>
-                                <option value="inconnue">Inconnue</option>
-                            </select>
+                            <label for="adressePere">Adresse</label>
+                            <textarea id="adressePere" name="adressePere" rows="3"></textarea>
                         </div>
+                    </div>
 
-                        <div id="detailsMere" class="dynamic-item">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="nomMere">Nom de la mère</label>
-                                    <input type="text" id="nomMere" name="nomMere">
-                                </div>
-                                <div class="form-group">
-                                    <label for="telephoneMere">Téléphone</label>
-                                    <input type="tel" id="telephoneMere" name="telephoneMere">
-                                </div>
+                    <div class="form-group">
+                        <label for="statutMere">Statut de la mère</label>
+                        <select id="statutMere" name="statutMere" onchange="toggleParentDetails('mere')">
+                            <option value="vivante">Vivante</option>
+                            <option value="decedee">Décédée</option>
+                            <option value="inconnue">Inconnue</option>
+                        </select>
+                    </div>
+
+                    <div id="detailsMere" class="dynamic-item">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nomMere">Nom de la mère</label>
+                                <input type="text" id="nomMere" name="nomMere">
                             </div>
                             <div class="form-group">
-                                <label for="adresseMere">Adresse</label>
-                                <textarea id="adresseMere" name="adresseMere" rows="3"></textarea>
+                                <label for="telephoneMere">Téléphone</label>
+                                <input type="tel" id="telephoneMere" name="telephoneMere">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-users-cog"></i> Autres héritiers</h2>
-                        
                         <div class="form-group">
-                            <label for="autresHeritiers">Autres membres de la famille héritiers (grands-parents, oncles, tantes, etc.)</label>
-                            <textarea id="autresHeritiers" name="autresHeritiers" rows="4" placeholder="Nom, lien de parenté, coordonnées..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="remarquesHeritiers">Remarques particulières sur les héritiers</label>
-                            <textarea id="remarquesHeritiers" name="remarquesHeritiers" rows="3"></textarea>
+                            <label for="adresseMere">Adresse</label>
+                            <textarea id="adresseMere" name="adresseMere" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
-                        <i class="fas fa-save"></i> Sauvegarder le brouillon
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="genererPDF()">
-                        <i class="fas fa-file-pdf"></i> Générer le PDF
-                    </button>
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-users-cog"></i> Autres héritiers</h2>
+                    
+                    <div class="form-group">
+                        <label for="autresHeritiers">Autres membres de la famille héritiers (grands-parents, oncles, tantes, etc.)</label>
+                        <textarea id="autresHeritiers" name="autresHeritiers" rows="4" placeholder="Nom, lien de parenté, coordonnées..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="remarquesHeritiers">Remarques particulières sur les héritiers</label>
+                        <textarea id="remarquesHeritiers" name="remarquesHeritiers" rows="3"></textarea>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
+                    <i class="fas fa-save"></i> Sauvegarder le brouillon
+                </button>
+                <button type="button" class="btn btn-primary" onclick="genererPDF()">
+                    <i class="fas fa-file-pdf"></i> Générer le PDF
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="continuerEtapes()">
+                    Continuer vers l'étape 3 <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </form>
     </div>
 
     <script>
-        // Variables globales
-        let currentStep = 1;
-        const totalSteps = 2;
-
         // Fonction pour afficher les notifications
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
@@ -679,80 +555,6 @@
             setTimeout(() => {
                 toast.className = 'toast';
             }, 3000);
-        }
-
-        // Fonction pour changer d'étape
-        function changeStep(direction) {
-            // Valider le formulaire actuel avant de changer d'étape
-            if (direction === 'next' && !validateCurrentStep()) {
-                showToast('Veuillez remplir tous les champs obligatoires', true);
-                return;
-            }
-
-            // Masquer l'étape actuelle
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            
-            // Calculer la nouvelle étape
-            if (direction === 'next' && currentStep < totalSteps) {
-                currentStep++;
-            } else if (direction === 'prev' && currentStep > 1) {
-                currentStep--;
-            }
-            
-            // Afficher la nouvelle étape
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            
-            // Mettre à jour la barre de progression
-            updateProgressBar();
-            
-            // Mettre à jour les informations de navigation
-            updateNavigation();
-        }
-
-        // Fonction pour valider l'étape actuelle
-        function validateCurrentStep() {
-            if (currentStep === 1) {
-                const requiredFields = document.querySelectorAll('#personalForm [required]');
-                for (let field of requiredFields) {
-                    if (!field.value.trim()) {
-                        field.focus();
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        // Fonction pour mettre à jour la barre de progression
-        function updateProgressBar() {
-            const progressPercentage = (currentStep / totalSteps) * 100;
-            document.getElementById('progressFill').style.width = `${progressPercentage}%`;
-            
-            // Mettre à jour le texte d'indication
-            const stepTitles = [
-                'Étape 1 : Informations personnelles',
-                'Étape 2 : Héritiers et famille'
-            ];
-            document.getElementById('stepIndicator').textContent = stepTitles[currentStep - 1];
-        }
-
-        // Fonction pour mettre à jour la navigation
-        function updateNavigation() {
-            document.getElementById('stepInfo').textContent = `Étape ${currentStep} sur ${totalSteps}`;
-            
-            // Masquer le bouton précédent sur la première étape
-            if (currentStep === 1) {
-                document.getElementById('prevStepBtn').style.visibility = 'hidden';
-            } else {
-                document.getElementById('prevStepBtn').style.visibility = 'visible';
-            }
-            
-            // Changer le texte du bouton suivant sur la dernière étape
-            if (currentStep === totalSteps) {
-                document.getElementById('nextStepBtn').innerHTML = 'Terminer <i class="fas fa-check"></i>';
-            } else {
-                document.getElementById('nextStepBtn').innerHTML = 'Étape suivante <i class="fas fa-arrow-right"></i>';
-            }
         }
 
         // Fonction pour générer les champs enfants
@@ -879,35 +681,23 @@
         }
 
         function sauvegarderBrouillon() {
-            // Récupérer les données des deux formulaires
-            const personalData = new FormData(document.getElementById('personalForm'));
-            const heritageData = new FormData(document.getElementById('heritageForm'));
+            const formData = new FormData(document.getElementById('heritageForm'));
+            const data = {};
             
-            const data = {
-                step: currentStep,
-                personal: {},
-                heritage: {}
-            };
-            
-            for (let [key, value] of personalData.entries()) {
-                data.personal[key] = value;
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
             }
             
-            for (let [key, value] of heritageData.entries()) {
-                data.heritage[key] = value;
-            }
-            
-            localStorage.setItem('wassiyaBrouillon', JSON.stringify(data));
+            localStorage.setItem('heritageBrouillon', JSON.stringify(data));
             showToast('Brouillon sauvegardé avec succès !');
         }
 
         function genererPDF() {
-            // Récupérer les données des formulaires
-            const personalData = new FormData(document.getElementById('personalForm'));
-            const heritageData = new FormData(document.getElementById('heritageForm'));
+            const form = document.getElementById('heritageForm');
+            const formData = new FormData(form);
             
             // Générer le contenu HTML formaté pour impression
-            const contenuHTML = genererContenuCompletHTML(personalData, heritageData);
+            const contenuHTML = genererContenuHeritageHTML(formData);
             
             // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
             const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
@@ -918,7 +708,7 @@
             showToast('Le document s\'ouvre dans une nouvelle fenêtre. Utilisez Ctrl+P pour imprimer/enregistrer en PDF.');
         }
 
-        function genererContenuCompletHTML(personalData, heritageData) {
+        function genererContenuHeritageHTML(formData) {
             const date = new Date().toLocaleDateString('fr-FR', {
                 weekday: 'long',
                 year: 'numeric',
@@ -927,14 +717,14 @@
             });
             
             let enfantsHTML = '<p>Aucun enfant</p>';
-            const nombreEnfants = parseInt(heritageData.get('nombreEnfants') || 0);
+            const nombreEnfants = parseInt(formData.get('nombreEnfants') || 0);
             
             if (nombreEnfants > 0) {
                 enfantsHTML = '<div class="heritiers-list">';
                 for (let i = 1; i <= nombreEnfants; i++) {
-                    const nom = heritageData.get(`enfantNom${i}`) || '';
-                    const telephone = heritageData.get(`enfantTelephone${i}`) || '';
-                    const adresse = heritageData.get(`enfantAdresse${i}`) || '';
+                    const nom = formData.get(`enfantNom${i}`) || '';
+                    const telephone = formData.get(`enfantTelephone${i}`) || '';
+                    const adresse = formData.get(`enfantAdresse${i}`) || '';
                     
                     enfantsHTML += `
                         <div class="heritier-item">
@@ -948,17 +738,17 @@
             }
             
             let freresSoeursHTML = '<p>Aucun frère ou sœur</p>';
-            const nombreFreres = parseInt(heritageData.get('nombreFreres') || 0);
-            const nombreSoeurs = parseInt(heritageData.get('nombreSoeurs') || 0);
+            const nombreFreres = parseInt(formData.get('nombreFreres') || 0);
+            const nombreSoeurs = parseInt(formData.get('nombreSoeurs') || 0);
             
             if (nombreFreres > 0 || nombreSoeurs > 0) {
                 freresSoeursHTML = '<div class="heritiers-list">';
                 
                 // Ajouter les frères
                 for (let i = 1; i <= nombreFreres; i++) {
-                    const nom = heritageData.get(`frereNom${i}`) || '';
-                    const telephone = heritageData.get(`frereTelephone${i}`) || '';
-                    const adresse = heritageData.get(`frereAdresse${i}`) || '';
+                    const nom = formData.get(`frereNom${i}`) || '';
+                    const telephone = formData.get(`frereTelephone${i}`) || '';
+                    const adresse = formData.get(`frereAdresse${i}`) || '';
                     
                     freresSoeursHTML += `
                         <div class="heritier-item">
@@ -969,3 +759,181 @@
                     `;
                 }
                 
+                // Ajouter les sœurs
+                for (let i = 1; i <= nombreSoeurs; i++) {
+                    const nom = formData.get(`soeurNom${i}`) || '';
+                    const telephone = formData.get(`soeurTelephone${i}`) || '';
+                    const adresse = formData.get(`soeurAdresse${i}`) || '';
+                    
+                    freresSoeursHTML += `
+                        <div class="heritier-item">
+                            <div class="field"><span class="field-label">Sœur ${i}:</span> ${nom}</div>
+                            ${telephone ? `<div class="field"><span class="field-label">Téléphone:</span> ${telephone}</div>` : ''}
+                            ${adresse ? `<div class="field"><span class="field-label">Adresse:</span> ${adresse}</div>` : ''}
+                        </div>
+                    `;
+                }
+                
+                freresSoeursHTML += '</div>';
+            }
+            
+            let parentsHTML = `
+                <div class="field"><span class="field-label">Père:</span> ${formData.get('statutPere')}</div>
+                <div class="field"><span class="field-label">Mère:</span> ${formData.get('statutMere')}</div>
+            `;
+            
+            if (formData.get('statutPere') === 'vivant') {
+                parentsHTML += `
+                    <div class="field"><span class="field-label">Nom du père:</span> ${formData.get('nomPere') || 'Non spécifié'}</div>
+                    <div class="field"><span class="field-label">Téléphone du père:</span> ${formData.get('telephonePere') || 'Non spécifié'}</div>
+                    <div class="field"><span class="field-label">Adresse du père:</span> ${formData.get('adressePere') || 'Non spécifiée'}</div>
+                `;
+            }
+            
+            if (formData.get('statutMere') === 'vivante') {
+                parentsHTML += `
+                    <div class="field"><span class="field-label">Nom de la mère:</span> ${formData.get('nomMere') || 'Non spécifié'}</div>
+                    <div class="field"><span class="field-label">Téléphone de la mère:</span> ${formData.get('telephoneMere') || 'Non spécifié'}</div>
+                    <div class="field"><span class="field-label">Adresse de la mère:</span> ${formData.get('adresseMere') || 'Non spécifiée'}</div>
+                `;
+            }
+            
+            return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Héritiers - Al Wassiya</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px;
+            border-bottom: 2px solid #C9B178;
+            padding-bottom: 20px;
+        }
+        .logo {
+            font-size: 28px;
+            color: #C9B178;
+            font-weight: bold;
+        }
+        .logo-arabic {
+            font-family: 'Amiri', serif;
+            font-size: 32px;
+            color: #2D4C68;
+            margin: 10px 0;
+        }
+        .section { 
+            margin: 25px 0;
+            padding: 20px;
+            border-left: 4px solid #C9B178;
+            background: #F8F5EE;
+        }
+        .section-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #2D4C68;
+            margin-bottom: 15px;
+        }
+        .field { 
+            margin: 10px 0;
+        }
+        .field-label {
+            font-weight: bold;
+            display: inline-block;
+            min-width: 150px;
+        }
+        .heritiers-list {
+            margin-left: 20px;
+        }
+        .heritier-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #C9B178;
+        }
+        @media print {
+            body { margin: 0; padding: 15px; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Al Wassiya</div>
+        <div class="logo-arabic">الوصية</div>
+        <div>Détails des héritiers - ${date}</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Enfants</div>
+        ${enfantsHTML}
+    </div>
+
+    <div class="section">
+        <div class="section-title">Frères et Sœurs</div>
+        ${freresSoeursHTML}
+    </div>
+
+    <div class="section">
+        <div class="section-title">Parents</div>
+        ${parentsHTML}
+    </div>
+
+    ${formData.get('autresHeritiers') ? `
+    <div class="section">
+        <div class="section-title">Autres héritiers</div>
+        <p>${formData.get('autresHeritiers')}</p>
+    </div>` : ''}
+
+    ${formData.get('remarquesHeritiers') ? `
+    <div class="section">
+        <div class="section-title">Remarques</div>
+        <p>${formData.get('remarquesHeritiers')}</p>
+    </div>` : ''}
+</body>
+</html>`;
+        }
+
+        function continuerEtapes() {
+            showToast('Fonctionnalité à venir : Vous pourrez bientôt continuer vers l\'étape 3');
+        }
+
+        // Charger les données sauvegardées si elles existent
+        window.addEventListener('load', function() {
+            const savedData = localStorage.getItem('heritageBrouillon');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                for (const key in data) {
+                    if (document.getElementById(key)) {
+                        document.getElementById(key).value = data[key];
+                    }
+                }
+                
+                // Déclencher la génération des champs dynamiques
+                if (data.nombreEnfants) {
+                    document.getElementById('nombreEnfants').value = data.nombreEnfants;
+                    generateChildrenFields();
+                    
+                    // Remplir les champs enfants
+                    for (let i = 1; i <= parseInt(data.nombreEnfants); i++) {
+                        if (data[`enfantNom${i}`]) document.getElementById(`enfantNom${i}`).value = data[`enfantNom${i}`];
+                        if (data[`enfantTelephone${i}`]) document.getElementById(`enfantTelephone${i}`).value = data[`enfantTelephone${i}`];
+                        if (data[`enfantAdresse${i}`]) document.getElementById(`enfantAdresse${i}`).value = data[`enfantAdresse${i}`];
+                    }
+                }
+                
+                if (data.nombreFreres || data.nombreSoeurs) {
+                    if (data.nombreFreres) document.getElementById('nombreFreres').value = data.nombreFreres;
+                    if (data.nombreSoeurs) document.getElementById('nombreSoeurs').value = data.nombreSoeurs;
+                    generateSiblingsFields();
+                    
+                    // Remplir les champs frères
+                    for (let i = 1; i <= parseInt(data.nombreFreres || 0); i++) {
+                        if (data[`frereNom${i}`]) document
