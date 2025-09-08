@@ -480,11 +480,66 @@
             z-index: -1;
         }
 
-        /* Step Navigation */
-        .step-navigation {
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .modal-buttons {
             display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-secondary {
+            background: var(--secondary);
+            color: white;
         }
     </style>
 </head>
@@ -733,7 +788,7 @@
                         <i class="fab fa-whatsapp"></i>
                     </div>
                     <div class="share-btn facebook" onclick="partagerFacebook()">
-                        <i class="fab fa-fa-facebook-f"></i>
+                        <i class="fab fa-facebook-f"></i>
                     </div>
                     <div class="share-btn twitter" onclick="partagerTwitter()">
                         <i class="fab fa-twitter"></i>
@@ -752,9 +807,33 @@
         </div>
     </div>
 
+    <!-- Modal pour le partage du PDF -->
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Votre testament est prêt !</h2>
+            <p>Votre testament islamique a été généré avec succès. Vous pouvez maintenant le télécharger ou le partager.</p>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-primary" onclick="imprimerPDF()">
+                    <i class="fas fa-print"></i> Imprimer
+                </button>
+                <button class="modal-btn modal-btn-secondary" onclick="partagerPDFWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="modal-btn modal-btn-secondary" onclick="partagerPDFEmail()">
+                    <i class="fas fa-envelope"></i> Email
+                </button>
+                <button class="modal-btn" onclick="fermerModal()" style="background: #6c757d; color: white;">
+                    <i class="fas fa-times"></i> Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Variables globales
         let etapeActuelle = 1;
+        let pdfContent = '';
 
         // Fonction pour afficher/masquer le champ conjoint
         function toggleConjointField() {
@@ -898,15 +977,15 @@
             }
 
             // Générer le contenu HTML formaté pour impression
-            const contenuHTML = genererContenuHTML();
+            pdfContent = genererContenuHTML();
             
             // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
             const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
-            nouvelleFenetre.document.write(contenuHTML);
+            nouvelleFenetre.document.write(pdfContent);
             nouvelleFenetre.document.close();
             
-            // Instructions pour l'utilisateur
-            alert('Le testament s\'ouvre dans une nouvelle fenêtre.\n\nPour sauvegarder en PDF :\n1. Appuyez sur Ctrl+P (Cmd+P sur Mac)\n2. Choisissez "Enregistrer au format PDF"\n3. Cliquez sur "Enregistrer"');
+            // Afficher le modal de partage
+            document.getElementById('pdfModal').style.display = 'flex';
         }
 
         function genererContenuHTML() {
@@ -1119,6 +1198,7 @@
     <div class="container">
         <div class="header">
             <div class="logo">Al Wassiya</div>
+            <div class="logo">الوصية</div>
             <div class="subtitle">Votre Testament Islamique Simplifié</div>
             <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
             <div class="title">TESTAMENT ISLAMIQUE (WASSIYA)</div>
@@ -1207,83 +1287,4 @@
 </html>`;
         }
 
-        function partagerWhatsApp() {
-            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya. Découvrez ce service pratique pour préparer votre testament selon les principes islamiques.");
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-        }
-
-        function partagerFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-        }
-
-        function partagerTwitter() {
-            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya - Un service pratique pour préparer son testament selon les principes islamiques");
-            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-        }
-
-        function partagerEmail() {
-            const subject = encodeURIComponent("Testament Islamique avec Al Wassiya");
-            const body = encodeURIComponent("Je viens de créer mon testament islamique avec Al Wassiya. C'est un service pratique pour préparer son testament selon les principes islamiques.\n\nDécouvrez-le ici: " + window.location.href);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
-        }
-
-        // Charger les données sauvegardées si elles existent
-        window.addEventListener('load', function() {
-            const savedData = localStorage.getItem('testamentBrouillon');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                
-                // Remplir les champs de base
-                for (const key in data) {
-                    if (document.getElementById(key)) {
-                        document.getElementById(key).value = data[key];
-                    }
-                }
-                
-                if (data.situationFamiliale) {
-                    document.getElementById('situationFamiliale').value = data.situationFamiliale;
-                    toggleConjointField();
-                }
-                
-                // Remplir les données des personnes si elles existent
-                const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
-                categories.forEach(category => {
-                    if (data[category] && Array.isArray(data[category])) {
-                        data[category].forEach((person, index) => {
-                            addPerson(category);
-                            const container = document.getElementById(`${category}-container`);
-                            const lastEntry = container.lastElementChild;
-                            
-                            if (lastEntry) {
-                                lastEntry.querySelector('[name$="[nom]"]').value = person.nom || '';
-                                lastEntry.querySelector('[name$="[prenom]"]').value = person.prenom || '';
-                                lastEntry.querySelector('[name$="[telephone]"]').value = person.telephone || '';
-                                lastEntry.querySelector('[name$="[adresse]"]').value = person.adresse || '';
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-        // Sauvegarde automatique
-        setInterval(() => {
-            const form = document.getElementById('testamentForm');
-            const formData = new FormData(form);
-            let hasData = false;
-            
-            for (let [key, value] of formData.entries()) {
-                if (value.trim() !== '') {
-                    hasData = true;
-                    break;
-                }
-            }
-            
-            if (hasData) {
-                sauvegarderBrouillon();
-            }
-        }, 30000);
-    </script>
-</body>
-</html>
+        // Fonctions
