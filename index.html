@@ -1,362 +1,971 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Al Wassiya - Testament Islamique Simplifié</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    --primary: #C9B178; --primary-dark: #A89262; --secondary: #2D4C68; --accent: #3A5F7E; --light: #F8F5EE; --dark: #1E1E24;
-    --success: #4CAF50; --error: #E74C3C; --radius: 16px; --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-  * {margin:0; padding:0; box-sizing:border-box;}
-  body {font-family:'Poppins', sans-serif; background:linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%); color: var(--dark); min-height:100vh; direction:ltr;}
-  body.rtl {direction: rtl; font-family: 'Amiri', 'Poppins', sans-serif;}
-  .container {max-width: 900px; margin: 20px auto; padding: 20px;}
-  .language-selector {position: fixed; top:20px; right:20px; z-index:1000; background: white; border-radius:10px; padding:10px; box-shadow: var(--shadow);}
-  .language-selector select {border:none; background:transparent; font-size:14px; cursor:pointer;}
-  .header {text-align:center; margin-bottom: 30px;}
-  .logo {font-family:'Playfair Display', serif; font-size: 3.5rem; font-weight:700; color: var(--primary); margin-bottom: 10px; letter-spacing: 1px;}
-  .arabic-title {font-family:'Amiri', serif; font-size:2.8rem; color: var(--primary-dark); margin:15px 0; direction: rtl;}
-  .subtitle {font-size: 1.2rem; color: var(--secondary); margin-bottom: 25px; font-weight: 400;}
-  .bismillah {font-size:2.2rem; color: var(--primary); margin: 25px 0; font-weight: 600; font-family:'Amiri', serif; direction: rtl;}
-  form {background: white; padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow);}
-  .form-group {margin-bottom: 20px;}
-  label {display: block; font-weight: 600; color: var(--secondary); margin-bottom: 8px;}
-  input[type=text], input[type=tel], input[type=email], textarea, select {
-    width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #EDE8DD; font-size: 1rem; transition: border-color 0.3s;
-  }
-  input[type=text]:focus, input[type=tel]:focus, input[type=email]:focus, textarea:focus, select:focus {
-    border-color: var(--primary); outline: none;
-  }
-  textarea {resize: vertical; min-height: 60px;}
-  .actions {text-align:center; margin-top: 30px;}
-  button {background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; font-weight: 600; font-size: 1.1rem; padding: 14px 30px; border:none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease;}
-  button:hover {background: var(--primary-dark);}
-  .btn-secondary {background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-left: 10px;}
-  .btn-secondary:hover {background: var(--primary); color: white;}
-  .hidden {display: none;}
-  .dynamic-section {margin-top: 20px; padding: 20px; background: #F8F5EE; border-radius: 10px; border-left: 4px solid var(--primary);}
-  .dynamic-item {background: white; border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);}
-  .item-header {font-weight: 600; color: var(--secondary); margin-bottom: 15px;}
-  .form-row {display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;}
-  @media (max-width: 768px) {.form-row {grid-template-columns: 1fr;}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Wassiya - Votre Testament Islamique Simplifié</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #C9B178;
+            --primary-dark: #A89262;
+            --secondary: #2D4C68;
+            --accent: #3A5F7E;
+            --light: #F8F5EE;
+            --dark: #1E1E24;
+            --success: #4CAF50;
+            --error: #E74C3C;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%);
+            color: var(--dark);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bismillah {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin: 25px 0;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .step-info {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* Progress Section */
+        .progress-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #EDE8DD;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .step-indicator {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* Form Styles */
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .form-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .form-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(201, 177, 120, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--secondary);
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #EDE8DD;
+            border-radius: 10px;
+            background: #FCFAF7;
+            color: var(--dark);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(201, 177, 120, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #A0A0A0;
+        }
+
+        .form-group select option {
+            padding: 12px;
+        }
+
+        .required {
+            color: var(--error);
+        }
+
+        /* Buttons */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(168, 146, 98, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .bismillah {
+                font-size: 1.8rem;
+            }
+            
+            .form-section {
+                padding: 25px 20px;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Islamic Pattern Background */
+        .islamic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(201, 177, 120, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(168, 146, 98, 0.03) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Dynamic fields */
+        .dynamic-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #F8F5EE;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .dynamic-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        /* Step container */
+        .step-container {
+            display: none;
+        }
+
+        .step-container.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-<div class="language-selector">
-  <select id="languageSelect" onchange="changeLanguage()">
-    <option value="fr" selected>Français</option>
-    <option value="en">English</option>
-    <option value="ar">العربية</option>
-  </select>
-</div>
-<div class="container">
-  <div class="header">
-    <div class="logo" id="headerTitle">Al Wassiya</div>
-    <div class="arabic-title" id="arabicTitle">الوصية</div>
-    <div class="subtitle" id="headerSubtitle">Votre Testament Islamique Simplifié</div>
-    <div class="bismillah" id="bismillahText">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-  </div>
-
-  <!-- Page Étape 1 -->
-  <section id="step1Section">
-    <form id="step1Form">
-      <div class="form-group">
-        <label for="fullName" id="labelFullName">Nom complet</label>
-        <input type="text" name="fullName" id="fullName" placeholder="Entrez votre nom complet" required />
-      </div>
-      <div class="form-group">
-        <label for="phoneNumber" id="labelPhone">Téléphone</label>
-        <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Entrez votre numéro de téléphone" required />
-      </div>
-      <div class="form-group">
-        <label for="emailAddress" id="labelEmail">Email</label>
-        <input type="email" name="emailAddress" id="emailAddress" placeholder="Entrez votre email" required />
-      </div>
-      <div class="actions">
-        <button type="submit" id="btnContinue">Continuer vers l'étape 2</button>
-      </div>
-    </form>
-  </section>
-
-  <!-- Page Étape 2 -->
-  <section id="step2Section" class="hidden">
-    <form id="heritageForm">
-      <div class="form-container">
-        <!-- Enfants -->
-        <div class="form-section">
-          <h2 class="section-title"><i class="fas fa-users"></i> <span id="childrenTitle">Enfants</span></h2>
-          <div class="form-group">
-            <label for="nombreEnfants" id="nombreEnfantsLabel">Nombre d'enfants</label>
-            <select id="nombreEnfants" name="nombreEnfants" onchange="generateChildrenFields()">
-              <option value="0">Aucun enfant</option>
-              <option value="1">1 enfant</option>
-              <option value="2">2 enfants</option>
-              <option value="3">3 enfants</option>
-              <option value="4">4 enfants</option>
-              <option value="5">5 enfants</option>
-              <option value="6">6 enfants</option>
-              <option value="7">7 enfants</option>
-              <option value="8">8 enfants</option>
-              <option value="9">9 enfants</option>
-              <option value="10">10 enfants ou plus</option>
-            </select>
-          </div>
-          <div id="childrenDetails" class="dynamic-section" style="display:none;"></div>
+    <div class="islamic-pattern"></div>
+    <div class="toast" id="toast"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">Al Wassiya</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
         </div>
 
-        <!-- Frères -->
-        <div class="form-section">
-          <h2 class="section-title"><i class="fas fa-male"></i> <span id="brothersTitle">Frères</span></h2>
-          <div class="form-group">
-            <label for="nombreFreres" id="nombreFreresLabel">Nombre de frères</label>
-            <select id="nombreFreres" name="nombreFreres" onchange="generateBrothersFields()">
-              <option value="0">Aucun frère</option>
-              <option value="1">1 frère</option>
-              <option value="2">2 frères</option>
-              <option value="3">3 frères</option>
-              <option value="4">4 frères</option>
-              <option value="5">5 frères</option>
-              <option value="6">6 frères</option>
-              <option value="7">7 frères</option>
-              <option value="8">8 frères</option>
-              <option value="9">9 frères</option>
-              <option value="10">10 frères ou plus</option>
-            </select>
-          </div>
-          <div id="brothersDetails" class="dynamic-section" style="display:none;"></div>
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="#" class="nav-btn" id="prevStepBtn" onclick="changeStep('prev')">
+                <i class="fas fa-arrow-left"></i> Étape précédente
+            </a>
+            <div class="step-info" id="stepInfo">Étape 1 sur 2</div>
+            <a href="#" class="nav-btn" id="nextStepBtn" onclick="changeStep('next')">
+                Étape suivante <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
 
-        <!-- Sœurs -->
-        <div class="form-section">
-          <h2 class="section-title"><i class="fas fa-female"></i> <span id="sistersTitle">Sœurs</span></h2>
-          <div class="form-group">
-            <label for="nombreSoeurs" id="nombreSoeursLabel">Nombre de sœurs</label>
-            <select id="nombreSoeurs" name="nombreSoeurs" onchange="generateSistersFields()">
-              <option value="0">Aucune sœur</option>
-              <option value="1">1 sœur</option>
-              <option value="2">2 sœurs</option>
-              <option value="3">3 sœurs</option>
-              <option value="4">4 sœurs</option>
-              <option value="5">5 sœurs</option>
-              <option value="6">6 sœurs</option>
-              <option value="7">7 sœurs</option>
-              <option value="8">8 sœurs</option>
-              <option value="9">9 sœurs</option>
-              <option value="10">10 sœurs ou plus</option>
-            </select>
-          </div>
-          <div id="sistersDetails" class="dynamic-section" style="display:none;"></div>
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 50%;"></div>
+            </div>
+            <div class="step-indicator" id="stepIndicator">
+                Étape 1 : Informations personnelles
+            </div>
         </div>
 
-        <!-- Autres héritiers -->
-        <div class="form-section">
-          <h2 class="section-title"><i class="fas fa-users-cog"></i> <span id="otherHeirsTitle">Autres héritiers</span></h2>
-          <div class="form-group">
-            <label for="autresHeritiers" id="autresHeritiersLabel">Autres membres de la famille héritiers (grands-parents, oncles, tantes, etc.)</label>
-            <textarea id="autresHeritiers" name="autresHeritiers" rows="4" placeholder="Nom, lien de parenté, coordonnées..."></textarea>
-          </div>
-          <div class="form-group">
-            <label for="remarquesHeritiers" id="remarquesHeritiersLabel">Remarques particulières sur les héritiers</label>
-            <textarea id="remarquesHeritiers" name="remarquesHeritiers" rows="3"></textarea>
-          </div>
+        <!-- Étape 1: Informations personnelles -->
+        <div class="step-container active" id="step1">
+            <form id="personalForm">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-user"></i> Informations personnelles</h2>
+                        
+                        <div class="form-group">
+                            <label for="nomComplet">Nom complet <span class="required">*</span></label>
+                            <input type="text" id="nomComplet" name="nomComplet" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
+                            <input type="date" id="dateNaissance" name="dateNaissance" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lieuNaissance">Lieu de naissance <span class="required">*</span></label>
+                            <input type="text" id="lieuNaissance" name="lieuNaissance" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adresse">Adresse complète <span class="required">*</span></label>
+                            <textarea id="adresse" name="adresse" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-phone-alt"></i> Coordonnées</h2>
+                        
+                        <div class="form-group">
+                            <label for="telephone">Numéro de téléphone <span class="required">*</span></label>
+                            <input type="tel" id="telephone" name="telephone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Adresse email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profession">Profession</label>
+                            <input type="text" id="profession" name="profession">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nationalite">Nationalité <span class="required">*</span></label>
+                            <input type="text" id="nationalite" name="nationalite" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
+                        <i class="fas fa-save"></i> Sauvegarder le brouillon
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="genererPDF()">
+                        <i class="fas fa-file-pdf"></i> Générer le PDF
+                    </button>
+                </div>
+            </form>
         </div>
-      </div>
-      <div class="actions" style="text-align:center;">
-        <button type="button" class="btn btn-secondary" onclick="showStep1()"><i class="fas fa-arrow-left"></i> Retour à l'étape 1</button>
-        <button type="button" class="btn btn-primary" onclick="genererPDF()"><i class="fas fa-file-pdf"></i> Générer le PDF</button>
-        <button type="button" class="btn btn-primary" onclick="alert('Fonction Continuer vers étape 3 à implémenter')">Continuer vers l'étape 3 <i class="fas fa-arrow-right"></i></button>
-      </div>
-    </form>
-  </section>
 
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-  const { jsPDF } = window.jspdf;
+        <!-- Étape 2: Héritiers et famille -->
+        <div class="step-container" id="step2">
+            <form id="heritageForm">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-users"></i> Enfants</h2>
+                        
+                        <div class="form-group">
+                            <label for="nombreEnfants">Nombre d'enfants</label>
+                            <select id="nombreEnfants" name="nombreEnfants" onchange="generateChildrenFields()">
+                                <option value="0">Aucun enfant</option>
+                                <option value="1">1 enfant</option>
+                                <option value="2">2 enfants</option>
+                                <option value="3">3 enfants</option>
+                                <option value="4">4 enfants</option>
+                                <option value="5">5 enfants</option>
+                                <option value="6">6 enfants</option>
+                                <option value="7">7 enfants</option>
+                                <option value="8">8 enfants</option>
+                                <option value="9">9 enfants</option>
+                                <option value="10">10 enfants ou plus</option>
+                            </select>
+                        </div>
 
-  const translations = {
-    fr: { /* ... mêmes que précédemment ...*/ },
-    en: { /* ... */ },
-    ar: { /* ... */ }
-  };
+                        <div id="childrenDetails" class="dynamic-section" style="display: none;">
+                            <!-- Les détails des enfants seront générés ici -->
+                        </div>
+                    </div>
 
-  let currentLanguage = 'fr';
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-user-friends"></i> Frères et Sœurs</h2>
+                        
+                        <div class="form-group">
+                            <label for="nombreFreres">Nombre de frères</label>
+                            <select id="nombreFreres" name="nombreFreres" onchange="generateSiblingsFields()">
+                                <option value="0">Aucun frère</option>
+                                <option value="1">1 frère</option>
+                                <option value="2">2 frères</option>
+                                <option value="3">3 frères</option>
+                                <option value="4">4 frères</option>
+                                <option value="5">5 frères</option>
+                                <option value="6">6 frères</option>
+                                <option value="7">7 frères</option>
+                                <option value="8">8 frères</option>
+                                <option value="9">9 frères</option>
+                                <option value="10">10 frères ou plus</option>
+                            </select>
+                        </div>
 
-  function changeLanguage() {
-    const languageSelect = document.getElementById('languageSelect');
-    currentLanguage = languageSelect.value;
-    if(currentLanguage === 'ar') {
-      document.body.classList.add('rtl');
-      document.documentElement.setAttribute('lang', 'ar');
-    } else {
-      document.body.classList.remove('rtl');
-      document.documentElement.setAttribute('lang', currentLanguage);
-    }
-    updateTexts();
-    generateChildrenFields();
-    generateBrothersFields();
-    generateSistersFields();
-  }
+                        <div class="form-group">
+                            <label for="nombreSoeurs">Nombre de sœurs</label>
+                            <select id="nombreSoeurs" name="nombreSoeurs" onchange="generateSiblingsFields()">
+                                <option value="0">Aucune sœur</option>
+                                <option value="1">1 sœur</option>
+                                <option value="2">2 sœurs</option>
+                                <option value="3">3 sœurs</option>
+                                <option value="4">4 sœurs</option>
+                                <option value="5">5 sœurs</option>
+                                <option value="6">6 sœurs</option>
+                                <option value="7">7 sœurs</option>
+                                <option value="8">8 sœurs</option>
+                                <option value="9">9 sœurs</option>
+                                <option value="10">10 sœurs ou plus</option>
+                            </select>
+                        </div>
 
-  function updateTexts() {
-    const lang = translations[currentLanguage];
-    for (const id in lang) {
-      const el = document.getElementById(id);
-      if (el) {
-        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-          el.placeholder = lang[id];
-        } else {
-          el.innerHTML = lang[id];
+                        <div id="siblingsDetails" class="dynamic-section" style="display: none;">
+                            <!-- Les détails des frères et sœurs seront générés ici -->
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-heart"></i> Parents</h2>
+                        
+                        <div class="form-group">
+                            <label for="statutPere">Statut du père</label>
+                            <select id="statutPere" name="statutPere" onchange="toggleParentDetails('pere')">
+                                <option value="vivant">Vivant</option>
+                                <option value="decede">Décédé</option>
+                                <option value="inconnu">Inconnu</option>
+                            </select>
+                        </div>
+
+                        <div id="detailsPere" class="dynamic-item">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nomPere">Nom du père</label>
+                                    <input type="text" id="nomPere" name="nomPere">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telephonePere">Téléphone</label>
+                                    <input type="tel" id="telephonePere" name="telephonePere">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="adressePere">Adresse</label>
+                                <textarea id="adressePere" name="adressePere" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="statutMere">Statut de la mère</label>
+                            <select id="statutMere" name="statutMere" onchange="toggleParentDetails('mere')">
+                                <option value="vivante">Vivante</option>
+                                <option value="decedee">Décédée</option>
+                                <option value="inconnue">Inconnue</option>
+                            </select>
+                        </div>
+
+                        <div id="detailsMere" class="dynamic-item">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nomMere">Nom de la mère</label>
+                                    <input type="text" id="nomMere" name="nomMere">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telephoneMere">Téléphone</label>
+                                    <input type="tel" id="telephoneMere" name="telephoneMere">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="adresseMere">Adresse</label>
+                                <textarea id="adresseMere" name="adresseMere" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-users-cog"></i> Autres héritiers</h2>
+                        
+                        <div class="form-group">
+                            <label for="autresHeritiers">Autres membres de la famille héritiers (grands-parents, oncles, tantes, etc.)</label>
+                            <textarea id="autresHeritiers" name="autresHeritiers" rows="4" placeholder="Nom, lien de parenté, coordonnées..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="remarquesHeritiers">Remarques particulières sur les héritiers</label>
+                            <textarea id="remarquesHeritiers" name="remarquesHeritiers" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
+                        <i class="fas fa-save"></i> Sauvegarder le brouillon
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="genererPDF()">
+                        <i class="fas fa-file-pdf"></i> Générer le PDF
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentStep = 1;
+        const totalSteps = 2;
+
+        // Fonction pour afficher les notifications
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '') + ' show';
+            
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
         }
-      }
-    }
-  }
 
-  // Gestion de la navigation entre étapes
-  function showStep2() {
-    document.getElementById('step1Section').classList.add('hidden');
-    document.getElementById('step2Section').classList.remove('hidden');
-  }
-  function showStep1() {
-    document.getElementById('step2Section').classList.add('hidden');
-    document.getElementById('step1Section').classList.remove('hidden');
-  }
+        // Fonction pour changer d'étape
+        function changeStep(direction) {
+            // Valider le formulaire actuel avant de changer d'étape
+            if (direction === 'next' && !validateCurrentStep()) {
+                showToast('Veuillez remplir tous les champs obligatoires', true);
+                return;
+            }
 
-  // Intercepte la validation formulaire étape 1 pour passer à étape 2
-  document.getElementById('step1Form').addEventListener('submit', function(e){
-    e.preventDefault();
-    showStep2();
-  });
+            // Masquer l'étape actuelle
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Calculer la nouvelle étape
+            if (direction === 'next' && currentStep < totalSteps) {
+                currentStep++;
+            } else if (direction === 'prev' && currentStep > 1) {
+                currentStep--;
+            }
+            
+            // Afficher la nouvelle étape
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Mettre à jour la barre de progression
+            updateProgressBar();
+            
+            // Mettre à jour les informations de navigation
+            updateNavigation();
+        }
 
-  // Fonctions dynamiques pour enfants, frères, soeurs (similaires au code précédent)
-  function generateChildrenFields() {
-    const nombre = parseInt(document.getElementById('nombreEnfants').value,10);
-    const container = document.getElementById('childrenDetails');
-    if(nombre === 0) {
-      container.style.display = 'none';
-      container.innerHTML = '';
-      return;
-    }
-    container.style.display = 'block';
-    container.innerHTML = '';
-    for(let i=1; i<=nombre; i++) {
-      const div = document.createElement('div');
-      div.className = 'dynamic-item';
-      div.innerHTML = `
-        <div class="item-header">${currentLanguage === 'ar' ? 'الطفل' : currentLanguage === 'en' ? 'Child' : 'Enfant'} ${i}</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>${currentLanguage === 'ar' ? 'الاسم' : currentLanguage === 'en' ? 'Name' : 'Nom'}</label>
-            <input type="text" name="nomEnfant${i}" placeholder="${currentLanguage === 'ar' ? 'اسم الطفل' : currentLanguage === 'en' ? "Child's name" : "Nom de l'enfant"}" />
-          </div>
-          <div class="form-group">
-            <label>${currentLanguage === 'ar' ? 'الهاتف' : currentLanguage === 'en' ? 'Phone' : 'Téléphone'}</label>
-            <input type="tel" name="telephoneEnfant${i}" placeholder="${currentLanguage === 'ar' ? 'رقم الهاتف' : currentLanguage === 'en' ? "Phone number" : "Numéro de téléphone"}" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label>${currentLanguage === 'ar' ? 'العنوان / وسيلة اتصال' : currentLanguage === 'en' ? 'Address / Contact' : 'Adresse / Moyen de contact'}</label>
-          <textarea name="adresseEnfant${i}" rows="2" placeholder="${currentLanguage === 'ar' ? 'العنوان أو وسيلة الاتصال' : currentLanguage === 'en' ? 'Address or contact method' : 'Adresse ou moyen de contact'}"></textarea>
-        </div>
-      `;
-      container.appendChild(div);
-    }
-  }
+        // Fonction pour valider l'étape actuelle
+        function validateCurrentStep() {
+            if (currentStep === 1) {
+                const requiredFields = document.querySelectorAll('#personalForm [required]');
+                for (let field of requiredFields) {
+                    if (!field.value.trim()) {
+                        field.focus();
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
-  function generateBrothersFields() {
-    const nombre = parseInt(document.getElementById('nombreFreres').value, 10);
-    const container = document.getElementById('brothersDetails');
-    if(nombre === 0) {
-      container.style.display = 'none';
-      container.innerHTML = '';
-      return;
-    }
-    container.style.display = 'block';
-    container.innerHTML = '';
-    for(let i=1; i<=nombre; i++) {
-      const div = document.createElement('div');
-      div.className = 'dynamic-item';
-      div.innerHTML = `
-        <div class="item-header">${currentLanguage === 'ar' ? 'الأخ' : currentLanguage === 'en' ? 'Brother' : 'Frère'} ${i}</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>${currentLanguage === 'ar' ? 'الاسم' : currentLanguage === 'en' ? 'Name' : 'Nom'}</label>
-            <input type="text" name="nomFrere${i}" placeholder="${currentLanguage === 'ar' ? 'اسم الأخ' : currentLanguage === 'en' ? "Brother's name" : 'Nom du frère'}" />
-          </div>
-          <div class="form-group">
-            <label>${currentLanguage === 'ar' ? 'الهاتف' : currentLanguage === 'en' ? 'Phone' : 'Téléphone'}</label>
-            <input type="tel" name="telephoneFrere${i}" placeholder="${currentLanguage === 'ar' ? 'رقم الهاتف' : currentLanguage === 'en' ? 'Phone number' : 'Numéro de téléphone'}" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label>${currentLanguage === 'ar' ? 'العنوان / وسيلة اتصال' : currentLanguage === 'en' ? 'Address / Contact' : 'Adresse / Moyen de contact'}</label>
-          <textarea name="adresseFrere${i}" rows="2" placeholder="${currentLanguage === 'ar' ? 'العنوان أو وسيلة الاتصال' : currentLanguage === 'en' ? 'Address or contact method' : 'Adresse ou moyen de contact'}"></textarea>
-        </div>
-      `;
-      container.appendChild(div);
-    }
-  }
+        // Fonction pour mettre à jour la barre de progression
+        function updateProgressBar() {
+            const progressPercentage = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercentage}%`;
+            
+            // Mettre à jour le texte d'indication
+            const stepTitles = [
+                'Étape 1 : Informations personnelles',
+                'Étape 2 : Héritiers et famille'
+            ];
+            document.getElementById('stepIndicator').textContent = stepTitles[currentStep - 1];
+        }
 
-  function generateSistersFields() {
-    const nombre = parseInt(document.getElementById('nombreSoeurs').value, 10);
-    const container = document.getElementById('sistersDetails');
-    if(nombre === 0) {
-      container.style.display = 'none';
-      container.innerHTML = '';
-      return;
-    }
-    container.style.display = 'block';
-    container.innerHTML = '';
-    for(let i=1; i<=nombre; i++) {
-      const div = document.createElement('div');
-      div.className = 'dynamic-item';
-      div.innerHTML = `
-        <div class="item-header">${currentLanguage === 'ar' ? 'الأخت' : currentLanguage === 'en' ? 'Sister' : 'Sœur'} ${i}</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>${currentLanguage === 'ar' ? 'الاسم' : currentLanguage === 'en' ? 'Name' : 'Nom'}</label>
-            <input type="text" name="nomSoeur${i}" placeholder="${currentLanguage === 'ar' ? 'اسم الأخت' : currentLanguage === 'en' ? "Sister's name" : 'Nom de la sœur'}" />
-          </div>
-          <div class="form-group">
-            <label>${currentLanguage === 'ar' ? 'الهاتف' : currentLanguage === 'en' ? 'Phone' : 'Téléphone'}</label>
-            <input type="tel" name="telephoneSoeur${i}" placeholder="${currentLanguage === 'ar' ? 'رقم الهاتف' : currentLanguage === 'en' ? 'Phone number' : 'Numéro de téléphone'}" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label>${currentLanguage === 'ar' ? 'العنوان / وسيلة اتصال' : currentLanguage === 'en' ? 'Address / Contact' : 'Adresse / Moyen de contact'}</label>
-          <textarea name="adresseSoeur${i}" rows="2" placeholder="${currentLanguage === 'ar' ? 'العنوان أو وسيلة الاتصال' : currentLanguage === 'en' ? 'Address or contact method' : 'Adresse ou moyen de contact'}"></textarea>
-        </div>
-      `;
-      container.appendChild(div);
-    }
-  }
+        // Fonction pour mettre à jour la navigation
+        function updateNavigation() {
+            document.getElementById('stepInfo').textContent = `Étape ${currentStep} sur ${totalSteps}`;
+            
+            // Masquer le bouton précédent sur la première étape
+            if (currentStep === 1) {
+                document.getElementById('prevStepBtn').style.visibility = 'hidden';
+            } else {
+                document.getElementById('prevStepBtn').style.visibility = 'visible';
+            }
+            
+            // Changer le texte du bouton suivant sur la dernière étape
+            if (currentStep === totalSteps) {
+                document.getElementById('nextStepBtn').innerHTML = 'Terminer <i class="fas fa-check"></i>';
+            } else {
+                document.getElementById('nextStepBtn').innerHTML = 'Étape suivante <i class="fas fa-arrow-right"></i>';
+            }
+        }
 
-  // Scroll to top helper
-  function scrollToTop() {
-    window.scroll({ top:0, behavior:'smooth' });
-  }
+        // Fonction pour générer les champs enfants
+        function generateChildrenFields() {
+            const nombreEnfants = parseInt(document.getElementById('nombreEnfants').value);
+            const container = document.getElementById('childrenDetails');
+            
+            if (nombreEnfants === 0) {
+                container.style.display = 'none';
+                container.innerHTML = '';
+                return;
+            }
+            
+            container.style.display = 'block';
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= nombreEnfants; i++) {
+                const childDiv = document.createElement('div');
+                childDiv.className = 'dynamic-item';
+                childDiv.innerHTML = `
+                    <div class="item-header">
+                        Enfant ${i}
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="enfantNom${i}">Nom complet</label>
+                            <input type="text" id="enfantNom${i}" name="enfantNom${i}">
+                        </div>
+                        <div class="form-group">
+                            <label for="enfantTelephone${i}">Téléphone</label>
+                            <input type="tel" id="enfantTelephone${i}" name="enfantTelephone${i}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="enfantAdresse${i}">Adresse ou moyens de contact</label>
+                        <textarea id="enfantAdresse${i}" name="enfantAdresse${i}" rows="2"></textarea>
+                    </div>
+                `;
+                container.appendChild(childDiv);
+            }
+        }
 
-  function genererPDF() {
-    // Le code complet de génération PDF avec gestion arabe (comme avant) peut être inséré ici
-    alert("Génération PDF à implémenter");
-  }
+        // Fonction pour générer les champs frères et sœurs
+        function generateSiblingsFields() {
+            const nombreFreres = parseInt(document.getElementById('nombreFreres').value);
+            const nombreSoeurs = parseInt(document.getElementById('nombreSoeurs').value);
+            const container = document.getElementById('siblingsDetails');
+            
+            if (nombreFreres === 0 && nombreSoeurs === 0) {
+                container.style.display = 'none';
+                container.innerHTML = '';
+                return;
+            }
+            
+            container.style.display = 'block';
+            container.innerHTML = '';
+            
+            // Ajouter les frères
+            for (let i = 1; i <= nombreFreres; i++) {
+                const frereDiv = document.createElement('div');
+                frereDiv.className = 'dynamic-item';
+                frereDiv.innerHTML = `
+                    <div class="item-header">
+                        Frère ${i}
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="frereNom${i}">Nom complet</label>
+                            <input type="text" id="frereNom${i}" name="frereNom${i}">
+                        </div>
+                        <div class="form-group">
+                            <label for="frereTelephone${i}">Téléphone</label>
+                            <input type="tel" id="frereTelephone${i}" name="frereTelephone${i}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="frereAdresse${i}">Adresse ou moyens de contact</label>
+                        <textarea id="frereAdresse${i}" name="frereAdresse${i}" rows="2"></textarea>
+                    </div>
+                `;
+                container.appendChild(frereDiv);
+            }
+            
+            // Ajouter les sœurs
+            for (let i = 1; i <= nombreSoeurs; i++) {
+                const soeurDiv = document.createElement('div');
+                soeurDiv.className = 'dynamic-item';
+                soeurDiv.innerHTML = `
+                    <div class="item-header">
+                        Sœur ${i}
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="soeurNom${i}">Nom complet</label>
+                            <input type="text" id="soeurNom${i}" name="soeurNom${i}">
+                        </div>
+                        <div class="form-group">
+                            <label for="soeurTelephone${i}">Téléphone</label>
+                            <input type="tel" id="soeurTelephone${i}" name="soeurTelephone${i}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="soeurAdresse${i}">Adresse ou moyens de contact</label>
+                        <textarea id="soeurAdresse${i}" name="soeurAdresse${i}" rows="2"></textarea>
+                    </div>
+                `;
+                container.appendChild(soeurDiv);
+            }
+        }
 
-  window.onload = () => {
-    changeLanguage();
-    generateChildrenFields();
-    generateBrothersFields();
-    generateSistersFields();
-  };
-</script>
+        // Fonction pour afficher/masquer les détails des parents
+        function toggleParentDetails(parent) {
+            const statut = document.getElementById(`statut${parent.charAt(0).toUpperCase() + parent.slice(1)}`).value;
+            const details = document.getElementById(`details${parent.charAt(0).toUpperCase() + parent.slice(1)}`);
+            
+            if (statut === 'vivant' || statut === 'vivante') {
+                details.style.display = 'block';
+            } else {
+                details.style.display = 'none';
+                // Réinitialiser les champs
+                const inputs = details.querySelectorAll('input, textarea');
+                inputs.forEach(input => input.value = '');
+            }
+        }
 
-<!-- Zones dynamiques pour frères et sœurs, non dans formulaire mais pour éviter déconvenues -->
-<div id="brothersDetails" class="dynamic-section hidden"></div>
-<div id="sistersDetails" class="dynamic-section hidden"></div>
+        function sauvegarderBrouillon() {
+            // Récupérer les données des deux formulaires
+            const personalData = new FormData(document.getElementById('personalForm'));
+            const heritageData = new FormData(document.getElementById('heritageForm'));
+            
+            const data = {
+                step: currentStep,
+                personal: {},
+                heritage: {}
+            };
+            
+            for (let [key, value] of personalData.entries()) {
+                data.personal[key] = value;
+            }
+            
+            for (let [key, value] of heritageData.entries()) {
+                data.heritage[key] = value;
+            }
+            
+            localStorage.setItem('wassiyaBrouillon', JSON.stringify(data));
+            showToast('Brouillon sauvegardé avec succès !');
+        }
 
-</body>
-</html>
+        function genererPDF() {
+            // Récupérer les données des formulaires
+            const personalData = new FormData(document.getElementById('personalForm'));
+            const heritageData = new FormData(document.getElementById('heritageForm'));
+            
+            // Générer le contenu HTML formaté pour impression
+            const contenuHTML = genererContenuCompletHTML(personalData, heritageData);
+            
+            // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
+            const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
+            nouvelleFenetre.document.write(contenuHTML);
+            nouvelleFenetre.document.close();
+            
+            // Instructions pour l'utilisateur
+            showToast('Le document s\'ouvre dans une nouvelle fenêtre. Utilisez Ctrl+P pour imprimer/enregistrer en PDF.');
+        }
+
+        function genererContenuCompletHTML(personalData, heritageData) {
+            const date = new Date().toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            let enfantsHTML = '<p>Aucun enfant</p>';
+            const nombreEnfants = parseInt(heritageData.get('nombreEnfants') || 0);
+            
+            if (nombreEnfants > 0) {
+                enfantsHTML = '<div class="heritiers-list">';
+                for (let i = 1; i <= nombreEnfants; i++) {
+                    const nom = heritageData.get(`enfantNom${i}`) || '';
+                    const telephone = heritageData.get(`enfantTelephone${i}`) || '';
+                    const adresse = heritageData.get(`enfantAdresse${i}`) || '';
+                    
+                    enfantsHTML += `
+                        <div class="heritier-item">
+                            <div class="field"><span class="field-label">Enfant ${i}:</span> ${nom}</div>
+                            ${telephone ? `<div class="field"><span class="field-label">Téléphone:</span> ${telephone}</div>` : ''}
+                            ${adresse ? `<div class="field"><span class="field-label">Adresse:</span> ${adresse}</div>` : ''}
+                        </div>
+                    `;
+                }
+                enfantsHTML += '</div>';
+            }
+            
+            let freresSoeursHTML = '<p>Aucun frère ou sœur</p>';
+            const nombreFreres = parseInt(heritageData.get('nombreFreres') || 0);
+            const nombreSoeurs = parseInt(heritageData.get('nombreSoeurs') || 0);
+            
+            if (nombreFreres > 0 || nombreSoeurs > 0) {
+                freresSoeursHTML = '<div class="heritiers-list">';
+                
+                // Ajouter les frères
+                for (let i = 1; i <= nombreFreres; i++) {
+                    const nom = heritageData.get(`frereNom${i}`) || '';
+                    const telephone = heritageData.get(`frereTelephone${i}`) || '';
+                    const adresse = heritageData.get(`frereAdresse${i}`) || '';
+                    
+                    freresSoeursHTML += `
+                        <div class="heritier-item">
+                            <div class="field"><span class="field-label">Frère ${i}:</span> ${nom}</div>
+                            ${telephone ? `<div class="field"><span class="field-label">Téléphone:</span> ${telephone}</div>` : ''}
+                            ${adresse ? `<div class="field"><span class="field-label">Adresse:</span> ${adresse}</div>` : ''}
+                        </div>
+                    `;
+                }
+                
