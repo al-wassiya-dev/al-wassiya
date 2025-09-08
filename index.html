@@ -301,6 +301,23 @@
             font-size: 0.9rem;
         }
 
+        /* Asset Section Styles */
+        .asset-category {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--radius);
+            background: #F8F5EE;
+            border: 1px solid rgba(201, 177, 120, 0.2);
+        }
+
+        .asset-entry {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
         /* Buttons */
         .actions {
             display: flex;
@@ -485,6 +502,16 @@
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
+        }
+        
+        .privacy-notice {
+            background-color: #f8f5ee;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-size: 0.9rem;
+            color: var(--secondary);
         }
     </style>
 </head>
@@ -711,6 +738,125 @@
                 </div>
             </div>
 
+            <!-- Étape 3: Biens matériels et financiers -->
+            <div id="step3" class="form-step" style="display: none;">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-home"></i> Biens immobiliers</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('immobilier')">
+                                <div class="category-title">
+                                    <i class="fas fa-building"></i> Propriétés immobilières
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="immobilier" class="category-content">
+                                <div id="immobilier-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addAsset('immobilier')">
+                                    <i class="fas fa-plus"></i> Ajouter un bien immobilier
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="privacy-notice">
+                            <i class="fas fa-shield-alt"></i> Les informations personnelles que vous saisissez sont sous votre responsabilité. Nous recommandons de ne pas inclure de données trop sensibles.
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-car"></i> Biens matériels</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('materiel')">
+                                <div class="category-title">
+                                    <i class="fas fa-tshirt"></i> Biens de valeur
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="materiel" class="category-content">
+                                <div id="materiel-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addAsset('materiel')">
+                                    <i class="fas fa-plus"></i> Ajouter un bien matériel
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('personnels')">
+                                <div class="category-title">
+                                    <i class="fas fa-book"></i> Biens personnels
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="personnels" class="category-content">
+                                <div id="personnels-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addAsset('personnels')">
+                                    <i class="fas fa-plus"></i> Ajouter un bien personnel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-university"></i> Comptes bancaires</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('comptes')">
+                                <div class="category-title">
+                                    <i class="fas fa-piggy-bank"></i> Comptes et épargnes
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="comptes" class="category-content">
+                                <div id="comptes-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addAsset('comptes')">
+                                    <i class="fas fa-plus"></i> Ajouter un compte
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-credit-card"></i> Cartes et accès bancaires</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('cartes')">
+                                <div class="category-title">
+                                    <i class="fas fa-credit-card"></i> Cartes bancaires
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="cartes" class="category-content">
+                                <div id="cartes-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addAsset('cartes')">
+                                    <i class="fas fa-plus"></i> Ajouter une carte
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('applications')">
+                                <div class="category-title">
+                                    <i class="fas fa-mobile-alt"></i> Applications bancaires
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="applications" class="category-content">
+                                <div id="applications-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addAsset('applications')">
+                                    <i class="fas fa-plus"></i> Ajouter un accès
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="privacy-notice">
+                            <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets ou les codes confidentiels. Indiquez plutôt où ces informations peuvent être retrouvées.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="actions">
                 <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
                     <i class="fas fa-save"></i> Sauvegarder le brouillon
@@ -718,10 +864,10 @@
                 <button type="button" class="btn btn-primary" onclick="genererPDF()">
                     <i class="fas fa-file-pdf"></i> Générer le PDF
                 </button>
-                <button type="button" class="btn btn-secondary" id="prevStepBtn" style="display: none;" onclick="changerEtape(1)">
-                    <i class="fas fa-arrow-left"></i> Retour à l'étape 1
+                <button type="button" class="btn btn-secondary" id="prevStepBtn" style="display: none;" onclick="prevStep()">
+                    <i class="fas fa-arrow-left"></i> Étape précédente
                 </button>
-                <button type="button" class="btn btn-primary" id="nextStepBtn" onclick="changerEtape(2)">
+                <button type="button" class="btn btn-primary" id="nextStepBtn" onclick="nextStep()">
                     Continuer vers la famille <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
@@ -733,7 +879,7 @@
                         <i class="fab fa-whatsapp"></i>
                     </div>
                     <div class="share-btn facebook" onclick="partagerFacebook()">
-                        <i class="fab fa-fa-facebook-f"></i>
+                        <i class="fab fa-facebook-f"></i>
                     </div>
                     <div class="share-btn twitter" onclick="partagerTwitter()">
                         <i class="fab fa-twitter"></i>
@@ -748,13 +894,14 @@
         <div class="footer-note">
             <p><strong>Note importante :</strong> Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). 
             Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.</p>
-            <p>Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
+            <p>Les dispositions de ce testament ne peuvent concernar que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
         </div>
     </div>
 
     <script>
         // Variables globales
         let etapeActuelle = 1;
+        const totalEtapes = 6;
 
         // Fonction pour afficher/masquer le champ conjoint
         function toggleConjointField() {
@@ -780,23 +927,53 @@
 
         // Fonction pour changer d'étape
         function changerEtape(etape) {
-            if (etape === 1) {
-                document.getElementById('step1').style.display = 'block';
-                document.getElementById('step2').style.display = 'none';
-                document.getElementById('prevStepBtn').style.display = 'none';
-                document.getElementById('nextStepBtn').style.display = 'inline-flex';
-                document.getElementById('nextStepBtn').innerHTML = 'Continuer vers la famille <i class="fas fa-arrow-right"></i>';
-                document.getElementById('stepIndicator').textContent = 'Étape 1 sur 6 : Informations personnelles et volontés générales';
-                document.getElementById('progressFill').style.width = '15%';
-                etapeActuelle = 1;
-            } else if (etape === 2) {
-                document.getElementById('step1').style.display = 'none';
-                document.getElementById('step2').style.display = 'block';
-                document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les actifs <i class="fas fa-arrow-right"></i>';
-                document.getElementById('stepIndicator').textContent = 'Étape 2 sur 6 : Famille et proches';
-                document.getElementById('progressFill').style.width = '30%';
-                etapeActuelle = 2;
+            // Masquer toutes les étapes
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.style.display = 'none';
+            });
+            
+            // Afficher l'étape demandée
+            document.getElementById(`step${etape}`).style.display = 'block';
+            
+            // Mettre à jour l'indicateur de progression
+            document.getElementById('progressFill').style.width = `${(etape / totalEtapes) * 100}%`;
+            
+            // Mettre à jour le texte d'indication d'étape
+            let stepText = '';
+            switch(etape) {
+                case 1:
+                    stepText = 'Étape 1 sur 6 : Informations personnelles et volontés générales';
+                    document.getElementById('prevStepBtn').style.display = 'none';
+                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers la famille <i class="fas fa-arrow-right"></i>';
+                    break;
+                case 2:
+                    stepText = 'Étape 2 sur 6 : Famille et proches';
+                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
+                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les biens <i class="fas fa-arrow-right"></i>';
+                    break;
+                case 3:
+                    stepText = 'Étape 3 sur 6 : Biens matériels et financiers';
+                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
+                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers l\'étape 4 <i class="fas fa-arrow-right"></i>';
+                    break;
+            }
+            document.getElementById('stepIndicator').textContent = stepText;
+            
+            // Mettre à jour l'étape actuelle
+            etapeActuelle = etape;
+        }
+
+        // Fonction pour passer à l'étape suivante
+        function nextStep() {
+            if (etapeActuelle < 3) {
+                changerEtape(etapeActuelle + 1);
+            }
+        }
+
+        // Fonction pour revenir à l'étape précédente
+        function prevStep() {
+            if (etapeActuelle > 1) {
+                changerEtape(etapeActuelle - 1);
             }
         }
 
@@ -838,6 +1015,220 @@
             container.appendChild(personEntry);
         }
 
+        // Fonction pour ajouter un bien/actif
+        function addAsset(category) {
+            const container = document.getElementById(`${category}-container`);
+            const index = container.children.length;
+            
+            let assetEntry = document.createElement('div');
+            assetEntry.className = 'asset-entry';
+            
+            // HTML différent selon la catégorie
+            switch(category) {
+                case 'immobilier':
+                    assetEntry.innerHTML = `
+                        <div class="form-group">
+                            <label>Type de bien <span class="required">*</span></label>
+                            <select name="${category}[${index}][type]" required>
+                                <option value="">Sélectionner</option>
+                                <option value="maison">Maison</option>
+                                <option value="appartement">Appartement</option>
+                                <option value="terrain">Terrain</option>
+                                <option value="local_commercial">Local commercial</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse complète <span class="required">*</span></label>
+                            <textarea name="${category}[${index}][adresse]" required placeholder="Adresse du bien immobilier"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Valeur estimée (€)</label>
+                            <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
+                        </div>
+                        <div class="form-group">
+                            <label>Statut de paiement</label>
+                            <select name="${category}[${index}][statut]">
+                                <option value="">Sélectionner</option>
+                                <option value="paye">Entièrement payé</option>
+                                <option value="credit">En cours de crédit</option>
+                                <option value="location">En location</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Informations complémentaires</label>
+                            <textarea name="${category}[${index}][info]" placeholder="Informations supplémentaires sur ce bien"></textarea>
+                        </div>
+                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    `;
+                    break;
+                    
+                case 'materiel':
+                    assetEntry.innerHTML = `
+                        <div class="form-group">
+                            <label>Type de bien <span class="required">*</span></label>
+                            <select name="${category}[${index}][type]" required>
+                                <option value="">Sélectionner</option>
+                                <option value="voiture">Voiture</option>
+                                <option value="moto">Moto/Scooter</option>
+                                <option value="bijoux">Bijoux</option>
+                                <option value="materiel_informatique">Matériel informatique</option>
+                                <option value="electromenager">Électroménager</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Description <span class="required">*</span></label>
+                            <input type="text" name="${category}[${index}][description]" required placeholder="Marque, modèle, caractéristiques">
+                        </div>
+                        <div class="form-group">
+                            <label>Valeur estimée (€)</label>
+                            <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
+                        </div>
+                        <div class="form-group">
+                            <label>Lieu de stockage</label>
+                            <input type="text" name="${category}[${index}][lieu]" placeholder="Où se trouve ce bien">
+                        </div>
+                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    `;
+                    break;
+                    
+                case 'personnels':
+                    assetEntry.innerHTML = `
+                        <div class="form-group">
+                            <label>Type de bien</label>
+                            <select name="${category}[${index}][type]">
+                                <option value="">Sélectionner</option>
+                                <option value="livres">Livres</option>
+                                <option value="meubles">Meubles</option>
+                                <option value="vetements">Vêtements</option>
+                                <option value="objets_art">Objets d'art</option>
+                                <option value="collections">Collections</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="${category}[${index}][description]" placeholder="Description détaillée de ces biens"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Valeur estimée (€)</label>
+                            <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
+                        </div>
+                        <div class="form-group">
+                            <label>Lieu de stockage</label>
+                            <input type="text" name="${category}[${index}][lieu]" placeholder="Où se trouvent ces biens">
+                        </div>
+                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    `;
+                    break;
+                    
+                case 'comptes':
+                    assetEntry.innerHTML = `
+                        <div class="form-group">
+                            <label>Nom de la banque <span class="required">*</span></label>
+                            <input type="text" name="${category}[${index}][banque]" required placeholder="Nom de l'établissement bancaire">
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse de l'agence</label>
+                            <input type="text" name="${category}[${index}][adresse]" placeholder="Adresse de l'agence">
+                        </div>
+                        <div class="form-group">
+                            <label>Type de compte <span class="required">*</span></label>
+                            <select name="${category}[${index}][type]" required>
+                                <option value="">Sélectionner</option>
+                                <option value="courant">Compte courant</option>
+                                <option value="epargne">Compte épargne</option>
+                                <option value="placement">Compte placement</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro de compte (IBAN)</label>
+                            <input type="text" name="${category}[${index}][iban]" placeholder="IBAN du compte">
+                        </div>
+                        <div class="form-group">
+                            <label>Solde approximatif (€)</label>
+                            <input type="number" name="${category}[${index}][solde]" placeholder="Solde en euros">
+                        </div>
+                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    `;
+                    break;
+                    
+                case 'cartes':
+                    assetEntry.innerHTML = `
+                        <div class="form-group">
+                            <label>Type de carte <span class="required">*</span></label>
+                            <select name="${category}[${index}][type]" required>
+                                <option value="">Sélectionner</option>
+                                <option value="visa">Carte Visa</option>
+                                <option value="mastercard">Carte Mastercard</option>
+                                <option value="american_express">Carte American Express</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro de carte</label>
+                            <input type="text" name="${category}[${index}][numero]" placeholder="Numéro de la carte">
+                        </div>
+                        <div class="form-group">
+                            <label>Date d'expiration</label>
+                            <input type="text" name="${category}[${index}][expiration]" placeholder="MM/AA">
+                        </div>
+                        <div class="form-group">
+                            <label>Code (partiel pour sécurité)</label>
+                            <input type="text" name="${category}[${index}][code]" placeholder="Premiers chiffres seulement">
+                        </div>
+                        <div class="form-group">
+                            <label>Banque émettrice</label>
+                            <input type="text" name="${category}[${index}][banque]" placeholder="Banque émettrice de la carte">
+                        </div>
+                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    `;
+                    break;
+                    
+                case 'applications':
+                    assetEntry.innerHTML = `
+                        <div class="form-group">
+                            <label>Nom de l'application <span class="required">*</span></label>
+                            <input type="text" name="${category}[${index}][application]" required placeholder="Nom de l'application bancaire">
+                        </div>
+                        <div class="form-group">
+                            <label>Identifiant</label>
+                            <input type="text" name="${category}[${index}][identifiant]" placeholder="Identifiant de connexion">
+                        </div>
+                        <div class="form-group">
+                            <label>Indice pour le mot de passe</label>
+                            <input type="text" name="${category}[${index}][indice]" placeholder="Indice pour retrouver le mot de passe">
+                        </div>
+                        <div class="form-group">
+                            <label>Email de récupération</label>
+                            <input type="email" name="${category}[${index}][email]" placeholder="Email associé au compte">
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro de téléphone associé</label>
+                            <input type="tel" name="${category}[${index}][telephone]" placeholder="Téléphone pour la validation">
+                        </div>
+                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    `;
+                    break;
+            }
+            
+            container.appendChild(assetEntry);
+        }
+
         function sauvegarderBrouillon() {
             const formData = new FormData(document.getElementById('testamentForm'));
             const data = {};
@@ -847,7 +1238,8 @@
             }
             
             // Récupérer les données des personnes
-            const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
+            const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
+                               'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
             categories.forEach(category => {
                 const entries = [];
                 const inputs = document.querySelectorAll(`[name^="${category}["]`);
@@ -926,38 +1318,10 @@
             }
             
             // Récupérer les données des personnes
-            const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
-            categories.forEach(category => {
-                const entries = [];
-                const inputs = document.querySelectorAll(`[name^="${category}["]`);
-                
-                let currentIndex = -1;
-                inputs.forEach(input => {
-                    const name = input.getAttribute('name');
-                    const match = name.match(new RegExp(`${category}\\[(\\d+)\\]\\[(\\w+)\\]`));
-                    
-                    if (match) {
-                        const index = parseInt(match[1]);
-                        const field = match[2];
-                        
-                        if (index !== currentIndex) {
-                            entries.push({});
-                            currentIndex = index;
-                        }
-                        
-                        entries[index][field] = input.value;
-                    }
-                });
-                
-                if (entries.length > 0) {
-                    data[category] = entries;
-                }
-            });
-            
-            // Générer le HTML pour les personnes
+            const categoriesPersonnes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
             let personnesHTML = '';
             
-            categories.forEach(category => {
+            categoriesPersonnes.forEach(category => {
                 if (data[category] && data[category].length > 0) {
                     let categoryTitle = '';
                     switch(category) {
@@ -980,6 +1344,65 @@
                     });
                     
                     personnesHTML += `</div>`;
+                }
+            });
+            
+            // Récupérer les données des biens (étape 3)
+            const categoriesBiens = ['immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
+            let biensHTML = '';
+            
+            categoriesBiens.forEach(category => {
+                if (data[category] && data[category].length > 0) {
+                    let categoryTitle = '';
+                    switch(category) {
+                        case 'immobilier': categoryTitle = 'BIENS IMMOBILIERS'; break;
+                        case 'materiel': categoryTitle = 'BIENS MATÉRIELS'; break;
+                        case 'personnels': categoryTitle = 'BIENS PERSONNELS'; break;
+                        case 'comptes': categoryTitle = 'COMPTES BANCAIRES'; break;
+                        case 'cartes': categoryTitle = 'CARTES BANCAIRES'; break;
+                        case 'applications': categoryTitle = 'APPLICATIONS BANCAIRES'; break;
+                    }
+                    
+                    biensHTML += `<div class="section">
+                        <div class="section-title">${categoryTitle}</div>`;
+                    
+                    data[category].forEach((bien, index) => {
+                        biensHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
+                        
+                        switch(category) {
+                            case 'immobilier':
+                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Adresse: ${bien.adresse || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Statut: ${bien.statut || 'Non précisé'}`;
+                                if (bien.info) biensHTML += `, Info: ${bien.info}`;
+                                break;
+                                
+                            case 'materiel':
+                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Lieu: ${bien.lieu || 'Non précisé'}`;
+                                break;
+                                
+                            case 'personnels':
+                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Lieu: ${bien.lieu || 'Non précisé'}`;
+                                break;
+                                
+                            case 'comptes':
+                                biensHTML += `Banque: ${bien.banque || 'Non précisée'}, Type: ${bien.type || 'Non précisé'}, IBAN: ${bien.iban || 'Non précisé'}, Solde: ${bien.solde || 'Non précisé'}€`;
+                                if (bien.adresse) biensHTML += `, Adresse: ${bien.adresse}`;
+                                break;
+                                
+                            case 'cartes':
+                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Numéro: ${bien.numero || 'Non précisé'}, Expiration: ${bien.expiration || 'Non précisée'}, Banque: ${bien.banque || 'Non précisée'}`;
+                                if (bien.code) biensHTML += `, Code: ${bien.code}`;
+                                break;
+                                
+                            case 'applications':
+                                biensHTML += `Application: ${bien.application || 'Non précisée'}, Identifiant: ${bien.identifiant || 'Non précisé'}, Email: ${bien.email || 'Non précisé'}, Téléphone: ${bien.telephone || 'Non précisé'}`;
+                                if (bien.indice) biensHTML += `, Indice: ${bien.indice}`;
+                                break;
+                        }
+                        
+                        biensHTML += `</div>`;
+                    });
+                    
+                    biensHTML += `</div>`;
                 }
             });
             
@@ -1142,6 +1565,17 @@
 
         ${personnesHTML}
 
+        ${biensHTML ? `
+        <div class="decoration">◆ ◆ ◆</div>
+        
+        <div class="section">
+            <div class="section-title">BIENS MATÉRIELS ET FINANCIERS</div>
+            <p>Liste des biens matériels et financiers déclarés par le testateur :</p>
+        </div>
+        
+        ${biensHTML}
+        ` : ''}
+
         <div class="section">
             <div class="section-title">VOLONTÉS CONCERNANT LES OBSÈQUES</div>
             <p>${data.volontesObseques || 'Selon les traditions islamiques'}</p>
@@ -1247,19 +1681,27 @@
                 }
                 
                 // Remplir les données des personnes si elles existent
-                const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
+                const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
+                                   'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
                 categories.forEach(category => {
                     if (data[category] && Array.isArray(data[category])) {
-                        data[category].forEach((person, index) => {
-                            addPerson(category);
+                        data[category].forEach((item, index) => {
+                            if (['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'].includes(category)) {
+                                addPerson(category);
+                            } else {
+                                addAsset(category);
+                            }
+                            
                             const container = document.getElementById(`${category}-container`);
                             const lastEntry = container.lastElementChild;
                             
                             if (lastEntry) {
-                                lastEntry.querySelector('[name$="[nom]"]').value = person.nom || '';
-                                lastEntry.querySelector('[name$="[prenom]"]').value = person.prenom || '';
-                                lastEntry.querySelector('[name$="[telephone]"]').value = person.telephone || '';
-                                lastEntry.querySelector('[name$="[adresse]"]').value = person.adresse || '';
+                                for (const field in item) {
+                                    const input = lastEntry.querySelector(`[name$="[${field}]"]`);
+                                    if (input) {
+                                        input.value = item[field] || '';
+                                    }
+                                }
                             }
                         });
                     }
@@ -1286,4 +1728,4 @@
         }, 30000);
     </script>
 </body>
-</html>
+                                                                                          </html>
