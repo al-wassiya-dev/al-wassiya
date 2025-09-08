@@ -1,21 +1,374 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Al Wassiya - Étape 2 : Héritiers</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<!-- Styles inclus : reprennent l’harmonie existante -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
 <style>
-/* ...Styles d’origine... */
+:root {
+  --primary: #C9B178;
+  --primary-dark: #A89262;
+  --secondary: #2D4C68;
+  --accent: #3A5F7E;
+  --light: #F8F5EE;
+  --dark: #1E1E24;
+  --success: #4CAF50;
+  --error: #E74C3C;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%);
+  color: var(--dark);
+  line-height: 1.7;
+  min-height: 100vh;
+  direction: ltr;
+}
+body.rtl {
+  direction: rtl;
+  font-family: 'Amiri', 'Poppins', sans-serif;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.language-selector {
+  position: fixed;
+  top: 20px; right: 20px;
+  z-index: 1000;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: var(--shadow);
+}
+.language-selector select {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Header Styles */
+.header {
+  text-align: center;
+  padding: 40px 0;
+  margin-bottom: 30px;
+  position: relative;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.arabic-title {
+  font-family: 'Amiri', serif;
+  font-size: 2.8rem;
+  color: var(--primary-dark);
+  margin: 15px 0;
+  direction: rtl;
+}
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--secondary);
+  margin-bottom: 25px;
+  font-weight: 400;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.bismillah {
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin: 25px 0;
+  font-weight: 600;
+  font-family: 'Amiri', serif;
+  direction: rtl;
+}
+.title-pdf {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--primary-dark);
+  text-align: center;
+  margin-top: 30px;
+  direction: ltr;
+}
+
+/* Progress Section */
+.progress-container {
+  background: white;
+  border-radius: var(--radius);
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+}
+.progress-bar {
+  height: 8px;
+  background: #EDE8DD;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  width: 30%;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+.step-indicator {
+  font-size: 1.1rem;
+  color: var(--secondary);
+  font-weight: 500;
+}
+
+/* Navigation */
+.navigation {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-btn {
+  padding: 12px 24px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.nav-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+.nav-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Form Styles */
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+.form-section {
+  background: white;
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.form-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--secondary);
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(201, 177, 120, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title i {
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+.form-group {
+  margin-bottom: 25px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--secondary);
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #EDE8DD;
+  border-radius: 10px;
+  background: #FCFAF7;
+  color: var(--dark);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(201, 177, 120, 0.2);
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #A0A0A0;
+}
+
+/* Dynamic Sections */
+.dynamic-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: #F8F5EE;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary);
+}
+.dynamic-item {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.dynamic-item:last-child {
+  margin-bottom: 0;
+}
+.item-header {
+  display: flex;
+  justify-content: between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: var(--secondary);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+.form-row .form-group {
+  margin-bottom: 0;
+}
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+/* Buttons */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin: 40px 0;
+}
+.btn {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(168, 146, 98, 0.4);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.btn-secondary:hover {
+  background: var(--primary);
+  color: white;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo {
+    font-size: 2.8rem;
+  }
+  .arabic-title {
+    font-size: 2.2rem;
+  }
+  .bismillah {
+    font-size: 1.8rem;
+  }
+  .form-section {
+    padding: 25px 20px;
+  }
+  .section-title {
+    font-size: 1.4rem;
+  }
+  .actions {
+    flex-direction: column;
+  }
+  .btn {
+    width: 100%;
+  }
+  .language-selector {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-bottom: 20px;
+  }
+  .navigation {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+/* Islamic Pattern Background */
+.islamic-pattern {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(201, 177, 120, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(168, 146, 98, 0.03) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: -1;
+}
 </style>
 </head>
 <body>
 <div class="islamic-pattern"></div>
 <div class="language-selector">
   <select id="languageSelect" onchange="changeLanguage()">
-    <option value="fr">Français</option>
+    <option value="fr" selected>Français</option>
     <option value="en">English</option>
     <option value="ar">العربية</option>
   </select>
@@ -23,9 +376,9 @@
 <div class="container">
   <div class="header">
     <div class="logo" id="headerTitle">Al Wassiya</div>
-    <div class="arabic-title">الوصية</div>
+    <div class="arabic-title" id="arabicTitle">الوصية</div>
     <div class="subtitle" id="headerSubtitle">Votre Testament Islamique Simplifié</div>
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+    <div class="bismillah" id="bismillahText">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
   </div>
   <div class="navigation">
     <a href="#" class="nav-btn" onclick="retourEtape1()">
@@ -33,16 +386,15 @@
     </a>
     <div id="stepInfo">Étape 2 sur 7</div>
     <div class="nav-btn disabled">
-      <span id="nextStepBtn">Étape 3</span> <i class="fas fa-arrow-right"></i>
+      <span id="nextStepBtn">Étape 3</span>
+      <i class="fas fa-arrow-right"></i>
     </div>
   </div>
   <div class="progress-container">
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
-    <div class="step-indicator" id="stepIndicator">
-      Étape 2 sur 7 : Héritiers et famille
-    </div>
+    <div class="step-indicator" id="stepIndicator">Étape 2 sur 7 : Héritiers et famille</div>
   </div>
   <form id="heritageForm">
     <div class="form-container">
@@ -67,9 +419,8 @@
             <option value="10">10 enfants ou plus</option>
           </select>
         </div>
-        <div id="childrenDetails" class="dynamic-section" style="display: none;"></div>
+        <div id="childrenDetails" class="dynamic-section" style="display:none;"></div>
       </div>
-
       <!-- Frères et Sœurs -->
       <div class="form-section">
         <h2 class="section-title">
@@ -108,7 +459,6 @@
           </select>
         </div>
       </div>
-
       <!-- Autres héritiers -->
       <div class="form-section">
         <h2 class="section-title">
@@ -137,47 +487,237 @@
     </div>
   </form>
 </div>
+
+<!-- jsPDF library CDN for PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
+const { jsPDF } = window.jspdf;
+
+const translations = {
+  fr: {
+    headerSubtitle: "Votre Testament Islamique Simplifié",
+    stepIndicator: "Étape 2 sur 7 : Héritiers et famille",
+    backBtn: "Retour à l'étape 1",
+    nextStepBtn: "Étape 3",
+    childrenTitle: "Enfants",
+    nombreEnfantsLabel: "Nombre d'enfants",
+    noChildren: "Aucun enfant",
+    siblingsTitle: "Frères et Sœurs",
+    nombreFreresLabel: "Nombre de frères",
+    noBrothers: "Aucun frère",
+    nombreSoeursLabel: "Nombre de sœurs",
+    noSisters: "Aucune sœur",
+    otherHeirsTitle: "Autres héritiers",
+    autresHeritiersLabel: "Autres membres de la famille héritiers (grands-parents, oncles, tantes, etc.)",
+    remarquesHeritiersLabel: "Remarques particulières sur les héritiers",
+    saveBtn: "Sauvegarder le brouillon",
+    generateBtn: "Générer le PDF",
+    continueBtn: "Continuer vers l'étape 3"
+  },
+  en: {
+    headerSubtitle: "Your Simplified Islamic Will",
+    stepIndicator: "Step 2 of 7: Heirs and family",
+    backBtn: "Back to step 1",
+    nextStepBtn: "Step 3",
+    childrenTitle: "Children",
+    nombreEnfantsLabel: "Number of children",
+    noChildren: "No children",
+    siblingsTitle: "Brothers and Sisters",
+    nombreFreresLabel: "Number of brothers",
+    noBrothers: "No brothers",
+    nombreSoeursLabel: "Number of sisters",
+    noSisters: "No sisters",
+    otherHeirsTitle: "Other heirs",
+    autresHeritiersLabel: "Other family members who are heirs (grandparents, uncles, aunts, etc.)",
+    remarquesHeritiersLabel: "Special remarks about heirs",
+    saveBtn: "Save Draft",
+    generateBtn: "Generate PDF",
+    continueBtn: "Continue to step 3"
+  },
+  ar: {
+    headerSubtitle: "وصيتك الإسلامية المبسطة",
+    stepIndicator: "الخطوة 2 من 7: الورثة والعائلة",
+    backBtn: "العودة للخطوة 1",
+    nextStepBtn: "الخطوة 3",
+    childrenTitle: "الأطفال",
+    nombreEnfantsLabel: "عدد الأطفال",
+    noChildren: "لا يوجد أطفال",
+    siblingsTitle: "الإخوة والأخوات",
+    nombreFreresLabel: "عدد الإخوة",
+    noBrothers: "لا يوجد إخوة",
+    nombreSoeursLabel: "عدد الأخوات",
+    noSisters: "لا توجد أخوات",
+    otherHeirsTitle: "ورثة آخرون",
+    autresHeritiersLabel: "أفراد آخرون من العائلة من الورثة (الأجداد، الأعمام، العمات، إلخ)",
+    remarquesHeritiersLabel: "ملاحظات خاصة حول الورثة",
+    saveBtn: "حفظ المسودة",
+    generateBtn: "إنشاء PDF",
+    continueBtn: "الانتقال للخطوة 3"
+  }
+};
+
+let currentLanguage = 'fr';
+
+function changeLanguage() {
+  const languageSelect = document.getElementById('languageSelect');
+  currentLanguage = languageSelect.value;
+  if(currentLanguage === 'ar') {
+    document.body.classList.add('rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.body.classList.remove('rtl');
+    document.documentElement.setAttribute('lang', currentLanguage);
+  }
+  updateTexts();
+}
+
+function updateTexts() {
+  const lang = translations[currentLanguage];
+  for(const id in lang) {
+    const el = document.getElementById(id);
+    if(el) {
+      if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = lang[id];
+      } else {
+        el.innerHTML = lang[id];
+      }
+    }
+  }
+}
+
 function generateChildrenFields() {
-  const nombreEnfants = parseInt(document.getElementById('nombreEnfants').value);
+  const nombreEnfants = parseInt(document.getElementById('nombreEnfants').value, 10);
   const container = document.getElementById('childrenDetails');
-  if (nombreEnfants === 0) {
+  if(nombreEnfants === 0) {
     container.style.display = 'none';
     container.innerHTML = '';
     return;
   }
   container.style.display = 'block';
   container.innerHTML = '';
-  for (let i = 1; i <= nombreEnfants; i++) {
-    const childDiv = document.createElement('div');
-    childDiv.className = 'dynamic-item';
-    childDiv.innerHTML = `
-      <div class="item-header">Enfant ${i}</div>
+  for(let i=1; i <= nombreEnfants; i++) {
+    const div = document.createElement('div');
+    div.className = 'dynamic-item';
+    div.innerHTML = `
+      <div class="item-header">${currentLanguage === 'ar' ? 'الطفل' : currentLanguage === 'en' ? 'Child' : 'Enfant'} ${i}</div>
       <div class="form-row">
         <div class="form-group">
-          <label>Nom</label>
-          <input type="text" name="nomEnfant${i}" placeholder="Nom de l'enfant">
+          <label>${currentLanguage === 'ar' ? 'الاسم' : currentLanguage === 'en' ? 'Name' : 'Nom'}</label>
+          <input type="text" name="nomEnfant${i}" placeholder="${
+            currentLanguage === 'ar' ? 'اسم الطفل' : currentLanguage === 'en' ? 'Child\'s name' : 'Nom de l\'enfant'
+          }" />
         </div>
         <div class="form-group">
-          <label>Téléphone</label>
-          <input type="tel" name="telephoneEnfant${i}" placeholder="Numéro de téléphone">
+          <label>${currentLanguage === 'ar' ? 'الهاتف' : currentLanguage === 'en' ? 'Phone' : 'Téléphone'}</label>
+          <input type="tel" name="telephoneEnfant${i}" placeholder="${
+            currentLanguage === 'ar' ? 'رقم الهاتف' : currentLanguage === 'en' ? 'Phone number' : 'Numéro de téléphone'
+          }" />
         </div>
       </div>
       <div class="form-group">
-        <label>Adresse/Moyen de contact</label>
-        <textarea name="adresseEnfant${i}" rows="2" placeholder="Adresse ou moyen de contact"></textarea>
+        <label>${currentLanguage === 'ar' ? 'العنوان / وسيلة اتصال' : currentLanguage === 'en' ? 'Address / Contact' : 'Adresse / Moyen de contact'}</label>
+        <textarea name="adresseEnfant${i}" rows="2" placeholder="${
+          currentLanguage === 'ar' ? 'العنوان أو وسيلة الاتصال' : currentLanguage === 'en' ? 'Address or contact method' : 'Adresse ou moyen de contact'
+        }"></textarea>
       </div>
     `;
-    container.appendChild(childDiv);
+    container.appendChild(div);
   }
 }
-function retourEtape1() { /* Retour à l’étape 1 */ }
-function sauvegarderBrouillon() { /* Fonction brouillon */ }
-function genererPDF() {
-  // Générer un PDF : inclure « Al Wassiya » et « الوصية » en titre
+
+function retourEtape1() {
+  alert('Retour à l\'étape 1 - Fonction à implémenter');
 }
-function continuerEtapes() { /* Continuer vers étape suivante */ }
-// Traductions et interface : code inchangé
+
+function sauvegarderBrouillon() {
+  alert('Sauvegarder le brouillon - Fonction à implémenter');
+}
+
+function continuerEtapes() {
+  alert('Continuer vers l\'étape 3 - Fonction à implémenter');
+}
+
+function genererPDF() {
+  const doc = new jsPDF();
+
+  // Titre en français et arabe
+  doc.setFont('Playfair Display', 'bold');
+  doc.setFontSize(22);
+  doc.setTextColor('#A89262');
+  doc.text('Al Wassiya', 105, 20, null, null, 'center');
+  doc.setFont('Amiri', 'normal');
+  doc.setFontSize(20);
+  doc.text('الوصية', 105, 30, null, null, 'center');
+
+  // Sous-titre
+  doc.setFont('Poppins', 'normal');
+  doc.setFontSize(12);
+  doc.setTextColor('#2D4C68');
+  doc.text(translations[currentLanguage].headerSubtitle, 105, 40, null, null, 'center');
+
+  let y = 50;
+  const lineHeight = 10;
+
+  // Enfants
+  doc.setTextColor('#1E1E24');
+  doc.setFontSize(14);
+  doc.text(translations[currentLanguage].childrenTitle + ' :', 10, y);
+  y += lineHeight;
+  const nombreEnfants = parseInt(document.getElementById('nombreEnfants').value, 10);
+  for(let i=1; i<=nombreEnfants; i++) {
+    const nom = document.querySelector(`input[name="nomEnfant${i}"]`)?.value || '-';
+    const tel = document.querySelector(`input[name="telephoneEnfant${i}"]`)?.value || '-';
+    const adresse = document.querySelector(`textarea[name="adresseEnfant${i}"]`)?.value || '-';
+    doc.setFontSize(12);
+    doc.text(`${i}. ${translations[currentLanguage].nombreEnfantsLabel} : ${nom}`, 15, y);
+    y += lineHeight;
+    doc.text(`   ${currentLanguage === 'ar' ? 'الهاتف' : currentLanguage === 'en' ? 'Phone' : 'Téléphone'} : ${tel}`, 20, y);
+    y += lineHeight;
+    const lines = doc.splitTextToSize(`${currentLanguage === 'ar' ? 'العنوان / وسيلة اتصال' : currentLanguage === 'en' ? 'Address / Contact' : 'Adresse / Moyen de contact'} : ${adresse}`, 180);
+    doc.text(lines, 20, y);
+    y += lines.length * lineHeight;
+    y += 4;
+    if(y > 270) {
+      doc.addPage();
+      y = 20;
+    }
+  }
+
+  // Frères et Sœurs
+  const freres = document.getElementById('nombreFreres').value;
+  const soeurs = document.getElementById('nombreSoeurs').value;
+  doc.setFontSize(14);
+  doc.text(translations[currentLanguage].siblingsTitle + ' :', 10, y);
+  y += lineHeight;
+  doc.setFontSize(12);
+  doc.text(`${translations[currentLanguage].nombreFreresLabel} : ${freres}`, 15, y);
+  y += lineHeight;
+  doc.text(`${translations[currentLanguage].nombreSoeursLabel} : ${soeurs}`, 15, y);
+  y += lineHeight*1.5;
+
+  // Autres héritiers
+  doc.setFontSize(14);
+  doc.text(translations[currentLanguage].otherHeirsTitle + ' :', 10, y);
+  y += lineHeight;
+  const autresHeritiers = document.getElementById('autresHeritiers').value || '-';
+  const remarquesHeritiers = document.getElementById('remarquesHeritiers').value || '-';
+  doc.setFontSize(12);
+  doc.text(doc.splitTextToSize(autresHeritiers, 180), 15, y);
+  y += lineHeight * (autresHeritiers.split('\n').length + 1);
+  y += 5;
+  doc.text(translations[currentLanguage].remarquesHeritiersLabel + ' :', 10, y);
+  y += lineHeight;
+  doc.text(doc.splitTextToSize(remarquesHeritiers, 180), 15, y);
+
+  doc.save('AlWassiya_Testament_Etape2.pdf');
+}
+
+// Initialisation
+updateTexts();
+generateChildrenFields();
+
+document.getElementById('languageSelect').value = currentLanguage;
 </script>
 </body>
 </html>
