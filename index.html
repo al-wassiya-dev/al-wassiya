@@ -14,7 +14,7 @@
             --accent: #3A5F7E;
             --light: #F8F5EE;
             --dark: #1E1E24;
-            --success: #27AE60;
+            --success: #4CAF50;
             --error: #E74C3C;
             --radius: 16px;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -337,13 +337,6 @@
             margin-bottom: 0;
         }
 
-        /* Steps Navigation */
-        .steps-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .logo {
@@ -376,17 +369,12 @@
             
             .share-buttons {
                 gap: 10px;
-                justify-content: center;
             }
             
             .share-btn {
                 width: 50px;
                 height: 50px;
                 font-size: 1.2rem;
-            }
-
-            .share-section {
-                padding: 20px;
             }
         }
 
@@ -419,15 +407,6 @@
             pointer-events: none;
             z-index: -1;
         }
-
-        /* Hidden steps */
-        .step {
-            display: none;
-        }
-        
-        .step.active {
-            display: block;
-        }
     </style>
 </head>
 <body>
@@ -456,212 +435,123 @@
             <div class="translation-note">(c'est une traduction rapprochée)</div>
         </div>
 
-        <!-- Étape 1: Informations personnelles -->
         <form id="testamentForm">
-            <div class="step active" id="step1">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
-                        
-                        <div class="form-group">
-                            <label for="sexe">Sexe <span class="required">*</span></label>
-                            <select id="sexe" name="sexe" required onchange="toggleConjointField()">
-                                <option value="">Sélectionner</option>
-                                <option value="homme">Homme</option>
-                                <option value="femme">Femme</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="prenom">Prénom <span class="required">*</span></label>
-                            <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nom">Nom de famille <span class="required">*</span></label>
-                            <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
-                            <input type="date" id="dateNaissance" name="dateNaissance" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lieuNaissance">Lieu de naissance</label>
-                            <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="adresse">Adresse actuelle <span class="required">*</span></label>
-                            <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nationalite">Nationalité</label>
-                            <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="situationFamiliale">Situation familiale</label>
-                            <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
-                                <option value="">Sélectionner</option>
-                                <option value="celibataire">Célibataire</option>
-                                <option value="marie">Marié(e)</option>
-                                <option value="divorce">Divorcé(e)</option>
-                                <option value="veuf">Veuf/Veuve</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group" id="conjointGroup" style="display: none;">
-                            <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
-                            <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
-                        </div>
+            <div class="form-container">
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
+                    
+                    <div class="form-group">
+                        <label for="sexe">Sexe <span class="required">*</span></label>
+                        <select id="sexe" name="sexe" required onchange="toggleConjointField()">
+                            <option value="">Sélectionner</option>
+                            <option value="homme">Homme</option>
+                            <option value="femme">Femme</option>
+                        </select>
                     </div>
 
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
-                        
-                        <div class="form-group">
-                            <label for="volontesObseques">Volontés concernant les obsèques</label>
-                            <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="recommandationsFamille">Recommandations à la famille</label>
-                            <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label for="nom">Nom de famille <span class="required">*</span></label>
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
-                            <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
-                        </div>
+                    <div class="form-group">
+                        <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
+                        <input type="date" id="dateNaissance" name="dateNaissance" required>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="contactExecuteur">Contact de l'exécuteur</label>
-                            <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
-                        </div>
+                    <div class="form-group">
+                        <label for="lieuNaissance">Lieu de naissance</label>
+                        <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="autresVolontes">Autres volontés ou instructions</label>
-                            <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label for="adresse">Adresse actuelle <span class="required">*</span></label>
+                        <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nationalite">Nationalité</label>
+                        <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="situationFamiliale">Situation familiale</label>
+                        <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
+                            <option value="">Sélectionner</option>
+                            <option value="celibataire">Célibataire</option>
+                            <option value="marie">Marié(e)</option>
+                            <option value="divorce">Divorcé(e)</option>
+                            <option value="veuf">Veuf/Veuve</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="conjointGroup" style="display: none;">
+                        <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
+                        <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
-                        <i class="fas fa-save"></i> Sauvegarder le brouillon
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="genererPDF()">
-                        <i class="fas fa-file-pdf"></i> Générer le PDF
-                    </button>
-                    <button type="button" class="btn btn-secondary" onclick="nextStep(2)">
-                        Continuer vers les héritiers <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
+                    
+                    <div class="form-group">
+                        <label for="volontesObseques">Volontés concernant les obsèques</label>
+                        <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
+                    </div>
 
-                <div class="share-section">
-                    <div class="share-title">Partager cette application</div>
-                    <div class="share-buttons">
-                        <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div class="share-btn facebook" onclick="partagerFacebook()">
-                            <i class="fab fa-facebook-f"></i>
-                        </div>
-                        <div class="share-btn twitter" onclick="partagerTwitter()">
-                            <i class="fab fa-twitter"></i>
-                        </div>
-                        <div class="share-btn email" onclick="partagerEmail()">
-                            <i class="fas fa-envelope"></i>
-                        </div>
+                    <div class="form-group">
+                        <label for="recommandationsFamille">Recommandations à la famille</label>
+                        <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
+                        <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactExecuteur">Contact de l'exécuteur</label>
+                        <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="autresVolontes">Autres volontés ou instructions</label>
+                        <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- Étape 2: Héritiers -->
-            <div class="step" id="step2">
-                <div class="form-section">
-                    <h2 class="section-title"><i class="fas fa-users"></i> Héritiers</h2>
-                    
-                    <div class="form-group">
-                        <label for="nombreFreres">Nombre de frères</label>
-                        <select id="nombreFreres" name="nombreFreres" onchange="toggleFreresDetails()">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5+</option>
-                        </select>
-                    </div>
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
+                    <i class="fas fa-save"></i> Sauvegarder le brouillon
+                </button>
+                <button type="button" class="btn btn-primary" onclick="genererPDF()">
+                    <i class="fas fa-file-pdf"></i> Générer le PDF
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="continuerEtapes()">
+                    Continuer vers les actifs <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
 
-                    <div id="freresDetails" style="display: none;">
-                        <div class="form-group">
-                            <label>Détails des frères</label>
-                            <div id="freresList"></div>
-                        </div>
+            <div class="share-section">
+                <div class="share-title">Partager cette application</div>
+                <div class="share-buttons">
+                    <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
                     </div>
-
-                    <div class="form-group">
-                        <label for="nombreSoeurs">Nombre de sœurs</label>
-                        <select id="nombreSoeurs" name="nombreSoeurs" onchange="toggleSoeursDetails()">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5+</option>
-                        </select>
+                    <div class="share-btn facebook" onclick="partagerFacebook()">
+                        <i class="fab fa-facebook-f"></i>
                     </div>
-
-                    <div id="soeursDetails" style="display: none;">
-                        <div class="form-group">
-                            <label>Détails des sœurs</label>
-                            <div id="soeursList"></div>
-                        </div>
+                    <div class="share-btn twitter" onclick="partagerTwitter()">
+                        <i class="fab fa-twitter"></i>
                     </div>
-
-                    <div class="form-group">
-                        <label for="nombreEnfants">Nombre d'enfants</label>
-                        <select id="nombreEnfants" name="nombreEnfants" onchange="toggleEnfantsDetails()">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5+</option>
-                        </select>
-                    </div>
-
-                    <div id="enfantsDetails" style="display: none;">
-                        <div class="form-group">
-                            <label>Détails des enfants</label>
-                            <div id="enfantsList"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="autresHeritiers">Autres héritiers (parents, conjoint, etc.)</label>
-                        <textarea id="autresHeritiers" name="autresHeritiers" placeholder="Précisez les autres héritiers et leurs coordonnées"></textarea>
-                    </div>
-                </div>
-
-                <div class="steps-navigation">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(1)">
-                        <i class="fas fa-arrow-left"></i> Retour
-                    </button>
-                    <div>
-                        <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
-                            <i class="fas fa-save"></i> Sauvegarder
-                        </button>
-                        <button type="button" class="btn btn-primary" onclick="genererPDF()">
-                            <i class="fas fa-file-pdf"></i> Générer PDF
-                        </button>
-                        <button type="button" class="btn btn-secondary" onclick="nextStep(3)">
-                            Suivant <i class="fas fa-arrow-right"></i>
-                        </button>
+                    <div class="share-btn email" onclick="partagerEmail()">
+                        <i class="fas fa-envelope"></i>
                     </div>
                 </div>
             </div>
@@ -694,106 +584,6 @@
             } else {
                 conjointGroup.style.display = 'none';
                 document.getElementById('conjoint').value = '';
-            }
-        }
-
-        // Fonctions pour la gestion des étapes
-        function nextStep(stepNumber) {
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active');
-            });
-            document.getElementById('step' + stepNumber).classList.add('active');
-            
-            // Mettre à jour la barre de progression
-            const progressPercentage = (stepNumber / 7) * 100;
-            document.getElementById('progressFill').style.width = progressPercentage + '%';
-            
-            // Mettre à jour l'indicateur d'étape
-            const stepTexts = [
-                "Étape 1 sur 7 : Informations personnelles et volontés générales",
-                "Étape 2 sur 7 : Héritiers",
-                "Étape 3 sur 7 : Actifs et biens",
-                "Étape 4 sur 7 : Dettes et obligations",
-                "Étape 5 sur 7 : Bénéficiaires du tiers",
-                "Étape 6 sur 7 : Calcul des parts",
-                "Étape 7 sur 7 : Vérification et validation"
-            ];
-            document.getElementById('stepIndicator').textContent = stepTexts[stepNumber - 1];
-            
-            window.scrollTo(0, 0);
-        }
-
-        function prevStep(stepNumber) {
-            nextStep(stepNumber);
-        }
-
-        // Fonctions pour la gestion des héritiers
-        function toggleFreresDetails() {
-            const nombreFreres = parseInt(document.getElementById('nombreFreres').value);
-            const freresDetails = document.getElementById('freresDetails');
-            const freresList = document.getElementById('freresList');
-            
-            if (nombreFreres > 0) {
-                freresDetails.style.display = 'block';
-                freresList.innerHTML = '';
-                
-                for (let i = 1; i <= nombreFreres; i++) {
-                    freresList.innerHTML += `
-                        <div class="form-group" style="margin-bottom: 15px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
-                            <label>Frère ${i}</label>
-                            <input type="text" name="frereNom${i}" placeholder="Nom complet" style="margin-bottom: 8px;">
-                            <input type="tel" name="frereTelephone${i}" placeholder="Numéro de téléphone">
-                        </div>
-                    `;
-                }
-            } else {
-                freresDetails.style.display = 'none';
-            }
-        }
-
-        function toggleSoeursDetails() {
-            const nombreSoeurs = parseInt(document.getElementById('nombreSoeurs').value);
-            const soeursDetails = document.getElementById('soeursDetails');
-            const soeursList = document.getElementById('soeursList');
-            
-            if (nombreSoeurs > 0) {
-                soeursDetails.style.display = 'block';
-                soeursList.innerHTML = '';
-                
-                for (let i = 1; i <= nombreSoeurs; i++) {
-                    soeursList.innerHTML += `
-                        <div class="form-group" style="margin-bottom: 15px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
-                            <label>Sœur ${i}</label>
-                            <input type="text" name="soeurNom${i}" placeholder="Nom complet" style="margin-bottom: 8px;">
-                            <input type="tel" name="soeurTelephone${i}" placeholder="Numéro de téléphone">
-                        </div>
-                    `;
-                }
-            } else {
-                soeursDetails.style.display = 'none';
-            }
-        }
-
-        function toggleEnfantsDetails() {
-            const nombreEnfants = parseInt(document.getElementById('nombreEnfants').value);
-            const enfantsDetails = document.getElementById('enfantsDetails');
-            const enfantsList = document.getElementById('enfantsList');
-            
-            if (nombreEnfants > 0) {
-                enfantsDetails.style.display = 'block';
-                enfantsList.innerHTML = '';
-                
-                for (let i = 1; i <= nombreEnfants; i++) {
-                    enfantsList.innerHTML += `
-                        <div class="form-group" style="margin-bottom: 15px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
-                            <label>Enfant ${i}</label>
-                            <input type="text" name="enfantNom${i}" placeholder="Nom complet" style="margin-bottom: 8px;">
-                            <input type="tel" name="enfantTelephone${i}" placeholder="Numéro de téléphone">
-                        </div>
-                    `;
-                }
-            } else {
-                enfantsDetails.style.display = 'none';
             }
         }
 
@@ -845,17 +635,6 @@
                 day: 'numeric'
             });
             
-            // Correction de l'affichage du sexe et situation familiale
-            let sexeText = formData.get('sexe') || '';
-            if (sexeText === 'homme') sexeText = 'Homme';
-            if (sexeText === 'femme') sexeText = 'Femme';
-            
-            let situationText = formData.get('situationFamiliale') || '';
-            if (situationText === 'marie') situationText = 'Marié(e)';
-            if (situationText === 'divorce') situationText = 'Divorcé(e)';
-            if (situationText === 'celibataire') situationText = 'Célibataire';
-            if (situationText === 'veuf') situationText = 'Veuf/Veuve';
-            
             return `
 <!DOCTYPE html>
 <html>
@@ -889,25 +668,11 @@
             border-bottom: 2px solid #C9B178;
         }
         
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-        
         .logo {
             font-family: 'Playfair Display', serif;
             font-size: 36px;
             color: #C9B178;
-        }
-        
-        .logo-arabic {
-            font-family: 'Traditional Arabic', serif;
-            font-size: 42px;
-            color: #1A2E40;
-            font-weight: bold;
+            margin-bottom: 10px;
         }
         
         .subtitle {
@@ -955,8 +720,192 @@
         .field-label {
             font-weight: 500;
             min-width: 180px;
-            color: #1A2E40;
         }
         
-        .field-value {
+        .signature-section {
+            margin-top: 60px;
+            border-top: 1px solid #ddd;
+            padding-top: 30px;
+        }
+        
+        .verset {
+            font-style: italic;
+            text-align: center;
             color: #2D4C68;
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #F8F5EE;
+            border: 1px dashed #C9B178;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #2D4C68;
+        }
+        
+        .decoration {
+            text-align: center;
+            margin: 30px 0;
+            color: #C9B178;
+            opacity: 0.5;
+        }
+        
+        @media print {
+            body { 
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Al Wassiya</div>
+            <div class="subtitle">Votre Testament Islamique Simplifié</div>
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="title">TESTAMENT ISLAMIQUE (WASSIYA)</div>
+            <p>Date de rédaction : ${date}</p>
+        </div>
+
+        <div class="decoration">◆ ◆ ◆</div>
+
+        <div class="section">
+            <div class="section-title">IDENTITÉ DU TESTATEUR</div>
+            <div class="field"><span class="field-label">Sexe :</span> ${formData.get('sexe')}</div>
+            <div class="field"><span class="field-label">Nom :</span> ${formData.get('nom')}</div>
+            <div class="field"><span class="field-label">Prénom :</span> ${formData.get('prenom')}</div>
+            <div class="field"><span class="field-label">Date de naissance :</span> ${new Date(formData.get('dateNaissance')).toLocaleDateString('fr-FR')}</div>
+            <div class="field"><span class="field-label">Lieu de naissance :</span> ${formData.get('lieuNaissance') || 'Non précisé'}</div>
+            <div class="field"><span class="field-label">Adresse :</span> ${formData.get('adresse')}</div>
+            <div class="field"><span class="field-label">Nationalité :</span> ${formData.get('nationalite') || 'Non précisée'}</div>
+            <div class="field"><span class="field-label">Situation familiale :</span> ${formData.get('situationFamiliale') || 'Non précisée'}</div>
+            ${formData.get('conjoint') ? `<div class="field"><span class="field-label">Conjoint :</span> ${formData.get('conjoint')}</div>` : ''}
+        </div>
+
+        <div class="section">
+            <div class="section-title">VOLONTÉS CONCERNANT LES OBSÈQUES</div>
+            <p>${formData.get('volontesObseques') || 'Selon les traditions islamiques'}</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">RECOMMANDATIONS À LA FAMILLE</div>
+            <p>${formData.get('recommandationsFamille') || 'Que Allah vous bénisse et vous guide'}</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">EXÉCUTEUR TESTAMENTAIRE</div>
+            <div class="field"><span class="field-label">Personne suggérée :</span> ${formData.get('executeurTestament') || 'À désigner par la famille'}</div>
+            <div class="field"><span class="field-label">Contact :</span> ${formData.get('contactExecuteur') || 'Non précisé'}</div>
+        </div>
+
+        ${formData.get('autresVolontes') ? `
+        <div class="section">
+            <div class="section-title">AUTRES VOLONTÉS</div>
+            <p>${formData.get('autresVolontes')}</p>
+        </div>` : ''}
+
+        <div class="section">
+            <div class="section-title">DISPOSITIONS IMPORTANTES</div>
+            <ul>
+                <li>Ce testament respecte les règles de l'héritage islamique (Mirath)</li>
+                <li>Les dispositions ne concernent que le tiers (1/3) des biens maximum</li>
+                <li>Les deux tiers restants sont distribués selon les règles coraniques</li>
+                <li>Il est recommandé de faire valider ce testament par un spécialiste</li>
+            </ul>
+        </div>
+
+        <div class="verset">
+            "Et c'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156
+        </div>
+
+        <div class="signature-section">
+            <p><strong>Signature du testateur :</strong> _______________________ &nbsp;&nbsp;&nbsp; <strong>Date :</strong> ${date}</p>
+            <br>
+            <p><strong>Témoins (recommandé) :</strong></p>
+            <p>1. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
+            <p>2. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
+        </div>
+
+        <div class="footer">
+            <p>Qu'Allah accepte ce testament et facilite son exécution selon Sa volonté.</p>
+            <p>Généré par Al Wassiya - Testament Islamique Simplifié</p>
+        </div>
+    </div>
+</body>
+</html>`;
+        }
+
+        function partagerWhatsApp() {
+            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya. Découvrez ce service pratique pour préparer votre testament selon les principes islamiques.");
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        function partagerFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function partagerTwitter() {
+            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya - Un service pratique pour préparer son testament selon les principes islamiques");
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        }
+
+        function partagerEmail() {
+            const subject = encodeURIComponent("Testament Islamique avec Al Wassiya");
+            const body = encodeURIComponent("Je viens de créer mon testament islamique avec Al Wassiya. C'est un service pratique pour préparer son testament selon les principes islamiques.\n\nDécouvrez-le ici: " + window.location.href);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        function continuerEtapes() {
+            alert('Fonctionnalité à venir : Vous pourrez bientôt continuer avec les actifs, dettes, héritiers, etc.');
+        }
+
+        // Charger les données sauvegardées si elles existent
+        window.addEventListener('load', function() {
+            const savedData = localStorage.getItem('testamentBrouillon');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                for (const key in data) {
+                    if (document.getElementById(key)) {
+                        document.getElementById(key).value = data[key];
+                    }
+                }
+                
+                if (data.situationFamiliale) {
+                    document.getElementById('situationFamiliale').value = data.situationFamiliale;
+                    toggleConjointField();
+                }
+            }
+        });
+
+        // Sauvegarde automatique
+        setInterval(() => {
+            const form = document.getElementById('testamentForm');
+            const formData = new FormData(form);
+            let hasData = false;
+            
+            for (let [key, value] of formData.entries()) {
+                if (value.trim() !== '') {
+                    hasData = true;
+                    break;
+                }
+            }
+            
+            if (hasData) {
+                sauvegarderBrouillon();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
