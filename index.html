@@ -388,6 +388,17 @@
             .share-section {
                 padding: 20px;
             }
+            
+            .steps-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .steps-navigation > div {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
         }
 
         /* Animations */
@@ -427,6 +438,7 @@
         
         .step.active {
             display: block;
+            animation: fadeIn 0.6s ease-out;
         }
     </style>
 </head>
@@ -675,11 +687,13 @@
     </div>
 
     <script>
-        // Fonction pour afficher/masquer le champ conjoint
+        // Fonction pour afficher/masquer le champ conjoint - CORRIGÉE
         function toggleConjointField() {
             const situationFamiliale = document.getElementById('situationFamiliale').value;
             const conjointGroup = document.getElementById('conjointGroup');
             const conjointLabel = document.getElementById('conjointLabel');
+            
+            console.log("Situation familiale sélectionnée:", situationFamiliale);
             
             if (situationFamiliale === 'marie' || situationFamiliale === 'divorce') {
                 conjointGroup.style.display = 'block';
@@ -697,8 +711,9 @@
             }
         }
 
-        // Fonctions pour la gestion des étapes
+        // Fonctions pour la gestion des étapes - CORRIGÉES
         function nextStep(stepNumber) {
+            console.log("Passage à l'étape", stepNumber);
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -926,37 +941,4 @@
         .title { 
             font-size: 24px; 
             font-weight: bold; 
-            margin: 15px 0;
-            color: #1A2E40;
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .section { 
-            margin: 30px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: #F8F5EE;
-            border-left: 4px solid #C9B178;
-        }
-        
-        .section-title { 
-            font-size: 18px; 
-            font-weight: bold; 
-            color: #C9B178;
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .field { 
-            margin: 12px 0;
-            display: flex;
-        }
-        
-        .field-label {
-            font-weight: 500;
-            min-width: 180px;
-            color: #1A2E40;
-        }
-        
-        .field-value {
-            color: #2D4C68;
+            margin:
