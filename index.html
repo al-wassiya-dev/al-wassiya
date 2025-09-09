@@ -513,6 +513,24 @@
             font-size: 0.9rem;
             color: var(--secondary);
         }
+        
+        .zakat-calculator {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .calculator-result {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--light);
+            border-radius: var(--radius);
+            font-weight: 500;
+            color: var(--secondary);
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -857,6 +875,158 @@
                 </div>
             </div>
 
+            <!-- Étape 4: Dettes et devoirs religieux -->
+            <div id="step4" class="form-step" style="display: none;">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> Créances à percevoir</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('creances')">
+                                <div class="category-title">
+                                    <i class="fas fa-money-check"></i> Créances financières
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="creances" class="category-content">
+                                <div id="creances-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addDebt('creances')">
+                                    <i class="fas fa-plus"></i> Ajouter une créance
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Dettes à régler</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('dettes')">
+                                <div class="category-title">
+                                    <i class="fas fa-credit-card"></i> Dettes financières
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="dettes" class="category-content">
+                                <div id="dettes-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addDebt('dettes')">
+                                    <i class="fas fa-plus"></i> Ajouter une dette
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-scale-balanced"></i> Zakat Al Maal</h2>
+                        
+                        <div class="form-group">
+                            <label for="zakatStatus">Statut de la Zakat</label>
+                            <select id="zakatStatus" name="zakatStatus">
+                                <option value="">Sélectionner</option>
+                                <option value="versee">Zakat versée</option>
+                                <option value="non-versee">Zakat non versée</option>
+                                <option value="partielle">Zakat partiellement versée</option>
+                            </select>
+                        </div>
+
+                        <div class="zakat-calculator">
+                            <h3>Calculateur de Zakat</h3>
+                            <div class="form-group">
+                                <label for="nissab">Valeur du Nissab (en or 85g)</label>
+                                <input type="number" id="nissab" name="nissab" placeholder="Valeur actuelle en € (ex: 4500)">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="epargne">Épargne totale</label>
+                                <input type="number" id="epargne" name="epargne" placeholder="Montant total en €">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="autres_actifs">Autres actifs (commerce, etc.)</label>
+                                <input type="number" id="autres_actifs" name="autres_actifs" placeholder="Montant total en €">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dettes">Dettes à déduire</label>
+                                <input type="number" id="dettes_zakat" name="dettes_zakat" placeholder="Montant total en €">
+                            </div>
+                            
+                            <button type="button" class="btn btn-secondary" onclick="calculerZakat()">
+                                <i class="fas fa-calculator"></i> Calculer la Zakat
+                            </button>
+                            
+                            <div id="resultatZakat" class="calculator-result"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-moon"></i> Jeûne de Ramadan</h2>
+                        
+                        <div class="form-group">
+                            <label for="jeuneStatus">Jours de jeûne à rattraper</label>
+                            <select id="jeuneStatus" name="jeuneStatus">
+                                <option value="">Sélectionner</option>
+                                <option value="0">Aucun jour à rattraper</option>
+                                <option value="1">1 jour</option>
+                                <option value="2">2 jours</option>
+                                <option value="3">3 jours</option>
+                                <option value="4">4 jours</option>
+                                <option value="5">5 jours</option>
+                                <option value="6">6 jours</option>
+                                <option value="7">7 jours</option>
+                                <option value="8">8 jours</option>
+                                <option value="9">9 jours</option>
+                                <option value="10">10 jours</option>
+                                <option value="plus">Plus de 10 jours (préciser dans les notes)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jeuneNotes">Notes concernant le jeûne</label>
+                            <textarea id="jeuneNotes" name="jeuneNotes" placeholder="Précisions sur les jours à rattraper, raisons, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-kaaba"></i> Pèlerinage (Hadj)</h2>
+                        
+                        <div class="form-group">
+                            <label for="hadjStatus">Statut du Hadj</label>
+                            <select id="hadjStatus" name="hadjStatus">
+                                <option value="">Sélectionner</option>
+                                <option value="accompli">Hadj accompli</option>
+                                <option value="non-accompli">Hadj non accompli</option>
+                                <option value="partiel">Hadj partiellement accompli (Omra seulement)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hadjNotes">Notes concernant le Hadj</label>
+                            <textarea id="hadjNotes" name="hadjNotes" placeholder="Année d'accomplissement, détails, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-hands-helping"></i> Aumônes (Sadaqa)</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('sadaqa')">
+                                <div class="category-title">
+                                    <i class="fas fa-donate"></i> Sadaqa à effectuer
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="sadaqa" class="category-content">
+                                <div id="sadaqa-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addSadaqa()">
+                                    <i class="fas fa-plus"></i> Ajouter une sadaqa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="actions">
                 <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
                     <i class="fas fa-save"></i> Sauvegarder le brouillon
@@ -954,7 +1124,12 @@
                 case 3:
                     stepText = 'Étape 3 sur 6 : Biens matériels et financiers';
                     document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers l\'étape 4 <i class="fas fa-arrow-right"></i>';
+                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les dettes <i class="fas fa-arrow-right"></i>';
+                    break;
+                case 4:
+                    stepText = 'Étape 4 sur 6 : Dettes et devoirs religieux';
+                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
+                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers l\'étape 5 <i class="fas fa-arrow-right"></i>';
                     break;
             }
             document.getElementById('stepIndicator').textContent = stepText;
@@ -965,7 +1140,7 @@
 
         // Fonction pour passer à l'étape suivante
         function nextStep() {
-            if (etapeActuelle < 3) {
+            if (etapeActuelle < 4) {
                 changerEtape(etapeActuelle + 1);
             }
         }
@@ -1229,6 +1404,184 @@
             container.appendChild(assetEntry);
         }
 
+        // Fonction pour ajouter une créance ou dette (étape 4)
+        function addDebt(category) {
+            const container = document.getElementById(`${category}-container`);
+            const index = container.children.length;
+            
+            let debtEntry = document.createElement('div');
+            debtEntry.className = 'asset-entry';
+            
+            if (category === 'creances') {
+                debtEntry.innerHTML = `
+                    <div class="form-group">
+                        <label>Type de créance <span class="required">*</span></label>
+                        <select name="${category}[${index}][type]" required>
+                            <option value="">Sélectionner</option>
+                            <option value="pret">Prêt d'argent</option>
+                            <option value="investissement">Investissement</option>
+                            <option value="placement">Placement financier</option>
+                            <option value="projet">Projet en association</option>
+                            <option value="autre">Autre type de créance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Montant (€) <span class="required">*</span></label>
+                        <input type="number" name="${category}[${index}][montant]" required placeholder="Montant à percevoir">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom du débiteur <span class="required">*</span></label>
+                        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom et prénom">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone du débiteur</label>
+                        <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse du débiteur</label>
+                        <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Date prévue de remboursement</label>
+                        <input type="date" name="${category}[${index}][date_remboursement]">
+                    </div>
+                    <div class="form-group">
+                        <label>Informations complémentaires</label>
+                        <textarea name="${category}[${index}][info]" placeholder="Détails sur cette créance"></textarea>
+                    </div>
+                    <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                `;
+            } else if (category === 'dettes') {
+                debtEntry.innerHTML = `
+                    <div class="form-group">
+                        <label>Type de dette <span class="required">*</span></label>
+                        <select name="${category}[${index}][type]" required>
+                            <option value="">Sélectionner</option>
+                            <option value="personne">Dette envers une personne</option>
+                            <option value="entreprise">Dette envers une entreprise</option>
+                            <option value="facture">Facture impayée</option>
+                            <option value="credit">Crédit en cours</option>
+                            <option value="autre">Autre type de dette</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Montant (€) <span class="required">*</span></label>
+                        <input type="number" name="${category}[${index}][montant]" required placeholder="Montant à rembourser">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom du créancier <span class="required">*</span></label>
+                        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom et prénom ou entreprise">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone du créancier</label>
+                        <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse du créancier</label>
+                        <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Date d'échéance</label>
+                        <input type="date" name="${category}[${index}][date_echeance]">
+                    </div>
+                    <div class="form-group">
+                        <label>Informations complémentaires</label>
+                        <textarea name="${category}[${index}][info]" placeholder="Détails sur cette dette"></textarea>
+                    </div>
+                    <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                `;
+            }
+            
+            container.appendChild(debtEntry);
+        }
+
+        // Fonction pour ajouter une sadaqa (étape 4)
+        function addSadaqa() {
+            const container = document.getElementById('sadaqa-container');
+            const index = container.children.length;
+            
+            const sadaqaEntry = document.createElement('div');
+            sadaqaEntry.className = 'asset-entry';
+            sadaqaEntry.innerHTML = `
+                <div class="form-group">
+                    <label>Type de sadaqa <span class="required">*</span></label>
+                    <select name="sadaqa[${index}][type]" required>
+                        <option value="">Sélectionner</option>
+                        <option value="argent">Don d'argent</option>
+                        <option value="nourriture">Don de nourriture</option>
+                        <option value="projet">Soutien à un projet</option>
+                        <option value="association">Don à une association</option>
+                        <option value="omra">Omra au nom du défunt</option>
+                        <option value="hadj">Hadj au nom du défunt</option>
+                        <option value="autre">Autre type de sadaqa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Montant ou description <span class="required">*</span></label>
+                    <input type="text" name="sadaqa[${index}][description]" required placeholder="Montant en € ou description">
+                </div>
+                <div class="form-group">
+                    <label>Bénéficiaire</label>
+                    <input type="text" name="sadaqa[${index}][beneficiaire]" placeholder="Personne ou organisation">
+                </div>
+                <div class="form-group">
+                    <label>Coordonnées du bénéficiaire</label>
+                    <textarea name="sadaqa[${index}][coordonnees]" placeholder="Adresse, téléphone, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Instructions</label>
+                    <textarea name="sadaqa[${index}][instructions]" placeholder="Instructions particulières"></textarea>
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            
+            container.appendChild(sadaqaEntry);
+        }
+
+        // Fonction pour calculer la Zakat
+        function calculerZakat() {
+            const nissab = parseFloat(document.getElementById('nissab').value) || 0;
+            const epargne = parseFloat(document.getElementById('epargne').value) || 0;
+            const autresActifs = parseFloat(document.getElementById('autres_actifs').value) || 0;
+            const dettes = parseFloat(document.getElementById('dettes_zakat').value) || 0;
+            
+            const patrimoine = epargne + autresActifs - dettes;
+            const resultatElement = document.getElementById('resultatZakat');
+            
+            if (nissab <= 0) {
+                resultatElement.innerHTML = '<span style="color: var(--error);">Veuillez entrer la valeur du Nissab</span>';
+                resultatElement.style.display = 'block';
+                return;
+            }
+            
+            if (patrimoine <= 0) {
+                resultatElement.innerHTML = `Votre patrimoine net est de ${patrimoine.toFixed(2)} €. Vous n'êtes pas redevable de la Zakat.`;
+                resultatElement.style.display = 'block';
+                return;
+            }
+            
+            if (patrimoine < nissab) {
+                resultatElement.innerHTML = `Votre patrimoine net est de ${patrimoine.toFixed(2)} €, ce qui est inférieur au Nissab (${nissab.toFixed(2)} €). Vous n'êtes pas redevable de la Zakat.`;
+                resultatElement.style.display = 'block';
+                return;
+            }
+            
+            const zakat = patrimoine * 0.025; // 2.5%
+            resultatElement.innerHTML = `
+                <strong>Résultat du calcul :</strong><br>
+                Patrimoine net: ${patrimoine.toFixed(2)} €<br>
+                Nissab: ${nissab.toFixed(2)} €<br>
+                <span style="color: var(--primary-dark); font-weight: bold;">Zakat à verser: ${zakat.toFixed(2)} € (2.5% de votre patrimoine)</span>
+            `;
+            resultatElement.style.display = 'block';
+        }
+
         function sauvegarderBrouillon() {
             const formData = new FormData(document.getElementById('testamentForm'));
             const data = {};
@@ -1239,7 +1592,8 @@
             
             // Récupérer les données des personnes
             const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
-                               'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
+                               'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
+                               'creances', 'dettes', 'sadaqa'];
             categories.forEach(category => {
                 const entries = [];
                 const inputs = document.querySelectorAll(`[name^="${category}["]`);
@@ -1405,6 +1759,98 @@
                     biensHTML += `</div>`;
                 }
             });
+            
+            // Récupérer les données des dettes et créances (étape 4)
+            let dettesHTML = '';
+            const categoriesDettes = ['creances', 'dettes', 'sadaqa'];
+            
+            categoriesDettes.forEach(category => {
+                if (data[category] && data[category].length > 0) {
+                    let categoryTitle = '';
+                    switch(category) {
+                        case 'creances': categoryTitle = 'CRÉANCES À PERCEVOIR'; break;
+                        case 'dettes': categoryTitle = 'DETTES À RÉGLER'; break;
+                        case 'sadaqa': categoryTitle = 'SADAQA À EFFECTUER'; break;
+                    }
+                    
+                    dettesHTML += `<div class="section">
+                        <div class="section-title">${categoryTitle}</div>`;
+                    
+                    data[category].forEach((item, index) => {
+                        dettesHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
+                        
+                        switch(category) {
+                            case 'creances':
+                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Débiteur: ${item.nom || 'Non précisé'}`;
+                                if (item.date_remboursement) dettesHTML += `, Date remboursement: ${item.date_remboursement}`;
+                                break;
+                                
+                            case 'dettes':
+                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Créancier: ${item.nom || 'Non précisé'}`;
+                                if (item.date_echeance) dettesHTML += `, Date échéance: ${item.date_echeance}`;
+                                break;
+                                
+                            case 'sadaqa':
+                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Description: ${item.description || 'Non précisée'}, Bénéficiaire: ${item.beneficiaire || 'Non précisé'}`;
+                                break;
+                        }
+                        
+                        dettesHTML += `</div>`;
+                    });
+                    
+                    dettesHTML += `</div>`;
+                }
+            });
+            
+            // Récupérer les données des devoirs religieux (étape 4)
+            let devoirsHTML = '';
+            
+            if (data.zakatStatus || data.jeuneStatus || data.hadjStatus) {
+                devoirsHTML += `<div class="section">
+                    <div class="section-title">DEVOIRS RELIGIEUX</div>`;
+                
+                if (data.zakatStatus) {
+                    let zakatText = '';
+                    switch(data.zakatStatus) {
+                        case 'versee': zakatText = 'Zakat versée'; break;
+                        case 'non-versee': zakatText = 'Zakat non versée'; break;
+                        case 'partielle': zakatText = 'Zakat partiellement versée'; break;
+                    }
+                    devoirsHTML += `<div class="field"><span class="field-label">Zakat :</span> ${zakatText}</div>`;
+                }
+                
+                if (data.jeuneStatus) {
+                    let jeuneText = '';
+                    if (data.jeuneStatus === '0') {
+                        jeuneText = 'Aucun jour de jeûne à rattraper';
+                    } else if (data.jeuneStatus === 'plus') {
+                        jeuneText = 'Plus de 10 jours de jeûne à rattraper';
+                    } else {
+                        jeuneText = `${data.jeuneStatus} jour(s) de jeûne à rattraper`;
+                    }
+                    devoirsHTML += `<div class="field"><span class="field-label">Jeûne de Ramadan :</span> ${jeuneText}</div>`;
+                    
+                    if (data.jeuneNotes) {
+                        devoirsHTML += `<div class="field"><span class="field-label">Notes sur le jeûne :</span> ${data.jeuneNotes}</div>`;
+                    }
+                }
+                
+                if (data.hadjStatus) {
+                    let hadjText = '';
+                    switch(data.hadjStatus) {
+                        case 'accompli': hadjText = 'Hadj accompli'; break;
+                        case 'non-accompli': hadjText = 'Hadj non accompli'; break;
+                        case 'partiel': hadjText = 'Hadj partiellement accompli (Omra seulement)'; break;
+                    }
+                    devoirsHTML += `<div class="field"><span class="field-label">Pèlerinage :</span> ${hadjText}</div>`;
+                    
+                    if (data.hadjNotes) {
+                        devoirsHTML += `<div class="field"><span class="field-label">Notes sur le Hadj :</span> ${data.hadjNotes}</div>`;
+                    }
+                }
+                
+                devoirsHTML += `</div>`;
+            }
             
             return `
 <!DOCTYPE html>
@@ -1576,6 +2022,23 @@
         ${biensHTML}
         ` : ''}
 
+        ${dettesHTML ? `
+        <div class="decoration">◆ ◆ ◆</div>
+        
+        <div class="section">
+            <div class="section-title">DETTES ET CRÉANCES</div>
+            <p>Liste des dettes à régler et créances à percevoir :</p>
+        </div>
+        
+        ${dettesHTML}
+        ` : ''}
+
+        ${devoirsHTML ? `
+        <div class="decoration">◆ ◆ ◆</div>
+        
+        ${devoirsHTML}
+        ` : ''}
+
         <div class="section">
             <div class="section-title">VOLONTÉS CONCERNANT LES OBSÈQUES</div>
             <p>${data.volontesObseques || 'Selon les traditions islamiques'}</p>
@@ -1682,12 +2145,17 @@
                 
                 // Remplir les données des personnes si elles existent
                 const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
-                                   'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
+                                   'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
+                                   'creances', 'dettes', 'sadaqa'];
                 categories.forEach(category => {
                     if (data[category] && Array.isArray(data[category])) {
                         data[category].forEach((item, index) => {
                             if (['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'].includes(category)) {
                                 addPerson(category);
+                            } else if (['creances', 'dettes'].includes(category)) {
+                                addDebt(category);
+                            } else if (category === 'sadaqa') {
+                                addSadaqa();
                             } else {
                                 addAsset(category);
                             }
@@ -1728,4 +2196,4 @@
         }, 30000);
     </script>
 </body>
-                                                                                          </html>
+    </html>
