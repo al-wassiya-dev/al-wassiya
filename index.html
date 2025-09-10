@@ -1,340 +1,72 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Al Wassiya - Votre Testament Islamique Simplifié</title>
-
-    <!-- Polices -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet" />
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Vos styles exacts fournis, plus quelques ajustements pour RTL */
-        /* ... intégrer ici tout le style CSS que vous avez donné ... */
-        body[dir="rtl"] {
-          direction: rtl;
-          text-align: right;
-        }
-        body[dir="rtl"] label, body[dir="rtl"] h2, body[dir="rtl"] h3 {
-          text-align: right;
-        }
-        .title-arabe {
-          font-family: 'Amiri', serif;
-          font-size: 3rem;
-          color: var(--primary);
-          margin-top: -10px;
-          margin-bottom: 1em;
-          text-align: center;
-        }
-        /* Ajoutez ici toutes vos variables CSS et styles fournis */
-    </style>
-</head>
-<body lang="fr" dir="ltr">
-    <div class="islamic-pattern"></div>
-    <div class="container">
-        <!-- Header commun avec titre FR et AR -->
-        <div class="header">
-            <div class="logo" id="logo-title">Al Wassiya</div>
-            <div class="title-arabe" id="title-arabe" style="display:none;">الوصية</div>
-            <div class="subtitle" id="subtitle">Votre Testament Islamique Simplifié</div>
-            <div class="bismillah" id="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-            <p>Créez facilement un testament islamique respectant le Coran et la Sunna</p>
-        </div>
-
-        <!-- Progress bar et indication d'étape -->
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 16.66%;"></div>
-            </div>
-            <div class="step-indicator" id="stepIndicator">
-                Étape 1 sur 6 : Informations personnelles et volontés générales
-            </div>
-        </div>
-
-        <!-- Contenu multipage pour les étapes 1 à 5 avec navigation -->
-        <form id="testamentForm">
-
-            <!-- Étape 1 : intégrée depuis votre code fourni -->
-
-            <div id="step1" class="form-step">
-                <!-- Tout votre contenu étape 1 ici, tel que donné -->
-                <!-- ... votre code complet étape 1 ... -->
-                <!-- J'inclus ici la balise pour le conteneur et tout le contenu -->
-                <!-- Par souci de lisibilité, vous pouvez aussi la copier-coller au complet dans votre intégration -->
-                <!-- Déjà donné dans votre dernier message -->
-            </div>
-
-            <!-- Étape 2 : Famille et proches -->
-            <div id="step2" class="form-step" style="display:none;">
-                <!-- Tout contenu étape 2 de votre code fourni -->
-                <!-- ... à recopier exactement -->
-            </div>
-
-            <!-- Étape 3 : Biens matériels et financiers -->
-            <div id="step3" class="form-step" style="display:none;">
-                <!-- Votre code fourni pour étape 3 ici -->
-            </div>
-
-            <!-- Étape 4 : Dettes et devoirs religieux + zakat corrigée -->
-            <div id="step4" class="form-step" style="display:none;">
-                <!-- Votre contenu étape 4 -->
-                <!-- Ajout de la fonction JS pour calculer la zakat corrigée ci-dessous -->
-            </div>
-
-            <!-- Étape 5 : Données numériques et réseaux sociaux -->
-            <div id="step5" class="form-step" style="display:none;">
-                <h2>Étape 5 - Données numériques et Réseaux sociaux</h2>
-                <div class="form-group">
-                    <label for="reseau">Nom du réseau social</label>
-                    <select id="reseau" name="reseau" >
-                        <option>Facebook</option>
-                        <option>Instagram</option>
-                        <option>WhatsApp</option>
-                        <option>Telegram</option>
-                        <option>TikTok</option>
-                        <option>Twitter/X</option>
-                        <option>LinkedIn</option>
-                        <option>Snapchat</option>
-                        <option>Signal</option>
-                        <option>WeChat</option>
-                        <option>Autre</option>
-                    </select>
-                </div>
-
-                <div class="form-group"><label>Pseudo</label><input type="text" name="pseudo" /></div>
-                <div class="form-group"><label>Adresse mail rattachée</label><input type="email" name="mail_reseau" /></div>
-                <div class="form-group"><label>Numéro de téléphone</label><input type="tel" name="tel_reseau" /></div>
-                <div class="form-group"><label>Mot de passe</label><input type="password" name="mdp_reseau" /></div>
-                <div class="form-group"><label>Compléments</label><input type="text" name="complement_reseau" /></div>
-
-                <h3>Compte Email</h3>
-                <div class="form-group"><label>Adresse mail</label><input type="email" name="mail_compte" /></div>
-                <div class="form-group"><label>Mot de passe</label><input type="password" name="mdp_compte" /></div>
-                <div class="form-group"><label>Adresse personnelle</label><input type="text" name="adresse_perso" /></div>
-                <div class="form-group"><label>Adresse professionnelle</label><input type="text" name="adresse_pro" /></div>
-
-                <h3>Comptes en ligne</h3>
-                <div class="form-group"><label>Nom du site/service</label><input type="text" name="site_compte" /></div>
-                <div class="form-group"><label>Adresse mail</label><input type="email" name="mail_site" /></div>
-                <div class="form-group"><label>Mot de passe</label><input type="password" name="mdp_site" /></div>
-                <div class="form-group"><label>Infos complémentaires</label><input type="text" name="infos_site" placeholder="(Amazon, abonnement téléphone...)" /></div>
-
-                <h3>Cloud en ligne</h3>
-                <div class="form-group"><label>Pseudo</label><input type="text" name="pseudo_cloud" /></div>
-                <div class="form-group"><label>Adresse mail</label><input type="email" name="mail_cloud" /></div>
-                <div class="form-group"><label>Mot de passe</label><input type="password" name="mdp_cloud" /></div>
-                <div class="form-group"><label>Infos complémentaires</label><input type="text" name="infos_cloud" /></div>
-
-                <h3>Téléphones et autres appareils</h3>
-                <div class="form-group"><label>Numéro de téléphone</label><input type="tel" name="num_telephone" /></div>
-                <div class="form-group"><label>Mot de passe</label><input type="password" name="mdp_appareil" /></div>
-
-                <button type="submit" class="btn btn-primary">Valider cette étape</button>
-            </div>
-
-        </form>
-
-        <!-- Navigation entre étapes -->
-        <div class="step-navigation">
-            <button class="btn btn-secondary nav-btn active" data-step="1">Étape 1</button>
-            <button class="btn btn-secondary nav-btn" data-step="2">Étape 2</button>
-            <button class="btn btn-secondary nav-btn" data-step="3">Étape 3</button>
-            <button class="btn btn-secondary nav-btn" data-step="4">Étape 4</button>
-            <button class="btn btn-secondary nav-btn" data-step="5">Étape 5</button>
-        </div>
-
-        <!-- Section partage PDF sur toutes les pages -->
-        <div class="share-section">
-            <div class="share-title">Partager votre testament</div>
-            <div class="share-buttons">
-                <div class="share-btn email" onclick="shareEmail()"><i class="fa fa-envelope"></i></div>
-                <div class="share-btn whatsapp" onclick="shareWhatsApp()"><i class="fa fa-whatsapp"></i></div>
-                <div class="share-btn facebook" onclick="shareFacebook()"><i class="fa fa-facebook"></i></div>
-                <div class="share-btn twitter" onclick="shareTwitter()"><i class="fa fa-twitter"></i></div>
-            </div>
-        </div>
-
-        <!-- Sélecteur de langue -->
-        <div class="lang-switch" style="text-align:center; margin-top:1rem;">
-            <button id="lang-fr" class="btn btn-primary lang-btn active">Français</button>
-            <button id="lang-ar" class="btn btn-primary lang-btn">عربية</button>
-        </div>
-
-    </div>
-
-    <script>
-        // Gestion de la navigation entre étapes
-        const navButtons = document.querySelectorAll('.nav-btn');
-        const steps = document.querySelectorAll('.form-step');
-        let currentStep = 1;
-
-        function showStep(step) {
-            steps.forEach(s => s.style.display = 'none');
-            const stepToShow = document.getElementById('step' + step);
-            if (stepToShow) stepToShow.style.display = 'block';
-
-            navButtons.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.step == step);
-            });
-
-            // Mettre à jour la barre de progression et texte
-            const progress = ((step) / 6) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            const stepTextsFR = [
-                "Étape 1 sur 6 : Informations personnelles et volontés générales",
-                "Étape 2 sur 6 : Famille et proches",
-                "Étape 3 sur 6 : Biens matériels et financiers",
-                "Étape 4 sur 6 : Dettes et devoirs religieux",
-                "Étape 5 sur 6 : Données numériques et Réseaux sociaux",
-                "Étape 6 sur 6 : Résumé et génération du testament"
-            ];
-            const stepTextsAR = [
-                "المرحلة 1 من 6: المعلومات الشخصية والرغبات العامة",
-                "المرحلة 2 من 6: العائلة والأقرباء",
-                "المرحلة 3 من 6: الممتلكات المادية والمالية",
-                "المرحلة 4 من 6: الديون والواجبات الدينية",
-                "المرحلة 5 من 6: البيانات الرقمية ووسائل التواصل الاجتماعي",
-                "المرحلة 6 من 6: الملخص وإنشاء الوصية"
-            ];
-            const lang = document.documentElement.lang || "fr";
-            document.getElementById('stepIndicator').textContent = (lang === 'ar' ? stepTextsAR : stepTextsFR)[step-1];
-            currentStep = step;
+        :root {
+            --primary: #C9B178;
+            --primary-dark: #A89262;
+            --secondary: #2D4C68;
+            --accent: #3A5F7E;
+            --light: #F8F5EE;
+            --dark: #1E1E24;
+            --success: #4CAF50;
+            --error: #E74C3C;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                showStep(Number(btn.dataset.step));
-            });
-        });
-
-        showStep(1); // initial
-
-        // Correction du calcul de la zakat (étape 4)
-        function calculerZakat() {
-            const nissab = parseFloat(document.getElementById('nissab').value) || 0;
-            const epargne = parseFloat(document.getElementById('epargne').value) || 0;
-            const autres = parseFloat(document.getElementById('autres_actifs').value) || 0;
-            const dettes = parseFloat(document.getElementById('dettes_zakat').value) || 0;
-
-            const totalPossede = epargne + autres - dettes;
-
-            if(totalPossede <= nissab){
-                afficherResultatZakat("Le montant total ne dépasse pas le Nissab. Pas de zakat due.");
-            } else {
-                const montantZakat = (totalPossede - nissab) * 0.025;
-                afficherResultatZakat("Zakat due : " + montantZakat.toFixed(2) + " € (calculée uniquement sur la part dépassant le Nissab).");
-            }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        function afficherResultatZakat(msg) {
-            const div = document.getElementById('resultatZakat');
-            div.style.display = 'block';
-            div.textContent = msg;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%);
+            color: var(--dark);
+            line-height: 1.7;
+            min-height: 100vh;
         }
 
-        // Gestion des partages PDF (remplacer URL par la vraie url de votre PDF)
-        const pdfUrl="https://example.com/votre-testament.pdf";
-
-        function shareEmail(){
-            window.location.href = `mailto:?subject=${encodeURIComponent("Mon Testament Islamique")}&body=${encodeURIComponent("Bonjour,\n\nVeuillez trouver mon testament ici : "+pdfUrl)}`;
-        }
-        function shareWhatsApp(){
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent("Mon Testament Islamique : "+pdfUrl)}`, '_blank');
-        }
-        function shareFacebook(){
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pdfUrl)}`, '_blank');
-        }
-        function shareTwitter(){
-            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(pdfUrl)}&text=${encodeURIComponent("Mon Testament Islamique")}`, '_blank');
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        // Gestion langue FR/AR
-        const langButtons = document.querySelectorAll('.lang-btn');
-        const translations = {
-            fr: {
-                "logo-title": "Al Wassiya",
-                "title-arabe": "الوصية",
-                "subtitle": "Votre Testament Islamique Simplifié",
-                "bismillah": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم",
-                "stepIndicator": "Étape 1 sur 6 : Informations personnelles et volontés générales",
-                // Ajouter les autres chaînes de traduction au besoin
-            },
-            ar: {
-                "logo-title": "الوصية",
-                "title-arabe": "الوصية",
-                "subtitle": "وصيتك الإسلامية المبسطة",
-                "bismillah": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم",
-                "stepIndicator": "المرحلة 1 من 6: المعلومات الشخصية والرغبات العامة",
-                // Ajouter autres traductions au besoin
-            }
-        };
-
-        function setLanguage(lang) {
-            document.documentElement.lang = lang;
-            if lang === 'ar') {
-                document.documentElement.dir = 'rtl';
-                document.body.dir = 'rtl';
-            } else {
-                document.documentElement.dir = 'ltr';
-                document.body.dir = 'ltr';
-            }
-            for (let id in translations[lang]) {
-                const el = document.getElementById(id);
-                if (el) el.textContent = translations[lang][id];
-            }
-            langButtons.forEach(btn => {
-                btn.classList.toggle('active', btn.id === 'lang-' + lang);
-            });
-            // Mettre à jour l’indicateur d’étape selon langue aussi
-            showStep(currentStep);
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 30px;
+            position: relative;
         }
 
-        langButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                setLanguage(btn.id.slice(5));
-            });
-        });
-
-        // Initial langue français
-        setLanguage('fr');
-
-        // Formulaire étape 5 : envoi / traitement
-        document.getElementById('step5').querySelector('form,form')?.addEventListener('submit', e => {
-            e.preventDefault();
-            // Récupérer données, ajouter à PDF (fonction à connecter avec backend ou jsPDF)
-            alert("Informations de l’étape 5 enregistrées. Elles seront ajoutées au testament généré.");
-        });
-
-        // Fonction toggle pour catégories déroulantes (parents, conjoints etc)
-        function toggleCategory(id) {
-            const el = document.getElementById(id);
-            if (el) el.classList.toggle('active');
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
-        // Fonction toggle champ conjoint (dans étape 1 si besoin)
-        function toggleConjointField() {
-            const situation = document.getElementById('situationFamiliale').value;
-            const sexe = document.getElementById('sexe').value;
-            const groupe = document.getElementById('conjointGroup');
-            const label = document.getElementById('conjointLabel');
-            if (!groupe) return;
-
-            if (situation === 'marie') {
-                groupe.style.display = 'block';
-                if (sexe === 'homme') label.textContent = "Identité de l'épouse";
-                else if (sexe === 'femme') label.textContent = "Identité de l'époux";
-                else label.textContent = "Identité du conjoint";
-            } else {
-                groupe.style.display = 'none';
-            }
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-    </script>
-</body>
-</html>
 
         .bismillah {
             font-size: 2.2rem;
@@ -1295,6 +1027,110 @@
                 </div>
             </div>
 
+            <!-- Étape 5: Données numériques et réseaux sociaux -->
+            <div id="step5" class="form-step" style="display: none;">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-hashtag"></i> Réseaux sociaux</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('reseaux-sociaux')">
+                                <div class="category-title">
+                                    <i class="fas fa-share-alt"></i> Comptes de réseaux sociaux
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="reseaux-sociaux" class="category-content">
+                                <div id="reseaux-sociaux-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addReseauSocial()">
+                                    <i class="fas fa-plus"></i> Ajouter un réseau social
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-envelope"></i> Comptes email</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('emails')">
+                                <div class="category-title">
+                                    <i class="fas fa-at"></i> Adresses email
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="emails" class="category-content">
+                                <div id="emails-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addEmail()">
+                                    <i class="fas fa-plus"></i> Ajouter un compte email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-globe"></i> Comptes en ligne</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('comptes-online')">
+                                <div class="category-title">
+                                    <i class="fas fa-user-circle"></i> Comptes divers
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="comptes-online" class="category-content">
+                                <div id="comptes-online-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addCompteOnline()">
+                                    <i class="fas fa-plus"></i> Ajouter un compte en ligne
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-cloud"></i> Cloud en ligne</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('cloud')">
+                                <div class="category-title">
+                                    <i class="fas fa-database"></i> Services de stockage
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="cloud" class="category-content">
+                                <div id="cloud-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addCloud()">
+                                    <i class="fas fa-plus"></i> Ajouter un service cloud
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2 class="section-title"><i class="fas fa-mobile-alt"></i> Appareils avec mots de passe</h2>
+                        
+                        <div class="asset-category">
+                            <div class="category-header" onclick="toggleCategory('appareils')">
+                                <div class="category-title">
+                                    <i class="fas fa-lock"></i> Appareils sécurisés
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="appareils" class="category-content">
+                                <div id="appareils-container"></div>
+                                <button type="button" class="add-person-btn" onclick="addAppareil()">
+                                    <i class="fas fa-plus"></i> Ajouter un appareil
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="privacy-notice">
+                            <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets. Indiquez plutôt où ces informations peuvent être retrouvées.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="actions">
                 <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
                     <i class="fas fa-save"></i> Sauvegarder le brouillon
@@ -1397,7 +1233,12 @@
                 case 4:
                     stepText = 'Étape 4 sur 6 : Dettes et devoirs religieux';
                     document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers l\'étape 5 <i class="fas fa-arrow-right"></i>';
+                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les données numériques <i class="fas fa-arrow-right"></i>';
+                    break;
+                case 5:
+                    stepText = 'Étape 5 sur 6 : Données numériques et réseaux sociaux';
+                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
+                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers l\'étape 6 <i class="fas fa-arrow-right"></i>';
                     break;
             }
             document.getElementById('stepIndicator').textContent = stepText;
@@ -1408,7 +1249,7 @@
 
         // Fonction pour passer à l'étape suivante
         function nextStep() {
-            if (etapeActuelle < 4) {
+            if (etapeActuelle < 5) {
                 changerEtape(etapeActuelle + 1);
             }
         }
@@ -1812,7 +1653,221 @@
             container.appendChild(sadaqaEntry);
         }
 
-        // Fonction pour calculer la Zakat
+        // Fonction pour ajouter un réseau social (étape 5)
+        function addReseauSocial() {
+            const container = document.getElementById('reseaux-sociaux-container');
+            const index = container.children.length;
+            
+            const entry = document.createElement('div');
+            entry.className = 'asset-entry';
+            entry.innerHTML = `
+                <div class="form-group">
+                    <label>Réseau social <span class="required">*</span></label>
+                    <select name="reseaux_sociaux[${index}][type]" required>
+                        <option value="">Sélectionner</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="twitter">Twitter / X</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="snapchat">Snapchat</option>
+                        <option value="pinterest">Pinterest</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="reddit">Reddit</option>
+                        <option value="discord">Discord</option>
+                        <option value="signal">Signal</option>
+                        <option value="autre">Autre réseau social</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pseudo / Identifiant</label>
+                    <input type="text" name="reseaux_sociaux[${index}][pseudo]" placeholder="Votre pseudo sur ce réseau">
+                </div>
+                <div class="form-group">
+                    <label>Adresse email rattachée</label>
+                    <input type="email" name="reseaux_sociaux[${index}][email]" placeholder="Email associé à ce compte">
+                </div>
+                <div class="form-group">
+                    <label>Numéro de téléphone rattaché</label>
+                    <input type="tel" name="reseaux_sociaux[${index}][telephone]" placeholder="Numéro associé à ce compte">
+                </div>
+                <div class="form-group">
+                    <label>Indice pour le mot de passe</label>
+                    <input type="text" name="reseaux_sociaux[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
+                </div>
+                <div class="form-group">
+                    <label>Compléments d'information</label>
+                    <textarea name="reseaux_sociaux[${index}][complements]" placeholder="Informations complémentaires sur ce compte"></textarea>
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            
+            container.appendChild(entry);
+        }
+
+        // Fonction pour ajouter un compte email (étape 5)
+        function addEmail() {
+            const container = document.getElementById('emails-container');
+            const index = container.children.length;
+            
+            const entry = document.createElement('div');
+            entry.className = 'asset-entry';
+            entry.innerHTML = `
+                <div class="form-group">
+                    <label>Adresse email <span class="required">*</span></label>
+                    <input type="email" name="emails[${index}][adresse]" required placeholder="Votre adresse email">
+                </div>
+                <div class="form-group">
+                    <label>Type de compte</label>
+                    <select name="emails[${index}][type]">
+                        <option value="">Sélectionner</option>
+                        <option value="personnel">Personnel</option>
+                        <option value="professionnel">Professionnel</option>
+                        <option value="secondaire">Secondaire</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Indice pour le mot de passe</label>
+                    <input type="text" name="emails[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
+                </div>
+                <div class="form-group">
+                    <label>Compléments d'information</label>
+                    <textarea name="emails[${index}][complements]" placeholder="Informations complémentaires sur ce compte email"></textarea>
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            
+            container.appendChild(entry);
+        }
+
+        // Fonction pour ajouter un compte en ligne (étape 5)
+        function addCompteOnline() {
+            const container = document.getElementById('comptes-online-container');
+            const index = container.children.length;
+            
+            const entry = document.createElement('div');
+            entry.className = 'asset-entry';
+            entry.innerHTML = `
+                <div class="form-group">
+                    <label>Nom du site / service <span class="required">*</span></label>
+                    <input type="text" name="comptes_online[${index}][site]" required placeholder="Ex: Amazon, Netflix, abonnement téléphone...">
+                </div>
+                <div class="form-group">
+                    <label>Adresse email du compte</label>
+                    <input type="email" name="comptes_online[${index}][email]" placeholder="Email associé à ce compte">
+                </div>
+                <div class="form-group">
+                    <label>Identifiant / Pseudo</label>
+                    <input type="text" name="comptes_online[${index}][identifiant]" placeholder="Votre identifiant sur ce site">
+                </div>
+                <div class="form-group">
+                    <label>Indice pour le mot de passe</label>
+                    <input type="text" name="comptes_online[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
+                </div>
+                <div class="form-group">
+                    <label>Informations complémentaires</label>
+                    <textarea name="comptes_online[${index}][complements]" placeholder="Détails sur ce compte, abonnement, etc."></textarea>
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            
+            container.appendChild(entry);
+        }
+
+        // Fonction pour ajouter un service cloud (étape 5)
+        function addCloud() {
+            const container = document.getElementById('cloud-container');
+            const index = container.children.length;
+            
+            const entry = document.createElement('div');
+            entry.className = 'asset-entry';
+            entry.innerHTML = `
+                <div class="form-group">
+                    <label>Service cloud <span class="required">*</span></label>
+                    <select name="cloud[${index}][service]" required>
+                        <option value="">Sélectionner</option>
+                        <option value="google_drive">Google Drive</option>
+                        <option value="dropbox">Dropbox</option>
+                        <option value="icloud">iCloud</option>
+                        <option value="onedrive">OneDrive</option>
+                        <option value="mega">MEGA</option>
+                        <option value="box">Box</option>
+                        <option value="autre">Autre service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pseudo / Identifiant</label>
+                    <input type="text" name="cloud[${index}][pseudo]" placeholder="Votre identifiant sur ce service">
+                </div>
+                <div class="form-group">
+                    <label>Adresse email rattachée</label>
+                    <input type="email" name="cloud[${index}][email]" placeholder="Email associé à ce compte">
+                </div>
+                <div class="form-group">
+                    <label>Indice pour le mot de passe</label>
+                    <input type="text" name="cloud[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
+                </div>
+                <div class="form-group">
+                    <label>Informations complémentaires</label>
+                    <textarea name="cloud[${index}][complements]" placeholder="Détails sur ce compte cloud"></textarea>
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            
+            container.appendChild(entry);
+        }
+
+        // Fonction pour ajouter un appareil (étape 5)
+        function addAppareil() {
+            const container = document.getElementById('appareils-container');
+            const index = container.children.length;
+            
+            const entry = document.createElement('div');
+            entry.className = 'asset-entry';
+            entry.innerHTML = `
+                <div class="form-group">
+                    <label>Type d'appareil <span class="required">*</span></label>
+                    <select name="appareils[${index}][type]" required>
+                        <option value="">Sélectionner</option>
+                        <option value="telephone">Téléphone portable</option>
+                        <option value="ordinateur_portable">Ordinateur portable</option>
+                        <option value="ordinateur_fixe">Ordinateur fixe</option>
+                        <option value="tablette">Tablette</option>
+                        <option value="montre_connectee">Montre connectée</option>
+                        <option value="autre">Autre appareil</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Marque et modèle</label>
+                    <input type="text" name="appareils[${index}][modele]" placeholder="Ex: iPhone 13, Samsung Galaxy S21...">
+                </div>
+                <div class="form-group">
+                    <label>Indice pour le mot de passe / code</label>
+                    <input type="text" name="appareils[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le code d'accès">
+                </div>
+                <div class="form-group">
+                    <label>Informations complémentaires</label>
+                    <textarea name="appareils[${index}][complements]" placeholder="Détails sur cet appareil"></textarea>
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            
+            container.appendChild(entry);
+        }
+
+        // Fonction pour calculer la Zakat (CORRIGÉE)
         function calculerZakat() {
             const nissab = parseFloat(document.getElementById('nissab').value) || 0;
             const epargne = parseFloat(document.getElementById('epargne').value) || 0;
@@ -1840,12 +1895,16 @@
                 return;
             }
             
-            const zakat = patrimoine * 0.025; // 2.5%
+            // CORRECTION: On ne calcule la Zakat que sur la partie qui dépasse le Nissab
+            const montantImposable = patrimoine - nissab;
+            const zakat = montantImposable * 0.025; // 2.5%
+            
             resultatElement.innerHTML = `
                 <strong>Résultat du calcul :</strong><br>
                 Patrimoine net: ${patrimoine.toFixed(2)} €<br>
                 Nissab: ${nissab.toFixed(2)} €<br>
-                <span style="color: var(--primary-dark); font-weight: bold;">Zakat à verser: ${zakat.toFixed(2)} € (2.5% de votre patrimoine)</span>
+                Montant imposable: ${montantImposable.toFixed(2)} €<br>
+                <span style="color: var(--primary-dark); font-weight: bold;">Zakat à verser: ${zakat.toFixed(2)} € (2.5% du montant imposable)</span>
             `;
             resultatElement.style.display = 'block';
         }
@@ -1861,7 +1920,7 @@
             // Récupérer les données des personnes
             const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
                                'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
-                               'creances', 'dettes', 'sadaqa'];
+                               'creances', 'dettes', 'sadaqa', 'reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
             categories.forEach(category => {
                 const entries = [];
                 const inputs = document.querySelectorAll(`[name^="${category}["]`);
@@ -2120,6 +2179,62 @@
                 devoirsHTML += `</div>`;
             }
             
+            // Récupérer les données numériques (étape 5)
+            let numeriqueHTML = '';
+            const categoriesNumerique = ['reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
+            
+            categoriesNumerique.forEach(category => {
+                if (data[category] && data[category].length > 0) {
+                    let categoryTitle = '';
+                    switch(category) {
+                        case 'reseaux_sociaux': categoryTitle = 'RÉSEAUX SOCIAUX'; break;
+                        case 'emails': categoryTitle = 'COMPTES EMAIL'; break;
+                        case 'comptes_online': categoryTitle = 'COMPTES EN LIGNE'; break;
+                        case 'cloud': categoryTitle = 'SERVICES CLOUD'; break;
+                        case 'appareils': categoryTitle = 'APPAREILS SÉCURISÉS'; break;
+                    }
+                    
+                    numeriqueHTML += `<div class="section">
+                        <div class="section-title">${categoryTitle}</div>`;
+                    
+                    data[category].forEach((item, index) => {
+                        numeriqueHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
+                        
+                        switch(category) {
+                            case 'reseaux_sociaux':
+                                numeriqueHTML += `Réseau: ${item.type || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}, Email: ${item.email || 'Non précisé'}`;
+                                if (item.telephone) numeriqueHTML += `, Téléphone: ${item.telephone}`;
+                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                break;
+                                
+                            case 'emails':
+                                numeriqueHTML += `Email: ${item.adresse || 'Non précisé'}, Type: ${item.type || 'Non précisé'}`;
+                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                break;
+                                
+                            case 'comptes_online':
+                                numeriqueHTML += `Site: ${item.site || 'Non précisé'}, Email: ${item.email || 'Non précisé'}, Identifiant: ${item.identifiant || 'Non précisé'}`;
+                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                break;
+                                
+                            case 'cloud':
+                                numeriqueHTML += `Service: ${item.service || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}, Email: ${item.email || 'Non précisé'}`;
+                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                break;
+                                
+                            case 'appareils':
+                                numeriqueHTML += `Type: ${item.type || 'Non précisé'}, Modèle: ${item.modele || 'Non précisé'}`;
+                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                break;
+                        }
+                        
+                        numeriqueHTML += `</div>`;
+                    });
+                    
+                    numeriqueHTML += `</div>`;
+                }
+            });
+            
             return `
 <!DOCTYPE html>
 <html>
@@ -2283,7 +2398,7 @@
         <div class="decoration">◆ ◆ ◆</div>
         
         <div class="section">
-            <div class="section-title">BIENS MATÉRIELS ET FINANCIERS</div>
+            <div class="section-title">BIENS MATÉRIELS AND FINANCIERS</div>
             <p>Liste des biens matériels et financiers déclarés par le testateur :</p>
         </div>
         
@@ -2305,6 +2420,17 @@
         <div class="decoration">◆ ◆ ◆</div>
         
         ${devoirsHTML}
+        ` : ''}
+
+        ${numeriqueHTML ? `
+        <div class="decoration">◆ ◆ ◆</div>
+        
+        <div class="section">
+            <div class="section-title">DONNÉES NUMÉRIQUES</div>
+            <p>Liste des comptes numériques et appareils déclarés par le testateur :</p>
+        </div>
+        
+        ${numeriqueHTML}
         ` : ''}
 
         <div class="section">
@@ -2414,7 +2540,7 @@
                 // Remplir les données des personnes si elles existent
                 const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
                                    'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
-                                   'creances', 'dettes', 'sadaqa'];
+                                   'creances', 'dettes', 'sadaqa', 'reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
                 categories.forEach(category => {
                     if (data[category] && Array.isArray(data[category])) {
                         data[category].forEach((item, index) => {
@@ -2424,6 +2550,16 @@
                                 addDebt(category);
                             } else if (category === 'sadaqa') {
                                 addSadaqa();
+                            } else if (category === 'reseaux_sociaux') {
+                                addReseauSocial();
+                            } else if (category === 'emails') {
+                                addEmail();
+                            } else if (category === 'comptes_online') {
+                                addCompteOnline();
+                            } else if (category === 'cloud') {
+                                addCloud();
+                            } else if (category === 'appareils') {
+                                addAppareil();
                             } else {
                                 addAsset(category);
                             }
@@ -2464,4 +2600,4 @@
         }, 30000);
     </script>
 </body>
-    </html>
+</html>
