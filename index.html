@@ -1,1 +1,97 @@
-// Placeholder content for the purpose of retrieving the current file. Please provide the actual content of the function.
+function genererContenuHTML() {
+    const date = new Date().toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    // Récupérer les données du formulaire
+    const form = document.getElementById('testamentForm');
+    const formData = new FormData(form);
+    const data = {};
+
+    for (let [key, value] of formData.entries()) {
+        data[key] = value;
+    }
+
+    // Collecter dynamiquement les catégories
+    const categories = [
+        'parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis',
+        'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
+        'creances', 'dettes', 'sadaqa', 'reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'
+    ];
+    categories.forEach(category => {
+        const entries = [];
+        const inputs = document.querySelectorAll(`[name^="${category}["]`);
+        inputs.forEach(input => {
+            const name = input.getAttribute('name');
+            const match = name.match(new RegExp(`${category}\[(\d+)\]\[(\w+)\]`));
+            if (match) {
+                const index = parseInt(match[1]);
+                const field = match[2];
+                if (!entries[index]) entries[index] = {};
+                entries[index][field] = input.value;
+            }
+        });
+        if (entries.length > 0) {
+            data[category] = entries.filter(Boolean); // enlève les éventuels trous
+        }
+    });
+
+    // Génération du HTML complet avec toutes les données du formulaire
+    let html = `<html><head>
+        <title>Testament - ${data.prenom || ''} ${data.nom || ''}</title>
+        <meta charset="utf-8">
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            h1, h2, h3 { color: #2D4C68; }
+            .section { margin-bottom: 30px; }
+            .categorie { margin-bottom: 15px; }
+            .item { margin-left: 15px; }
+        </style>
+    </head><body>`;
+
+    html += `<h1>Testament de ${data.prenom || ''} ${data.nom || ''}</h1>`;
+    html += `<p>Date de génération : ${date}</p>`;
+
+    // Informations personnelles
+    html += `<div class="section"><h2>Identité</h2>`;
+    html += `<p>Sexe : ${data.sexe || ''}</p>`;
+    html += `<p>Prénom : ${data.prenom || ''}</p>`;
+    html += `<p>Nom : ${data.nom || ''}</p>`;
+    html += `<p>Date de naissance : ${data.dateNaissance || ''}</p>`;
+    html += `<p>Lieu de naissance : ${data.lieuNaissance || ''}</p>`;
+    html += `<p>Adresse : ${data.adresse || ''}</p>`;
+    html += `<p>Nationalité : ${data.nationalite || ''}</p>`;
+    html += `<p>Situation familiale : ${data.situationFamiliale || ''}</p>`;
+    html += `<p>Conjoint : ${data.conjoint || ''}</p>`;
+    html += `</div>`;
+
+    // Volontés générales
+    html += `<div class="section"><h2>Volontés générales</h2>`;
+    html += `<p>Obsèques : ${data.volontesObseques || ''}</p>`;
+    html += `<p>Recommandations à la famille : ${data.recommandationsFamille || ''}</p>`;
+    html += `<p>Exécuteur testamentaire suggéré : ${data.executeurTestament || ''}</p>`;
+    html += `<p>Contact de l'exécuteur : ${data.contactExecuteur || ''}</p>`;
+    html += `<p>Autres volontés : ${data.autresVolontes || ''}</p>`;
+    html += `</div>`;
+
+    // Pour chaque catégorie dynamique (famille, biens, etc)
+    categories.forEach(category => {
+        if (data[category] && data[category].length > 0) {
+            html += `<div class="section"><h2>${category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h2>`;
+            data[category].forEach((item, idx) => {
+                html += `<div class="categorie"><h3>${category.slice(0, -1)} #${idx + 1}</h3>`;
+                Object.keys(item).forEach(field => {
+                    html += `<div class="item"><strong>${field} :</strong> ${item[field]}</div>`;
+                });
+                html += `</div>`;
+            });
+            html += `</div>`;
+        }
+    });
+
+    html += `</body></html>`;
+    return html;
+}
