@@ -6,6 +6,9 @@
     <title>Al Wassiya - Votre Testament Islamique Simplifié</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Intégration de jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <style>
         :root {
             --primary: #C9B178;
@@ -610,12 +613,49 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        /* Loading indicator for PDF generation */
+        .pdf-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        .pdf-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
     
     <div class="islamic-pattern"></div>
+    
+    <!-- Loading indicator for PDF generation -->
+    <div class="pdf-loading" id="pdfLoading">
+        <div class="pdf-loading-spinner"></div>
+        <p>Génération du PDF en cours...</p>
+    </div>
     
     <div class="container">
         <div class="header">
@@ -1372,7 +1412,7 @@
             document.getElementById('progressFill').style.width = `${(etape / totalEtapes) * 100}%`;
             
             // Mettre à jour les indicateurs d'étape
-            document.querySelectorAll('.step-dot').forEach((dot, index) => {
+            document.querySelectorAll('.step-dot').forEach((dot, index) {
                 dot.classList.remove('active', 'completed');
                 if (index + 1 === etape) {
                     dot.classList.add('active');
@@ -1734,7 +1774,7 @@
                     </div>
                     <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
                         <i class="fas fa-trash"></i> Supprimer
-                    </button>
+                        </button>
                 `;
             } else if (category === 'dettes') {
                 debtEntry.innerHTML = `
@@ -2133,37 +2173,169 @@
             }, 3000);
         }
 
+        // Fonction pour générer le PDF avec jsPDF
         function genererPDF() {
+            // Afficher l'indicateur de chargement
+            document.getElementById('pdfLoading').style.display = 'flex';
+            
+            // Vérifier les champs obligatoires de l'étape 1
             const form = document.getElementById('testamentForm');
             const formData = new FormData(form);
             
-            // Vérifier les champs obligatoires de l'étape 1
-            if (etapeActuelle === 1) {
-                const sexe = formData.get('sexe');
-                const prenom = formData.get('prenom');
-                const nom = formData.get('nom');
-                const dateNaissance = formData.get('dateNaissance');
-                const adresse = formData.get('adresse');
-                
-                if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
-                    alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *)');
-                    return;
-                }
+            const sexe = formData.get('sexe');
+            const prenom = formData.get('prenom');
+            const nom = formData.get('nom');
+            const dateNaissance = formData.get('dateNaissance');
+            const adresse = formData.get('adresse');
+            
+            if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
+                alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *)');
+                document.getElementById('pdfLoading').style.display = 'none';
+                return;
             }
-
-            // Générer le contenu HTML formaté pour impression
-            const contenuHTML = genererContenuHTML();
             
-            // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
-            const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
-            nouvelleFenetre.document.write(contenuHTML);
-            nouvelleFenetre.document.close();
-            
-            // Instructions pour l'utilisateur
-            alert('Le testament s\'ouvre dans une nouvelle fenêtre.\n\nPour sauvegarder en PDF :\n1. Appuyez sur Ctrl+P (Cmd+P sur Mac)\n2. Choisissez "Enregistrer au format PDF"\n3. Cliquez sur "Enregistrer"');
+            // Utiliser setTimeout pour permettre à l'UI de se mettre à jour avant le traitement lourd
+            setTimeout(() => {
+                // Récupérer les données du formulaire
+                const data = {};
+                
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+                
+                // Récupérer les données des personnes
+                const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
+                                   'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
+                                   'creances', 'dettes', 'sadaqa', 'reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
+                categories.forEach(category => {
+                    const entries = [];
+                    const inputs = document.querySelectorAll(`[name^="${category}["]`);
+                    
+                    let currentIndex = -1;
+                    inputs.forEach(input => {
+                        const name = input.getAttribute('name');
+                        const match = name.match(new RegExp(`${category}\\[(\\d+)\\]\\[(\\w+)\\]`));
+                        
+                        if (match) {
+                            const index = parseInt(match[1]);
+                            const field = match[2];
+                            
+                            if (index !== currentIndex) {
+                                entries.push({});
+                                currentIndex = index;
+                            }
+                            
+                            entries[index][field] = input.value;
+                        }
+                    });
+                    
+                    if (entries.length > 0) {
+                        data[category] = entries;
+                    }
+                });
+                
+                // Générer le PDF
+                genererContenuPDF(data);
+                
+                // Masquer l'indicateur de chargement
+                document.getElementById('pdfLoading').style.display = 'none';
+            }, 100);
         }
 
-        function genererContenuHTML() {
+        // Fonction pour générer le contenu PDF avec jsPDF
+        function genererContenuPDF(data) {
+            // Initialiser jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Définir les marges et la largeur utile
+            const margin = 20;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const usableWidth = pageWidth - 2 * margin;
+            
+            // Variables pour le suivi de la position Y
+            let yPosition = margin;
+            
+            // Fonction pour ajouter une nouvelle page si nécessaire
+            function checkPageHeight(heightNeeded) {
+                if (yPosition + heightNeeded > doc.internal.pageSize.getHeight() - margin) {
+                    doc.addPage();
+                    yPosition = margin;
+                    return true;
+                }
+                return false;
+            }
+            
+            // Fonction pour ajouter un titre de section
+            function addSectionTitle(title) {
+                checkPageHeight(20);
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(45, 76, 104); // Couleur --secondary
+                doc.text(title, margin, yPosition);
+                yPosition += 10;
+                doc.setDrawColor(201, 177, 120); // Couleur --primary
+                doc.line(margin, yPosition, pageWidth - margin, yPosition);
+                yPosition += 15;
+            }
+            
+            // Fonction pour ajouter du texte normal
+            function addText(text, x = margin, fontStyle = 'normal') {
+                doc.setFontSize(12);
+                doc.setFont(undefined, fontStyle);
+                doc.setTextColor(30, 30, 36); // Couleur --dark
+                
+                // Gérer le texte long avec word wrap
+                const splitText = doc.splitTextToSize(text, usableWidth);
+                checkPageHeight(splitText.length * 7);
+                
+                doc.text(splitText, x, yPosition);
+                yPosition += splitText.length * 7;
+            }
+            
+            // Fonction pour ajouter une paire label-valeur
+            function addField(label, value, indent = 0) {
+                if (!value) return;
+                
+                const x = margin + indent;
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(45, 76, 104); // Couleur --secondary
+                checkPageHeight(7);
+                doc.text(label + ':', x, yPosition);
+                
+                doc.setFont(undefined, 'normal');
+                doc.setTextColor(30, 30, 36); // Couleur --dark
+                
+                const splitValue = doc.splitTextToSize(value, usableWidth - indent);
+                checkPageHeight(splitValue.length * 7);
+                
+                doc.text(splitValue, x + 40, yPosition);
+                yPosition += Math.max(7, splitValue.length * 7);
+            }
+            
+            // En-tête du document
+            doc.setFontSize(24);
+            doc.setFont('Playfair Display', 'bold');
+            doc.setTextColor(201, 177, 120); // Couleur --primary
+            doc.text('Al Wassiya', pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 15;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(45, 76, 104); // Couleur --secondary
+            doc.text('Votre Testament Islamique Simplifié', pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 20;
+            
+            doc.setFontSize(18);
+            doc.setTextColor(201, 177, 120); // Couleur --primary
+            doc.text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 15;
+            
+            doc.setFontSize(20);
+            doc.setTextColor(45, 76, 104); // Couleur --secondary
+            doc.text('TESTAMENT ISLAMIQUE (WASSIYA)', pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 10;
+            
             const date = new Date().toLocaleDateString('fr-FR', {
                 weekday: 'long',
                 year: 'numeric',
@@ -2171,20 +2343,35 @@
                 day: 'numeric'
             });
             
-            // Récupérer les données du formulaire
-            const formData = new FormData(document.getElementById('testamentForm'));
-            const data = {};
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Date de rédaction : ' + date, pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 20;
             
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
+            // Section 1: Identité du testateur
+            addSectionTitle('IDENTITÉ DU TESTATEUR');
+            addField('Sexe', data.sexe);
+            addField('Nom', data.nom);
+            addField('Prénom', data.prenom);
+            addField('Date de naissance', data.dateNaissance ? new Date(data.dateNaissance).toLocaleDateString('fr-FR') : '');
+            addField('Lieu de naissance', data.lieuNaissance);
+            addField('Adresse', data.adresse);
+            addField('Nationalité', data.nationalite);
+            addField('Situation familiale', data.situationFamiliale);
+            addField('Conjoint', data.conjoint);
+            yPosition += 10;
             
-            // Récupérer les données des personnes
+            // Section 2: Famille et proches
             const categoriesPersonnes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
-            let personnesHTML = '';
+            let hasFamilyData = false;
             
             categoriesPersonnes.forEach(category => {
                 if (data[category] && data[category].length > 0) {
+                    if (!hasFamilyData) {
+                        addSectionTitle('FAMILLE ET PROCHES');
+                        hasFamilyData = true;
+                    }
+                    
                     let categoryTitle = '';
                     switch(category) {
                         case 'parents': categoryTitle = 'PARENTS'; break;
@@ -2194,27 +2381,29 @@
                         case 'amis': categoryTitle = 'AMIS PROCHES'; break;
                     }
                     
-                    personnesHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
+                    addText(categoryTitle, margin, 'bold');
+                    yPosition += 5;
                     
                     data[category].forEach((person, index) => {
-                        personnesHTML += `
-                        <div class="field"><span class="field-label">Personne ${index + 1} :</span> ${person.prenom || ''} ${person.nom || ''}</div>
-                        <div class="field"><span class="field-label">Téléphone :</span> ${person.telephone || 'Non précisé'}</div>
-                        <div class="field"><span class="field-label">Adresse :</span> ${person.adresse || 'Non précisée'}</div>
-                        <br>`;
+                        addText(`Personne ${index + 1}: ${person.prenom || ''} ${person.nom || ''}`);
+                        addField('Téléphone', person.telephone, 20);
+                        addField('Adresse', person.adresse, 20);
+                        yPosition += 5;
                     });
-                    
-                    personnesHTML += `</div>`;
                 }
             });
             
-            // Récupérer les données des biens (étape 3)
+            // Section 3: Biens matériels et financiers
             const categoriesBiens = ['immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
-            let biensHTML = '';
+            let hasAssetsData = false;
             
             categoriesBiens.forEach(category => {
                 if (data[category] && data[category].length > 0) {
+                    if (!hasAssetsData) {
+                        addSectionTitle('BIENS MATÉRIELS ET FINANCIERS');
+                        hasAssetsData = true;
+                    }
+                    
                     let categoryTitle = '';
                     switch(category) {
                         case 'immobilier': categoryTitle = 'BIENS IMMOBILIERS'; break;
@@ -2225,55 +2414,67 @@
                         case 'applications': categoryTitle = 'APPLICATIONS BANCAIRES'; break;
                     }
                     
-                    biensHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
+                    addText(categoryTitle, margin, 'bold');
+                    yPosition += 5;
                     
                     data[category].forEach((bien, index) => {
-                        biensHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
+                        let bienText = `Élément ${index + 1}: `;
                         
                         switch(category) {
                             case 'immobilier':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Adresse: ${bien.adresse || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Statut: ${bien.statut || 'Non précisé'}`;
-                                if (bien.info) biensHTML += `, Info: ${bien.info}`;
+                                bienText += `Type: ${bien.type || 'Non précisé'}, Adresse: ${bien.adresse || 'Non précisée'}`;
+                                if (bien.valeur) bienText += `, Valeur: ${bien.valeur}€`;
+                                if (bien.statut) bienText += `, Statut: ${bien.statut}`;
                                 break;
                                 
                             case 'materiel':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Lieu: ${bien.lieu || 'Non précisé'}`;
+                                bienText += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}`;
+                                if (bien.valeur) bienText += `, Valeur: ${bien.valeur}€`;
+                                if (bien.lieu) bienText += `, Lieu: ${bien.lieu}`;
                                 break;
                                 
                             case 'personnels':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Lieu: ${bien.lieu || 'Non précisé'}`;
+                                bienText += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}`;
+                                if (bien.valeur) bienText += `, Valeur: ${bien.valeur}€`;
+                                if (bien.lieu) bienText += `, Lieu: ${bien.lieu}`;
                                 break;
                                 
                             case 'comptes':
-                                biensHTML += `Banque: ${bien.banque || 'Non précisée'}, Type: ${bien.type || 'Non précisé'}, IBAN: ${bien.iban || 'Non précisé'}, Solde: ${bien.solde || 'Non précisé'}€`;
-                                if (bien.adresse) biensHTML += `, Adresse: ${bien.adresse}`;
+                                bienText += `Banque: ${bien.banque || 'Non précisée'}, Type: ${bien.type || 'Non précisé'}`;
+                                if (bien.iban) bienText += `, IBAN: ${bien.iban}`;
+                                if (bien.solde) bienText += `, Solde: ${bien.solde}€`;
                                 break;
                                 
                             case 'cartes':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Numéro: ${bien.numero || 'Non précisé'}, Expiration: ${bien.expiration || 'Non précisée'}, Banque: ${bien.banque || 'Non précisée'}`;
-                                if (bien.code) biensHTML += `, Code: ${bien.code}`;
+                                bienText += `Type: ${bien.type || 'Non précisé'}, Banque: ${bien.banque || 'Non précisée'}`;
+                                if (bien.numero) bienText += `, Numéro: ${bien.numero}`;
+                                if (bien.expiration) bienText += `, Expiration: ${bien.expiration}`;
                                 break;
                                 
                             case 'applications':
-                                biensHTML += `Application: ${bien.application || 'Non précisée'}, Identifiant: ${bien.identifiant || 'Non précisé'}, Email: ${bien.email || 'Non précisé'}, Téléphone: ${bien.telephone || 'Non précisé'}`;
-                                if (bien.indice) biensHTML += `, Indice: ${bien.indice}`;
+                                bienText += `Application: ${bien.application || 'Non précisée'}`;
+                                if (bien.identifiant) bienText += `, Identifiant: ${bien.identifiant}`;
+                                if (bien.email) bienText += `, Email: ${bien.email}`;
                                 break;
                         }
                         
-                        biensHTML += `</div>`;
+                        addText(bienText);
+                        yPosition += 5;
                     });
-                    
-                    biensHTML += `</div>`;
                 }
             });
             
-            // Récupérer les données des dettes et créances (étape 4)
-            let dettesHTML = '';
+            // Section 4: Dettes et créances
             const categoriesDettes = ['creances', 'dettes', 'sadaqa'];
+            let hasDebtsData = false;
             
             categoriesDettes.forEach(category => {
                 if (data[category] && data[category].length > 0) {
+                    if (!hasDebtsData) {
+                        addSectionTitle('DETTES ET CRÉANCES');
+                        hasDebtsData = true;
+                    }
+                    
                     let categoryTitle = '';
                     switch(category) {
                         case 'creances': categoryTitle = 'CRÉANCES À PERCEVOIR'; break;
@@ -2281,41 +2482,38 @@
                         case 'sadaqa': categoryTitle = 'SADAQA À EFFECTUER'; break;
                     }
                     
-                    dettesHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
+                    addText(categoryTitle, margin, 'bold');
+                    yPosition += 5;
                     
                     data[category].forEach((item, index) => {
-                        dettesHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
+                        let itemText = `Élément ${index + 1}: `;
                         
                         switch(category) {
                             case 'creances':
-                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Débiteur: ${item.nom || 'Non précisé'}`;
-                                if (item.date_remboursement) dettesHTML += `, Date remboursement: ${item.date_remboursement}`;
+                                itemText += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Débiteur: ${item.nom || 'Non précisé'}`;
+                                if (item.date_remboursement) itemText += `, Date remboursement: ${item.date_remboursement}`;
                                 break;
                                 
                             case 'dettes':
-                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Créancier: ${item.nom || 'Non précisé'}`;
-                                if (item.date_echeance) dettesHTML += `, Date échéance: ${item.date_echeance}`;
+                                itemText += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Créancier: ${item.nom || 'Non précisé'}`;
+                                if (item.date_echeance) itemText += `, Date échéance: ${item.date_echeance}`;
                                 break;
                                 
                             case 'sadaqa':
-                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Description: ${item.description || 'Non précisée'}, Bénéficiaire: ${item.beneficiaire || 'Non précisé'}`;
+                                itemText += `Type: ${item.type || 'Non précisé'}, Description: ${item.description || 'Non précisée'}`;
+                                if (item.beneficiaire) itemText += `, Bénéficiaire: ${item.beneficiaire}`;
                                 break;
                         }
                         
-                        dettesHTML += `</div>`;
+                        addText(itemText);
+                        yPosition += 5;
                     });
-                    
-                    dettesHTML += `</div>`;
                 }
             });
             
-            // Récupérer les données des devoirs religieux (étape 4)
-            let devoirsHTML = '';
-            
+            // Section 5: Devoirs religieux
             if (data.zakatStatus || data.jeuneStatus || data.hadjStatus) {
-                devoirsHTML += `<div class="section">
-                    <div class="section-title">DEVOIRS RELIGIEUX</div>`;
+                addSectionTitle('DEVOIRS RELIGIEUX');
                 
                 if (data.zakatStatus) {
                     let zakatText = '';
@@ -2324,7 +2522,7 @@
                         case 'non-versee': zakatText = 'Zakat non versée'; break;
                         case 'partielle': zakatText = 'Zakat partiellement versée'; break;
                     }
-                    devoirsHTML += `<div class="field"><span class="field-label">Zakat :</span> ${zakatText}</div>`;
+                    addField('Zakat', zakatText);
                 }
                 
                 if (data.jeuneStatus) {
@@ -2336,10 +2534,10 @@
                     } else {
                         jeuneText = `${data.jeuneStatus} jour(s) de jeûne à rattraper`;
                     }
-                    devoirsHTML += `<div class="field"><span class="field-label">Jeûne de Ramadan :</span> ${jeuneText}</div>`;
+                    addField('Jeûne de Ramadan', jeuneText);
                     
                     if (data.jeuneNotes) {
-                        devoirsHTML += `<div class="field"><span class="field-label">Notes sur le jeûne :</span> ${data.jeuneNotes}</div>`;
+                        addField('Notes sur le jeûne', data.jeuneNotes, 20);
                     }
                 }
                 
@@ -2350,22 +2548,27 @@
                         case 'non-accompli': hadjText = 'Hadj non accompli'; break;
                         case 'partiel': hadjText = 'Hadj partiellement accompli (Omra seulement)'; break;
                     }
-                    devoirsHTML += `<div class="field"><span class="field-label">Pèlerinage :</span> ${hadjText}</div>`;
+                    addField('Pèlerinage', hadjText);
                     
                     if (data.hadjNotes) {
-                        devoirsHTML += `<div class="field"><span class="field-label">Notes sur le Hadj :</span> ${data.hadjNotes}</div>`;
+                        addField('Notes sur le Hadj', data.hadjNotes, 20);
                     }
                 }
                 
-                devoirsHTML += `</div>`;
+                yPosition += 10;
             }
             
-            // Récupérer les données numériques (étape 5)
-            let numeriqueHTML = '';
+            // Section 6: Données numériques
             const categoriesNumerique = ['reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
+            let hasDigitalData = false;
             
             categoriesNumerique.forEach(category => {
                 if (data[category] && data[category].length > 0) {
+                    if (!hasDigitalData) {
+                        addSectionTitle('DONNÉES NUMÉRIQUES');
+                        hasDigitalData = true;
+                    }
+                    
                     let categoryTitle = '';
                     switch(category) {
                         case 'reseaux_sociaux': categoryTitle = 'RÉSEAUX SOCIAUX'; break;
@@ -2375,314 +2578,115 @@
                         case 'appareils': categoryTitle = 'APPAREILS SÉCURISÉS'; break;
                     }
                     
-                    numeriqueHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
+                    addText(categoryTitle, margin, 'bold');
+                    yPosition += 5;
                     
                     data[category].forEach((item, index) => {
-                        numeriqueHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
+                        let itemText = `Élément ${index + 1}: `;
                         
                         switch(category) {
                             case 'reseaux_sociaux':
-                                numeriqueHTML += `Réseau: ${item.type || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}, Email: ${item.email || 'Non précisé'}`;
-                                if (item.telephone) numeriqueHTML += `, Téléphone: ${item.telephone}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                itemText += `Réseau: ${item.type || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}`;
+                                if (item.email) itemText += `, Email: ${item.email}`;
                                 break;
                                 
                             case 'emails':
-                                numeriqueHTML += `Email: ${item.adresse || 'Non précisé'}, Type: ${item.type || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                itemText += `Email: ${item.adresse || 'Non précisé'}, Type: ${item.type || 'Non précisé'}`;
                                 break;
                                 
                             case 'comptes_online':
-                                numeriqueHTML += `Site: ${item.site || 'Non précisé'}, Email: ${item.email || 'Non précisé'}, Identifiant: ${item.identifiant || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                itemText += `Site: ${item.site || 'Non précisé'}`;
+                                if (item.email) itemText += `, Email: ${item.email}`;
+                                if (item.identifiant) itemText += `, Identifiant: ${item.identifiant}`;
                                 break;
                                 
                             case 'cloud':
-                                numeriqueHTML += `Service: ${item.service || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}, Email: ${item.email || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                itemText += `Service: ${item.service || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}`;
+                                if (item.email) itemText += `, Email: ${item.email}`;
                                 break;
                                 
                             case 'appareils':
-                                numeriqueHTML += `Type: ${item.type || 'Non précisé'}, Modèle: ${item.modele || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
+                                itemText += `Type: ${item.type || 'Non précisé'}, Modèle: ${item.modele || 'Non précisé'}`;
                                 break;
                         }
                         
-                        numeriqueHTML += `</div>`;
+                        addText(itemText);
+                        yPosition += 5;
                     });
-                    
-                    numeriqueHTML += `</div>`;
                 }
             });
             
-            return `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Testament Islamique - Al Wassiya</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
-        
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            line-height: 1.7; 
-            margin: 0;
-            padding: 0;
-            color: #1A2E40;
-            background-color: #F8F5EE;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px;
-            background: white;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header { 
-            text-align: center; 
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #C9B178;
-        }
-        
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: #C9B178;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 16px;
-            color: #2D4C68;
-            margin-bottom: 20px;
-        }
-        
-        .bismillah { 
-            font-size: 28px; 
-            color: #C9B178; 
-            font-weight: bold; 
-            margin: 20px 0;
-        }
-        
-        .title { 
-            font-size: 24px; 
-            font-weight: bold; 
-            margin: 15px 0;
-            color: #1A2E40;
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .section { 
-            margin: 30px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: #F8F5EE;
-            border-left: 4px solid #C9B178;
-        }
-        
-        .section-title { 
-            font-size: 18px; 
-            font-weight: bold; 
-            color: #C9B178;
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .field { 
-            margin: 12px 0;
-            display: flex;
-        }
-        
-        .field-label {
-            font-weight: 500;
-            min-width: 180px;
-        }
-        
-        .signature-section {
-            margin-top: 60px;
-            border-top: 1px solid #ddd;
-            padding-top: 30px;
-        }
-        
-        .verset {
-            font-style: italic;
-            text-align: center;
-            color: #2D4C68;
-            margin: 40px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: #F8F5EE;
-            border: 1px dashed #C9B178;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 14px;
-            color: #2D4C68;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-        }
-        
-        .decoration {
-            text-align: center;
-            margin: 30px 0;
-            color: #C9B178;
-            opacity: 0.5;
-        }
-        
-        @media print {
-            body { 
-                background: white;
-                margin: 0;
-                padding: 0;
+            // Section 7: Volontés générales
+            addSectionTitle('VOLONTÉS GÉNÉRALES');
+            
+            if (data.volontesObseques) {
+                addField('Volontés concernant les obsèques', data.volontesObseques);
             }
             
-            .container {
-                box-shadow: none;
-                padding: 20px;
+            if (data.recommandationsFamille) {
+                addField('Recommandations à la famille', data.recommandationsFamille);
             }
             
-            .section {
-                page-break-inside: avoid;
+            if (data.executeurTestament) {
+                addField('Exécuteur testamentaire suggéré', data.executeurTestament);
+                if (data.contactExecuteur) {
+                    addField('Contact de l\'exécuteur', data.contactExecuteur, 20);
+                }
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">Al Wassiya</div>
-            <div class="subtitle">Votre Testament Islamique Simplifié</div>
-            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-            <div class="title">TESTAMENT ISLAMIQUE (WASSIYA)</div>
-            <p>Date de rédaction : ${date}</p>
-        </div>
-
-        <div class="decoration">◆ ◆ ◆</div>
-
-        <div class="section">
-            <div class="section-title">IDENTITÉ DU TESTATEUR</div>
-            <div class="field"><span class="field-label">Sexe :</span> ${data.sexe || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Nom :</span> ${data.nom || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Prénom :</span> ${data.prenom || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Date de naissance :</span> ${data.dateNaissance ? new Date(data.dateNaissance).toLocaleDateString('fr-FR') : 'Non précisée'}</div>
-            <div class="field"><span class="field-label">Lieu de naissance :</span> ${data.lieuNaissance || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Adresse :</span> ${data.adresse || 'Non précisée'}</div>
-            <div class="field"><span class="field-label">Nationalité :</span> ${data.nationalite || 'Non précisée'}</div>
-            <div class="field"><span class="field-label">Situation familiale :</span> ${data.situationFamiliale || 'Non précisée'}</div>
-            ${data.conjoint ? `<div class="field"><span class="field-label">Conjoint :</span> ${data.conjoint}</div>` : ''}
-        </div>
-
-        ${personnesHTML}
-
-        ${biensHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        <div class="section">
-            <div class="section-title">BIENS MATÉRIELS AND FINANCIERS</div>
-            <p>Liste des biens matériels et financiers déclarés par le testateur :</p>
-        </div>
-        
-        ${biensHTML}
-        ` : ''}
-
-        ${dettesHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        <div class="section">
-            <div class="section-title">DETTES ET CRÉANCES</div>
-            <p>Liste des dettes à régler et créances à percevoir :</p>
-        </div>
-        
-        ${dettesHTML}
-        ` : ''}
-
-        ${devoirsHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        ${devoirsHTML}
-        ` : ''}
-
-        ${numeriqueHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        <div class="section">
-            <div class="section-title">DONNÉES NUMÉRIQUES</div>
-            <p>Liste des comptes numériques et appareils déclarés par le testateur :</p>
-        </div>
-        
-        ${numeriqueHTML}
-        ` : ''}
-
-        <div class="section">
-            <div class="section-title">VOLONTÉS CONCERNANT LES OBSÈQUES</div>
-            <p>${data.volontesObseques || 'Selon les traditions islamiques'}</p>
-        </div>
-
-        <div class="section">
-            <div class="section-title">RECOMMANDATIONS À LA FAMILLE</div>
-            <p>${data.recommandationsFamille || 'Que Allah vous bénisse et vous guide'}</p>
-        </div>
-
-        ${data.autresProches ? `
-        <div class="section">
-            <div class="section-title">AUTRES PERSONNES À MENTIONNER</div>
-            <p>${data.autresProches}</p>
-        </div>` : ''}
-
-        ${data.relationsParticulieres ? `
-        <div class="section">
-            <div class="section-title">RELATIONS PARTICULIÈRES</div>
-            <p>${data.relationsParticulieres}</p>
-        </div>` : ''}
-
-        <div class="section">
-            <div class="section-title">EXÉCUTEUR TESTAMENTAIRE</div>
-            <div class="field"><span class="field-label">Personne suggérée :</span> ${data.executeurTestament || 'À désigner par la famille'}</div>
-            <div class="field"><span class="field-label">Contact :</span> ${data.contactExecuteur || 'Non précisé'}</div>
-        </div>
-
-        ${data.autresVolontes ? `
-        <div class="section">
-            <div class="section-title">AUTRES VOLONTÉS</div>
-            <p>${data.autresVolontes}</p>
-        </div>` : ''}
-
-        <div class="section">
-            <div class="section-title">DISPOSITIONS IMPORTANTES</div>
-            <ul>
-                <li>Ce testament respecte les règles de l'héritage islamique (Mirath)</li>
-                <li>Les dispositions ne concernent que le tiers (1/3) des biens maximum</li>
-                <li>Les deux tiers restants sont distribués selon les règles coraniques</li>
-                <li>Il est recommandé de faire valider ce testament par un spécialiste</li>
-            </ul>
-        </div>
-
-        <div class="verset">
-            "Et c'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156
-        </div>
-
-        <div class="signature-section">
-            <p><strong>Signature du testateur :</strong> _______________________ &nbsp;&nbsp;&nbsp; <strong>Date :</strong> ${date}</p>
-            <br>
-            <p><strong>Témoins (recommandé) :</strong></p>
-            <p>1. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
-            <p>2. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
-        </div>
-
-        <div class="footer">
-            <p>Qu'Allah accepte ce testament et facilite son exécution selon Sa volonté.</p>
-            <p>Généré par Al Wassiya - Testament Islamique Simplifié</p>
-        </div>
-    </div>
-</body>
-</html>`;
+            
+            if (data.autresProches) {
+                addField('Autres personnes à mentionner', data.autresProches);
+            }
+            
+            if (data.relationsParticulieres) {
+                addField('Relations particulières', data.relationsParticulieres);
+            }
+            
+            if (data.personnesPrevenir) {
+                addField('Personnes à prévenir en priorité', data.personnesPrevenir);
+            }
+            
+            if (data.autresVolontes) {
+                addField('Autres volontés ou instructions', data.autresVolontes);
+            }
+            
+            yPosition += 10;
+            
+            // Section 8: Dispositions importantes
+            addSectionTitle('DISPOSITIONS IMPORTANTES');
+            addText('• Ce testament respecte les règles de l\'héritage islamique (Mirath)');
+            addText('• Les dispositions ne concernent que le tiers (1/3) des biens maximum');
+            addText('• Les deux tiers restants sont distribués selon les règles coraniques');
+            addText('• Il est recommandé de faire valider ce testament par un spécialiste');
+            yPosition += 10;
+            
+            // Section 9: Signature
+            checkPageHeight(50);
+            doc.setDrawColor(0, 0, 0);
+            doc.line(margin, yPosition, pageWidth - margin, yPosition);
+            yPosition += 20;
+            
+            addText('Signature du testateur: _______________________', margin);
+            addText('Date: ' + date, margin);
+            yPosition += 10;
+            
+            addText('Témoins (recommandé):', margin, 'bold');
+            addText('1. Nom: _________________ Signature: _________________', margin);
+            addText('2. Nom: _________________ Signature: _________________', margin);
+            
+            // Pied de page
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.setTextColor(100, 100, 100);
+                doc.text('Page ' + i + ' sur ' + pageCount, pageWidth - margin, doc.internal.pageSize.getHeight() - 10, { align: 'right' });
+                doc.text('Généré par Al Wassiya - Testament Islamique Simplifié', margin, doc.internal.pageSize.getHeight() - 10);
+            }
+            
+            // Sauvegarder le PDF
+            const fileName = `Testament_Islamique_${data.prenom}_${data.nom}_${new Date().toISOString().slice(0, 10)}.pdf`;
+            doc.save(fileName);
         }
 
         function partagerWhatsApp() {
@@ -2811,4 +2815,4 @@
         }, 30000);
     </script>
 </body>
-            </html>
+    </html>
