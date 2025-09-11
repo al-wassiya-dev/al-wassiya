@@ -531,9 +531,90 @@
             color: var(--secondary);
             display: none;
         }
+
+        /* Améliorations ajoutées */
+        .step-dots {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 40px;
+            gap: 12px;
+        }
+
+        .step-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #EDE8DD;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .step-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .step-dot.completed {
+            background-color: var(--success);
+        }
+
+        .validation-error {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        input:invalid, textarea:invalid, select:invalid {
+            border-color: var(--error);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .save-indicator.visible {
+            opacity: 1;
+        }
+
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            z-index: 100;
+            transition: top 0.3s ease;
+        }
+
+        .skip-to-content:focus {
+            top: 10px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+    
     <div class="islamic-pattern"></div>
     
     <div class="container">
@@ -544,12 +625,20 @@
             <p>Créez facilement un testament islamique respectant le Coran et la Sunna</p>
         </div>
 
+        <div class="step-dots" id="stepDots">
+            <div class="step-dot active" data-step="1"></div>
+            <div class="step-dot" data-step="2"></div>
+            <div class="step-dot" data-step="3"></div>
+            <div class="step-dot" data-step="4"></div>
+            <div class="step-dot" data-step="5"></div>
+        </div>
+
         <div class="progress-container">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
             <div class="step-indicator" id="stepIndicator">
-                Étape 1 sur 6 : Informations personnelles et volontés générales
+                Étape 1 sur 5 : Informations personnelles et volontés générales
             </div>
         </div>
 
@@ -559,623 +648,688 @@
             <div class="translation-note">(c'est une traduction rapprochée)</div>
         </div>
 
-        <!-- Étape 1: Informations personnelles (inchangée) -->
-        <form id="testamentForm">
-            <div id="step1" class="form-step">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
-                        
-                        <div class="form-group">
-                            <label for="sexe">Sexe <span class="required">*</span></label>
-                            <select id="sexe" name="sexe" required onchange="toggleConjointField()">
-                                <option value="">Sélectionner</option>
-                                <option value="homme">Homme</option>
-                                <option value="femme">Femme</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="prenom">Prénom <span class="required">*</span></label>
-                            <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nom">Nom de famille <span class="required">*</span></label>
-                            <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
-                            <input type="date" id="dateNaissance" name="dateNaissance" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lieuNaissance">Lieu de naissance</label>
-                            <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="adresse">Adresse actuelle <span class="required">*</span></label>
-                            <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nationalite">Nationalité</label>
-                            <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="situationFamiliale">Situation familiale</label>
-                            <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
-                                <option value="">Sélectionner</option>
-                                <option value="celibataire">Célibataire</option>
-                                <option value="marie">Marié(e)</option>
-                                <option value="divorce">Divorcé(e)</option>
-                                <option value="veuf">Veuf/Veuve</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group" id="conjointGroup" style="display: none;">
-                            <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
-                            <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
-                        
-                        <div class="form-group">
-                            <label for="volontesObseques">Volontés concernant les obsèques</label>
-                            <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="recommandationsFamille">Recommandations à la famille</label>
-                            <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
-                            <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="contactExecuteur">Contact de l'exécuteur</label>
-                            <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="autresVolontes">Autres volontés ou instructions</label>
-                            <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Étape 2: Famille et proches -->
-            <div id="step2" class="form-step" style="display: none;">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-users"></i> Famille et proches</h2>
-                        
-                        <div class="family-category">
-                            <div class="category-header" onclick="toggleCategory('parents')">
-                                <div class="category-title">
-                                    <i class="fas fa-user-friends"></i> Parents
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="parents" class="category-content">
-                                <div id="parents-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addPerson('parents')">
-                                    <i class="fas fa-plus"></i> Ajouter un parent
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="family-category">
-                            <div class="category-header" onclick="toggleCategory('conjoints')">
-                                <div class="category-title">
-                                    <i class="fas fa-ring"></i> Époux/Épouse
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="conjoints" class="category-content">
-                                <div id="conjoints-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addPerson('conjoints')">
-                                    <i class="fas fa-plus"></i> Ajouter un conjoint
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="family-category">
-                            <div class="category-header" onclick="toggleCategory('freres-soeurs')">
-                                <div class="category-title">
-                                    <i class="fas fa-users"></i> Frères et Soeurs
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="freres-soeurs" class="category-content">
-                                <div id="freres-soeurs-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addPerson('freres-soeurs')">
-                                    <i class="fas fa-plus"></i> Ajouter un frère/une soeur
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="family-category">
-                            <div class="category-header" onclick="toggleCategory('enfants')">
-                                <div class="category-title">
-                                    <i class="fas fa-baby"></i> Enfants
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="enfants" class="category-content">
-                                <div id="enfants-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addPerson('enfants')">
-                                    <i class="fas fa-plus"></i> Ajouter un enfant
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="family-category">
-                            <div class="category-header" onclick="toggleCategory('amis')">
-                                <div class="category-title">
-                                    <i class="fas fa-heart"></i> Amis proches
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="amis" class="category-content">
-                                <div id="amis-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addPerson('amis')">
-                                    <i class="fas fa-plus"></i> Ajouter un ami
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-info-circle"></i> Informations complémentaires</h2>
-                        
-                        <div class="form-group">
-                            <label for="autresProches">Autres personnes à mentionner</label>
-                            <textarea id="autresProches" name="autresProches" placeholder="Toute autre personne que vous souhaitez mentionner dans votre testament"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="relationsParticulieres">Relations particulières</label>
-                            <textarea id="relationsParticulieres" name="relationsParticulieres" placeholder="Décrivez toute relation particulière ou situation familiale importante"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="personnesPrevenir">Personnes à prévenir en priorité</label>
-                            <textarea id="personnesPrevenir" name="personnesPrevenir" placeholder="Liste des personnes à contacter en priorité en cas de décès"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Étape 3: Biens matériels et financiers -->
-            <div id="step3" class="form-step" style="display: none;">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-home"></i> Biens immobiliers</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('immobilier')">
-                                <div class="category-title">
-                                    <i class="fas fa-building"></i> Propriétés immobilières
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="immobilier" class="category-content">
-                                <div id="immobilier-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addAsset('immobilier')">
-                                    <i class="fas fa-plus"></i> Ajouter un bien immobilier
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="privacy-notice">
-                            <i class="fas fa-shield-alt"></i> Les informations personnelles que vous saisissez sont sous votre responsabilité. Nous recommandons de ne pas inclure de données trop sensibles.
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-car"></i> Biens matériels</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('materiel')">
-                                <div class="category-title">
-                                    <i class="fas fa-tshirt"></i> Biens de valeur
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="materiel" class="category-content">
-                                <div id="materiel-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addAsset('materiel')">
-                                    <i class="fas fa-plus"></i> Ajouter un bien matériel
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('personnels')">
-                                <div class="category-title">
-                                    <i class="fas fa-book"></i> Biens personnels
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="personnels" class="category-content">
-                                <div id="personnels-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addAsset('personnels')">
-                                    <i class="fas fa-plus"></i> Ajouter un bien personnel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-university"></i> Comptes bancaires</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('comptes')">
-                                <div class="category-title">
-                                    <i class="fas fa-piggy-bank"></i> Comptes et épargnes
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="comptes" class="category-content">
-                                <div id="comptes-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addAsset('comptes')">
-                                    <i class="fas fa-plus"></i> Ajouter un compte
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-credit-card"></i> Cartes et accès bancaires</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('cartes')">
-                                <div class="category-title">
-                                    <i class="fas fa-credit-card"></i> Cartes bancaires
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="cartes" class="category-content">
-                                <div id="cartes-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addAsset('cartes')">
-                                    <i class="fas fa-plus"></i> Ajouter une carte
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('applications')">
-                                <div class="category-title">
-                                    <i class="fas fa-mobile-alt"></i> Applications bancaires
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="applications" class="category-content">
-                                <div id="applications-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addAsset('applications')">
-                                    <i class="fas fa-plus"></i> Ajouter un accès
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="privacy-notice">
-                            <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets ou les codes confidentiels. Indiquez plutôt où ces informations peuvent être retrouvées.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Étape 4: Dettes et devoirs religieux -->
-            <div id="step4" class="form-step" style="display: none;">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> Créances à percevoir</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('creances')">
-                                <div class="category-title">
-                                    <i class="fas fa-money-check"></i> Créances financières
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="creances" class="category-content">
-                                <div id="creances-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addDebt('creances')">
-                                    <i class="fas fa-plus"></i> Ajouter une créance
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Dettes à régler</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('dettes')">
-                                <div class="category-title">
-                                    <i class="fas fa-credit-card"></i> Dettes financières
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="dettes" class="category-content">
-                                <div id="dettes-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addDebt('dettes')">
-                                    <i class="fas fa-plus"></i> Ajouter une dette
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-scale-balanced"></i> Zakat Al Maal</h2>
-                        
-                        <div class="form-group">
-                            <label for="zakatStatus">Statut de la Zakat</label>
-                            <select id="zakatStatus" name="zakatStatus">
-                                <option value="">Sélectionner</option>
-                                <option value="versee">Zakat versée</option>
-                                <option value="non-versee">Zakat non versée</option>
-                                <option value="partielle">Zakat partiellement versée</option>
-                            </select>
-                        </div>
-
-                        <div class="zakat-calculator">
-                            <h3>Calculateur de Zakat</h3>
-                            <div class="form-group">
-                                <label for="nissab">Valeur du Nissab (en or 85g)</label>
-                                <input type="number" id="nissab" name="nissab" placeholder="Valeur actuelle en € (ex: 4500)">
-                            </div>
+        <main id="main-content">
+            <!-- Étape 1: Informations personnelles -->
+            <form id="testamentForm" novalidate>
+                <div id="step1" class="form-step">
+                    <div class="form-container">
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
                             
                             <div class="form-group">
-                                <label for="epargne">Épargne totale</label>
-                                <input type="number" id="epargne" name="epargne" placeholder="Montant total en €">
+                                <label for="sexe">Sexe <span class="required">*</span></label>
+                                <select id="sexe" name="sexe" required onchange="toggleConjointField()">
+                                    <option value="">Sélectionner</option>
+                                    <option value="homme">Homme</option>
+                                    <option value="femme">Femme</option>
+                                </select>
+                                <div class="validation-error" id="sexe-error">Veuillez sélectionner votre sexe</div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="prenom">Prénom <span class="required">*</span></label>
+                                <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                                <div class="validation-error" id="prenom-error">Veuillez saisir votre prénom</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nom">Nom de famille <span class="required">*</span></label>
+                                <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
+                                <div class="validation-error" id="nom-error">Veuillez saisir votre nom</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
+                                <input type="date" id="dateNaissance" name="dateNaissance" required>
+                                <div class="validation-error" id="dateNaissance-error">Veuillez saisir votre date de naissance</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lieuNaissance">Lieu de naissance</label>
+                                <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="adresse">Adresse actuelle <span class="required">*</span></label>
+                                <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
+                                <div class="validation-error" id="adresse-error">Veuillez saisir votre adresse</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nationalite">Nationalité</label>
+                                <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="situationFamiliale">Situation familiale</label>
+                                <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
+                                    <option value="">Sélectionner</option>
+                                    <option value="celibataire">Célibataire</option>
+                                    <option value="marie">Marié(e)</option>
+                                    <option value="divorce">Divorcé(e)</option>
+                                    <option value="veuf">Veuf/Veuve</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="conjointGroup" style="display: none;">
+                                <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
+                                <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
                             
                             <div class="form-group">
-                                <label for="autres_actifs">Autres actifs (commerce, etc.)</label>
-                                <input type="number" id="autres_actifs" name="autres_actifs" placeholder="Montant total en €">
+                                <label for="volontesObseques">Volontés concernant les obsèques</label>
+                                <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
                             </div>
+
+                            <div class="form-group">
+                                <label for="recommandationsFamille">Recommandations à la famille</label>
+                                <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
+                                <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactExecuteur">Contact de l'exécuteur</label>
+                                <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="autresVolontes">Autres volontés ou instructions</label>
+                                <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 2: Famille et proches -->
+                <div id="step2" class="form-step" style="display: none;">
+                    <div class="form-container">
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-users"></i> Famille et proches</h2>
+                            
+                            <div class="family-category">
+                                <div class="category-header" onclick="toggleCategory('parents')">
+                                    <div class="category-title">
+                                        <i class="fas fa-user-friends"></i> Parents
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="parents" class="category-content">
+                                    <div id="parents-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addPerson('parents')">
+                                        <i class="fas fa-plus"></i> Ajouter un parent
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="family-category">
+                                <div class="category-header" onclick="toggleCategory('conjoints')">
+                                    <div class="category-title">
+                                        <i class="fas fa-ring"></i> Époux/Épouse
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="conjoints" class="category-content">
+                                    <div id="conjoints-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addPerson('conjoints')">
+                                        <i class="fas fa-plus"></i> Ajouter un conjoint
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="family-category">
+                                <div class="category-header" onclick="toggleCategory('freres-soeurs')">
+                                    <div class="category-title">
+                                        <i class="fas fa-users"></i> Frères et Soeurs
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="freres-soeurs" class="category-content">
+                                    <div id="freres-soeurs-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addPerson('freres-soeurs')">
+                                        <i class="fas fa-plus"></i> Ajouter un frère/une soeur
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="family-category">
+                                <div class="category-header" onclick="toggleCategory('enfants')">
+                                    <div class="category-title">
+                                        <i class="fas fa-baby"></i> Enfants
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="enfants" class="category-content">
+                                    <div id="enfants-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addPerson('enfants')">
+                                        <i class="fas fa-plus"></i> Ajouter un enfant
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="family-category">
+                                <div class="category-header" onclick="toggleCategory('amis')">
+                                    <div class="category-title">
+                                        <i class="fas fa-heart"></i> Amis proches
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="amis" class="category-content">
+                                    <div id="amis-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addPerson('amis')">
+                                        <i class="fas fa-plus"></i> Ajouter un ami
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-info-circle"></i> Informations complémentaires</h2>
                             
                             <div class="form-group">
-                                <label for="dettes">Dettes à déduire</label>
-                                <input type="number" id="dettes_zakat" name="dettes_zakat" placeholder="Montant total en €">
+                                <label for="autresProches">Autres personnes à mentionner</label>
+                                <textarea id="autresProches" name="autresProches" placeholder="Toute autre personne que vous souhaitez mentionner dans votre testament"></textarea>
                             </div>
+
+                            <div class="form-group">
+                                <label for="relationsParticulieres">Relations particulières</label>
+                                <textarea id="relationsParticulieres" name="relationsParticulieres" placeholder="Décrivez toute relation particulière ou situation familiale importante"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="personnesPrevenir">Personnes à prévenir en priorité</label>
+                                <textarea id="personnesPrevenir" name="personnesPrevenir" placeholder="Liste des personnes à contacter en priorité en cas de décès"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 3: Biens matériels et financiers -->
+                <div id="step3" class="form-step" style="display: none;">
+                    <div class="form-container">
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-home"></i> Biens immobiliers</h2>
                             
-                            <button type="button" class="btn btn-secondary" onclick="calculerZakat()">
-                                <i class="fas fa-calculator"></i> Calculer la Zakat
-                            </button>
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('immobilier')">
+                                    <div class="category-title">
+                                        <i class="fas fa-building"></i> Propriétés immobilières
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="immobilier" class="category-content">
+                                    <div id="immobilier-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addAsset('immobilier')">
+                                        <i class="fas fa-plus"></i> Ajouter un bien immobilier
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="privacy-notice">
+                                <i class="fas fa-shield-alt"></i> Les informations personnelles que vous saisissez sont sous votre responsabilité. Nous recommandons de ne pas inclure de données trop sensibles.
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-car"></i> Biens matériels</h2>
                             
-                            <div id="resultatZakat" class="calculator-result"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-moon"></i> Jeûne de Ramadan</h2>
-                        
-                        <div class="form-group">
-                            <label for="jeuneStatus">Jours de jeûne à rattraper</label>
-                            <select id="jeuneStatus" name="jeuneStatus">
-                                <option value="">Sélectionner</option>
-                                <option value="0">Aucun jour à rattraper</option>
-                                <option value="1">1 jour</option>
-                                <option value="2">2 jours</option>
-                                <option value="3">3 jours</option>
-                                <option value="4">4 jours</option>
-                                <option value="5">5 jours</option>
-                                <option value="6">6 jours</option>
-                                <option value="7">7 jours</option>
-                                <option value="8">8 jours</option>
-                                <option value="9">9 jours</option>
-                                <option value="10">10 jours</option>
-                                <option value="plus">Plus de 10 jours (préciser dans les notes)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="jeuneNotes">Notes concernant le jeûne</label>
-                            <textarea id="jeuneNotes" name="jeuneNotes" placeholder="Précisions sur les jours à rattraper, raisons, etc."></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-kaaba"></i> Pèlerinage (Hadj)</h2>
-                        
-                        <div class="form-group">
-                            <label for="hadjStatus">Statut du Hadj</label>
-                            <select id="hadjStatus" name="hadjStatus">
-                                <option value="">Sélectionner</option>
-                                <option value="accompli">Hadj accompli</option>
-                                <option value="non-accompli">Hadj non accompli</option>
-                                <option value="partiel">Hadj partiellement accompli (Omra seulement)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="hadjNotes">Notes concernant le Hadj</label>
-                            <textarea id="hadjNotes" name="hadjNotes" placeholder="Année d'accomplissement, détails, etc."></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-hands-helping"></i> Aumônes (Sadaqa)</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('sadaqa')">
-                                <div class="category-title">
-                                    <i class="fas fa-donate"></i> Sadaqa à effectuer
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('materiel')">
+                                    <div class="category-title">
+                                        <i class="fas fa-tshirt"></i> Biens de valeur
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
                                 </div>
-                                <i class="fas fa-chevron-down"></i>
+                                <div id="materiel" class="category-content">
+                                    <div id="materiel-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addAsset('materiel')">
+                                        <i class="fas fa-plus"></i> Ajouter un bien matériel
+                                    </button>
+                                </div>
                             </div>
-                            <div id="sadaqa" class="category-content">
-                                <div id="sadaqa-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addSadaqa()">
-                                    <i class="fas fa-plus"></i> Ajouter une sadaqa
-                                </button>
+
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('personnels')">
+                                    <div class="category-title">
+                                        <i class="fas fa-book"></i> Biens personnels
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="personnels" class="category-content">
+                                    <div id="personnels-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addAsset('personnels')">
+                                        <i class="fas fa-plus"></i> Ajouter un bien personnel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-university"></i> Comptes bancaires</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('comptes')">
+                                    <div class="category-title">
+                                        <i class="fas fa-piggy-bank"></i> Comptes et épargnes
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="comptes" class="category-content">
+                                    <div id="comptes-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addAsset('comptes')">
+                                        <i class="fas fa-plus"></i> Ajouter un compte
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-credit-card"></i> Cartes et accès bancaires</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('cartes')">
+                                    <div class="category-title">
+                                        <i class="fas fa-credit-card"></i> Cartes bancaires
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="cartes" class="category-content">
+                                    <div id="cartes-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addAsset('cartes')">
+                                        <i class="fas fa-plus"></i> Ajouter une carte
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('applications')">
+                                    <div class="category-title">
+                                        <i class="fas fa-mobile-alt"></i> Applications bancaires
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="applications" class="category-content">
+                                    <div id="applications-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addAsset('applications')">
+                                        <i class="fas fa-plus"></i> Ajouter un accès
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="privacy-notice">
+                                <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets ou les codes confidentiels. Indiquez plutôt où ces informations peuvent être retrouvées.
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Étape 5: Données numériques et réseaux sociaux -->
-            <div id="step5" class="form-step" style="display: none;">
-                <div class="form-container">
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-hashtag"></i> Réseaux sociaux</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('reseaux-sociaux')">
-                                <div class="category-title">
-                                    <i class="fas fa-share-alt"></i> Comptes de réseaux sociaux
+                <!-- Étape 4: Dettes et devoirs religieux -->
+                <div id="step4" class="form-step" style="display: none;">
+                    <div class="form-container">
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> Créances à percevoir</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('creances')">
+                                    <div class="category-title">
+                                        <i class="fas fa-money-check"></i> Créances financières
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
                                 </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="reseaux-sociaux" class="category-content">
-                                <div id="reseaux-sociaux-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addReseauSocial()">
-                                    <i class="fas fa-plus"></i> Ajouter un réseau social
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-envelope"></i> Comptes email</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('emails')">
-                                <div class="category-title">
-                                    <i class="fas fa-at"></i> Adresses email
+                                <div id="creances" class="category-content">
+                                    <div id="creances-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addDebt('creances')">
+                                        <i class="fas fa-plus"></i> Ajouter une créance
+                                    </button>
                                 </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="emails" class="category-content">
-                                <div id="emails-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addEmail()">
-                                    <i class="fas fa-plus"></i> Ajouter un compte email
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-globe"></i> Comptes en ligne</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('comptes-online')">
-                                <div class="category-title">
-                                    <i class="fas fa-user-circle"></i> Comptes divers
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="comptes-online" class="category-content">
-                                <div id="comptes-online-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addCompteOnline()">
-                                    <i class="fas fa-plus"></i> Ajouter un compte en ligne
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-cloud"></i> Cloud en ligne</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('cloud')">
-                                <div class="category-title">
-                                    <i class="fas fa-database"></i> Services de stockage
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="cloud" class="category-content">
-                                <div id="cloud-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addCloud()">
-                                    <i class="fas fa-plus"></i> Ajouter un service cloud
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title"><i class="fas fa-mobile-alt"></i> Appareils avec mots de passe</h2>
-                        
-                        <div class="asset-category">
-                            <div class="category-header" onclick="toggleCategory('appareils')">
-                                <div class="category-title">
-                                    <i class="fas fa-lock"></i> Appareils sécurisés
-                                </div>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div id="appareils" class="category-content">
-                                <div id="appareils-container"></div>
-                                <button type="button" class="add-person-btn" onclick="addAppareil()">
-                                    <i class="fas fa-plus"></i> Ajouter un appareil
-                                </button>
                             </div>
                         </div>
 
-                        <div class="privacy-notice">
-                            <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets. Indiquez plutôt où ces informations peuvent être retrouvées.
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Dettes à régler</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('dettes')">
+                                    <div class="category-title">
+                                        <i class="fas fa-credit-card"></i> Dettes financières
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="dettes" class="category-content">
+                                    <div id="dettes-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addDebt('dettes')">
+                                        <i class="fas fa-plus"></i> Ajouter une dette
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-scale-balanced"></i> Zakat Al Maal</h2>
+                            
+                            <div class="form-group">
+                                <label for="zakatStatus">Statut de la Zakat</label>
+                                <select id="zakatStatus" name="zakatStatus">
+                                    <option value="">Sélectionner</option>
+                                    <option value="versee">Zakat versée</option>
+                                    <option value="non-versee">Zakat non versée</option>
+                                    <option value="partielle">Zakat partiellement versée</option>
+                                </select>
+                            </div>
+
+                            <div class="zakat-calculator">
+                                <h3>Calculateur de Zakat</h3>
+                                <div class="form-group">
+                                    <label for="nissab">Valeur du Nissab (en or 85g)</label>
+                                    <input type="number" id="nissab" name="nissab" placeholder="Valeur actuelle en € (ex: 4500)">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="epargne">Épargne totale</label>
+                                    <input type="number" id="epargne" name="epargne" placeholder="Montant total en €">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="autres_actifs">Autres actifs (commerce, etc.)</label>
+                                    <input type="number" id="autres_actifs" name="autres_actifs" placeholder="Montant total en €">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="dettes">Dettes à déduire</label>
+                                    <input type="number" id="dettes_zakat" name="dettes_zakat" placeholder="Montant total en €">
+                                </div>
+                                
+                                <button type="button" class="btn btn-secondary" onclick="calculerZakat()">
+                                    <i class="fas fa-calculator"></i> Calculer la Zakat
+                                </button>
+                                
+                                <div id="resultatZakat" class="calculator-result"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-moon"></i> Jeûne de Ramadan</h2>
+                            
+                            <div class="form-group">
+                                <label for="jeuneStatus">Jours de jeûne à rattraper</label>
+                                <select id="jeuneStatus" name="jeuneStatus">
+                                    <option value="">Sélectionner</option>
+                                    <option value="0">Aucun jour à rattraper</option>
+                                    <option value="1">1 jour</option>
+                                    <option value="2">2 jours</option>
+                                    <option value="3">3 jours</option>
+                                    <option value="4">4 jours</option>
+                                    <option value="5">5 jours</option>
+                                    <option value="6">6 jours</option>
+                                    <option value="7">7 jours</option>
+                                    <option value="8">8 jours</option>
+                                    <option value="9">9 jours</option>
+                                    <option value="10">10 jours</option>
+                                    <option value="plus">Plus de 10 jours (préciser dans les notes)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="jeuneNotes">Notes concernant le jeûne</label>
+                                <textarea id="jeuneNotes" name="jeuneNotes" placeholder="Précisions sur les jours à rattraper, raisons, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-kaaba"></i> Pèlerinage (Hadj)</h2>
+                            
+                            <div class="form-group">
+                                <label for="hadjStatus">Statut du Hadj</label>
+                                <select id="hadjStatus" name="hadjStatus">
+                                    <option value="">Sélectionner</option>
+                                    <option value="accompli">Hadj accompli</option>
+                                    <option value="non-accompli">Hadj non accompli</option>
+                                    <option value="partiel">Hadj partiellement accompli (Omra seulement)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hadjNotes">Notes concernant le Hadj</label>
+                                <textarea id="hadjNotes" name="hadjNotes" placeholder="Année d'accomplissement, détails, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-hands-helping"></i> Aumônes (Sadaqa)</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('sadaqa')">
+                                    <div class="category-title">
+                                        <i class="fas fa-donate"></i> Sadaqa à effectuer
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="sadaqa" class="category-content">
+                                    <div id="sadaqa-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addSadaqa()">
+                                        <i class="fas fa-plus"></i> Ajouter une sadaqa
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="actions">
-                <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
-                    <i class="fas fa-save"></i> Sauvegarder le brouillon
-                </button>
-                <button type="button" class="btn btn-primary" onclick="genererPDF()">
-                    <i class="fas fa-file-pdf"></i> Générer le PDF
-                </button>
-                <button type="button" class="btn btn-secondary" id="prevStepBtn" style="display: none;" onclick="prevStep()">
-                    <i class="fas fa-arrow-left"></i> Étape précédente
-                </button>
-                <button type="button" class="btn btn-primary" id="nextStepBtn" onclick="nextStep()">
-                    Continuer vers la famille <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
+                <!-- Étape 5: Données numériques et réseaux sociaux -->
+                <div id="step5" class="form-step" style="display: none;">
+                    <div class="form-container">
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-hashtag"></i> Réseaux sociaux</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('reseaux-sociaux')">
+                                    <div class="category-title">
+                                        <i class="fas fa-share-alt"></i> Comptes de réseaux sociaux
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="reseaux-sociaux" class="category-content">
+                                    <div id="reseaux-sociaux-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addReseauSocial()">
+                                        <i class="fas fa-plus"></i> Ajouter un réseau social
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="share-section">
-                <div class="share-title">Partager cette application</div>
-                <div class="share-buttons">
-                    <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <div class="share-btn facebook" onclick="partagerFacebook()">
-                        <i class="fab fa-facebook-f"></i>
-                    </div>
-                    <div class="share-btn twitter" onclick="partagerTwitter()">
-                        <i class="fab fa-twitter"></i>
-                    </div>
-                    <div class="share-btn email" onclick="partagerEmail()">
-                        <i class="fas fa-envelope"></i>
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-envelope"></i> Comptes email</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('emails')">
+                                    <div class="category-title">
+                                        <i class="fas fa-at"></i> Adresses email
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="emails" class="category-content">
+                                    <div id="emails-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addEmail()">
+                                        <i class="fas fa-plus"></i> Ajouter un compte email
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-globe"></i> Comptes en ligne</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('comptes-online')">
+                                    <div class="category-title">
+                                        <i class="fas fa-user-circle"></i> Comptes divers
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="comptes-online" class="category-content">
+                                    <div id="comptes-online-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addCompteOnline()">
+                                        <i class="fas fa-plus"></i> Ajouter un compte en ligne
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-cloud"></i> Cloud en ligne</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('cloud')">
+                                    <div class="category-title">
+                                        <i class="fas fa-database"></i> Services de stockage
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="cloud" class="category-content">
+                                    <div id="cloud-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addCloud()">
+                                        <i class="fas fa-plus"></i> Ajouter un service cloud
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title"><i class="fas fa-mobile-alt"></i> Appareils avec mots de passe</h2>
+                            
+                            <div class="asset-category">
+                                <div class="category-header" onclick="toggleCategory('appareils')">
+                                    <div class="category-title">
+                                        <i class="fas fa-lock"></i> Appareils sécurisés
+                                    </div>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="appareils" class="category-content">
+                                    <div id="appareils-container"></div>
+                                    <button type="button" class="add-person-btn" onclick="addAppareil()">
+                                        <i class="fas fa-plus"></i> Ajouter un appareil
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="privacy-notice">
+                                <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets. Indiquez plutôt où ces informations peuvent être retrouvées.
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
+                        <i class="fas fa-save"></i> Sauvegarder le brouillon
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="genererPDF()">
+                        <i class="fas fa-file-pdf"></i> Générer le PDF
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="prevStepBtn" style="display: none;" onclick="prevStep()">
+                        <i class="fas fa-arrow-left"></i> Étape précédente
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextStepBtn" onclick="nextStep()">
+                        Continuer vers la famille <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="share-section">
+                    <div class="share-title">Partager cette application</div>
+                    <div class="share-buttons">
+                        <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="share-btn facebook" onclick="partagerFacebook()">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="share-btn twitter" onclick="partagerTwitter()">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="share-btn email" onclick="partagerEmail()">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
 
         <div class="footer-note">
             <p><strong>Note importante :</strong> Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). 
             Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.</p>
-            <p>Les dispositions de ce testament ne peuvent concernar que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
+            <p>Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
         </div>
     </div>
+
+    <div class="save-indicator" id="saveIndicator">Sauvegarde effectuée</div>
 
     <script>
         // Variables globales
         let etapeActuelle = 1;
-        const totalEtapes = 6;
+        const totalEtapes = 5;
+
+        // Initialisation des indicateurs d'étape
+        function initialiserIndicateursEtape() {
+            const stepDotsContainer = document.getElementById('stepDots');
+            stepDotsContainer.innerHTML = '';
+            
+            for (let i = 1; i <= totalEtapes; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'step-dot';
+                dot.dataset.step = i;
+                if (i === 1) dot.classList.add('active');
+                
+                dot.addEventListener('click', () => {
+                    if (i < etapeActuelle || validerEtape(etapeActuelle)) {
+                        changerEtape(i);
+                    }
+                });
+                
+                stepDotsContainer.appendChild(dot);
+            }
+        }
+
+        // Fonction pour valider une étape
+        function validerEtape(etape) {
+            if (etape === 1) {
+                const champsObligatoires = [
+                    document.getElementById('sexe'),
+                    document.getElementById('prenom'),
+                    document.getElementById('nom'),
+                    document.getElementById('dateNaissance'),
+                    document.getElementById('adresse')
+                ];
+                
+                let valide = true;
+                
+                champsObligatoires.forEach(champ => {
+                    if (!champ.value.trim()) {
+                        valide = false;
+                        champ.classList.add('invalid');
+                        document.getElementById(`${champ.id}-error`).style.display = 'block';
+                    } else {
+                        champ.classList.remove('invalid');
+                        document.getElementById(`${champ.id}-error`).style.display = 'none';
+                    }
+                });
+                
+                if (!valide) {
+                    alert('Veuillez remplir tous les champs obligatoires avant de continuer.');
+                    document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                return valide;
+            }
+            
+            return true;
+        }
 
         // Fonction pour afficher/masquer le champ conjoint
         function toggleConjointField() {
@@ -1201,6 +1355,11 @@
 
         // Fonction pour changer d'étape
         function changerEtape(etape) {
+            // Valider l'étape actuelle avant de changer
+            if (etape > etapeActuelle && !validerEtape(etapeActuelle)) {
+                return;
+            }
+            
             // Masquer toutes les étapes
             document.querySelectorAll('.form-step').forEach(step => {
                 step.style.display = 'none';
@@ -1212,45 +1371,60 @@
             // Mettre à jour l'indicateur de progression
             document.getElementById('progressFill').style.width = `${(etape / totalEtapes) * 100}%`;
             
+            // Mettre à jour les indicateurs d'étape
+            document.querySelectorAll('.step-dot').forEach((dot, index) => {
+                dot.classList.remove('active', 'completed');
+                if (index + 1 === etape) {
+                    dot.classList.add('active');
+                } else if (index + 1 < etape) {
+                    dot.classList.add('completed');
+                }
+            });
+            
             // Mettre à jour le texte d'indication d'étape
             let stepText = '';
             switch(etape) {
                 case 1:
-                    stepText = 'Étape 1 sur 6 : Informations personnelles et volontés générales';
+                    stepText = 'Étape 1 sur 5 : Informations personnelles et volontés générales';
                     document.getElementById('prevStepBtn').style.display = 'none';
                     document.getElementById('nextStepBtn').innerHTML = 'Continuer vers la famille <i class="fas fa-arrow-right"></i>';
                     break;
                 case 2:
-                    stepText = 'Étape 2 sur 6 : Famille et proches';
+                    stepText = 'Étape 2 sur 5 : Famille et proches';
                     document.getElementById('prevStepBtn').style.display = 'inline-flex';
                     document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les biens <i class="fas fa-arrow-right"></i>';
                     break;
                 case 3:
-                    stepText = 'Étape 3 sur 6 : Biens matériels et financiers';
+                    stepText = 'Étape 3 sur 5 : Biens matériels et financiers';
                     document.getElementById('prevStepBtn').style.display = 'inline-flex';
                     document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les dettes <i class="fas fa-arrow-right"></i>';
                     break;
                 case 4:
-                    stepText = 'Étape 4 sur 6 : Dettes et devoirs religieux';
+                    stepText = 'Étape 4 sur 5 : Dettes et devoirs religieux';
                     document.getElementById('prevStepBtn').style.display = 'inline-flex';
                     document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les données numériques <i class="fas fa-arrow-right"></i>';
                     break;
                 case 5:
-                    stepText = 'Étape 5 sur 6 : Données numériques et réseaux sociaux';
+                    stepText = 'Étape 5 sur 5 : Données numériques et réseaux sociaux';
                     document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers l\'étape 6 <i class="fas fa-arrow-right"></i>';
+                    document.getElementById('nextStepBtn').innerHTML = 'Finaliser et générer le PDF <i class="fas fa-file-pdf"></i>';
                     break;
             }
             document.getElementById('stepIndicator').textContent = stepText;
             
             // Mettre à jour l'étape actuelle
             etapeActuelle = etape;
+            
+            // Scroll vers le haut de la page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Fonction pour passer à l'étape suivante
         function nextStep() {
-            if (etapeActuelle < 5) {
+            if (etapeActuelle < totalEtapes) {
                 changerEtape(etapeActuelle + 1);
+            } else {
+                genererPDF();
             }
         }
 
@@ -1949,7 +2123,14 @@
             });
             
             localStorage.setItem('testamentBrouillon', JSON.stringify(data));
-            alert('Brouillon sauvegardé avec succès !');
+            
+            // Afficher l'indicateur de sauvegarde
+            const saveIndicator = document.getElementById('saveIndicator');
+            saveIndicator.classList.add('visible');
+            
+            setTimeout(() => {
+                saveIndicator.classList.remove('visible');
+            }, 3000);
         }
 
         function genererPDF() {
@@ -2344,6 +2525,8 @@
             margin-top: 50px;
             font-size: 14px;
             color: #2D4C68;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
         }
         
         .decoration {
@@ -2363,6 +2546,10 @@
             .container {
                 box-shadow: none;
                 padding: 20px;
+            }
+            
+            .section {
+                page-break-inside: avoid;
             }
         }
     </style>
@@ -2519,8 +2706,12 @@
             window.location.href = `mailto:?subject=${subject}&body=${body}`;
         }
 
-        // Charger les données sauvegardées si elles existent
+        // Initialiser l'application
         window.addEventListener('load', function() {
+            // Initialiser les indicateurs d'étape
+            initialiserIndicateursEtape();
+            
+            // Charger les données sauvegardées si elles existent
             const savedData = localStorage.getItem('testamentBrouillon');
             if (savedData) {
                 const data = JSON.parse(savedData);
@@ -2579,6 +2770,26 @@
                     }
                 });
             }
+            
+            // Configurer la validation des champs obligatoires
+            const champsObligatoires = document.querySelectorAll('input[required], select[required], textarea[required]');
+            champsObligatoires.forEach(champ => {
+                champ.addEventListener('blur', function() {
+                    if (!this.value.trim()) {
+                        this.classList.add('invalid');
+                        const errorElement = document.getElementById(`${this.id}-error`);
+                        if (errorElement) {
+                            errorElement.style.display = 'block';
+                        }
+                    } else {
+                        this.classList.remove('invalid');
+                        const errorElement = document.getElementById(`${this.id}-error`);
+                        if (errorElement) {
+                            errorElement.style.display = 'none';
+                        }
+                    }
+                });
+            });
         });
 
         // Sauvegarde automatique
@@ -2600,20 +2811,4 @@
         }, 30000);
     </script>
 </body>
-</html>
-```
-
-J'ai implémenté toutes vos demandes :
-
-1. Création de la 5ème étape sur les données numériques et réseaux sociaux
-2. Ajout des catégories demandées avec menus déroulants :
-   · Réseaux sociaux (Facebook, Instagram, WhatsApp, Telegram, TikTok, etc.)
-   · Comptes email
-   · Comptes en ligne (Amazon, abonnements)
-   · Services cloud
-   · Appareils avec mots de passe
-3. Correction du calcul de la Zakat : maintenant elle se calcule uniquement sur la partie qui dépasse le Nissab
-4. Ajout des boutons de partage sur toutes les pages
-5. Intégration des données dans le PDF généré
-
-Toutes les fonctionnalités ont été testées et fonctionnent correctement. La navigation entre les étapes est fluide, et les données de la 5ème étape s'ajoutent bien au PDF final.
+            </html>
