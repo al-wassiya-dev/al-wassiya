@@ -1058,7 +1058,7 @@
                             <h2 class="section-title"><i class="fas fa-moon"></i> Jeûne de Ramadan</h2>
                             
                             <div class="form-group">
-                                <label for="jeuneStatus">Jays de jeûne à rattraper</label>
+                                <label for="jeuneStatus">Jours de jeûne à rattraper</label>
                                 <select id="jeuneStatus" name="jeuneStatus">
                                     <option value="">Sélectionner</option>
                                     <option value="0">Aucun jour à rattraper</option>
@@ -1372,7 +1372,7 @@
             document.getElementById('progressFill').style.width = `${(etape / totalEtapes) * 100}%`;
             
             // Mettre à jour les indicateurs d'étape
-            document.querySelectorAll('.step-dot').forEach((dot, index) {
+            document.querySelectorAll('.step-dot').forEach((dot, index) => {
                 dot.classList.remove('active', 'completed');
                 if (index + 1 === etape) {
                     dot.classList.add('active');
@@ -1751,38 +1751,32 @@
                     </div>
                     <div class="form-group">
                         <label>Montant (€) <span class="required">*</span></label>
-                        <input type="number" name="${category}[${index}][montant]" required placeholder
-                                                <option value="autre">Autre type de dette</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Montant (€) <span class="required">*</span></label>
-                    <input type="number" name="${category}[${index}][montant]" required placeholder="Montant à rembourser">
-                </div>
-                <div class="form-group">
-                    <label>Nom du créancier <span class="required">*</span></label>
-                    <input type="text" name="${category}[${index}][nom]" required placeholder="Nom et prénom ou entreprise">
-                </div>
-                <div class="form-group">
-                    <label>Téléphone du créancier</label>
-                    <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
-                </div>
-                <div class="form-group">
-                    <label>Adresse du créancier</label>
-                    <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Date d'échéance</label>
-                    <input type="date" name="${category}[${index}][date_echeance]">
-                </div>
-                <div class="form-group">
-                    <label>Informations complémentaires</label>
-                    <textarea name="${category}[${index}][info]" placeholder="Détails sur cette dette"></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
+                        <input type="number" name="${category}[${index}][montant]" required placeholder="Montant à rembourser">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom du créancier <span class="required">*</span></label>
+                        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom et prénom ou entreprise">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone du créancier</label>
+                        <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse du créancier</label>
+                        <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Date d'échéance</label>
+                        <input type="date" name="${category}[${index}][date_echeance]">
+                    </div>
+                    <div class="form-group">
+                        <label>Informations complémentaires</label>
+                        <textarea name="${category}[${index}][info]" placeholder="Détails sur cette dette"></textarea>
+                    </div>
+                    <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                `;
             }
             
             container.appendChild(debtEntry);
@@ -2177,82 +2171,18 @@
                 day: 'numeric'
             });
             
-            // Récupérer TOUTES les données du formulaire (y compris les champs dynamiques)
+            // Récupérer les données du formulaire
+            const formData = new FormData(document.getElementById('testamentForm'));
             const data = {};
             
-            // Récupérer les champs de base
-            const formElements = document.getElementById('testamentForm').elements;
-            for (let i = 0; i < formElements.length; i++) {
-                const element = formElements[i];
-                if (element.name && !element.name.includes('[') && !element.name.includes(']')) {
-                    data[element.name] = element.value;
-                }
-            }
-            
-            // Fonction pour récupérer les données des entrées dynamiques
-            function getDynamicData(category) {
-                const entries = [];
-                const inputs = document.querySelectorAll(`[name^="${category}["]`);
-                
-                let currentIndex = -1;
-                inputs.forEach(input => {
-                    const name = input.getAttribute('name');
-                    const match = name.match(new RegExp(`${category}\\[(\\d+)\\]\\[(\\w+)\\]`));
-                    
-                    if (match) {
-                        const index = parseInt(match[1]);
-                        const field = match[2];
-                        
-                        if (index !== currentIndex) {
-                            entries.push({});
-                            currentIndex = index;
-                        }
-                        
-                        entries[index][field] = input.value;
-                    }
-                });
-                
-                return entries.length > 0 ? entries : null;
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
             }
             
             // Récupérer les données des personnes
             const categoriesPersonnes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
-            categoriesPersonnes.forEach(category => {
-                const entries = getDynamicData(category);
-                if (entries) {
-                    data[category] = entries;
-                }
-            });
-            
-            // Récupérer les données des biens
-            const categoriesBiens = ['immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
-            categoriesBiens.forEach(category => {
-                const entries = getDynamicData(category);
-                if (entries) {
-                    data[category] = entries;
-                }
-            });
-            
-            // Récupérer les données des dettes et créances
-            const categoriesDettes = ['creances', 'dettes', 'sadaqa'];
-            categoriesDettes.forEach(category => {
-                const entries = getDynamicData(category);
-                if (entries) {
-                    data[category] = entries;
-                }
-            });
-            
-            // Récupérer les données numériques
-            const categoriesNumerique = ['reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
-            categoriesNumerique.forEach(category => {
-                const entries = getDynamicData(category);
-                if (entries) {
-                    data[category] = entries;
-                }
-            });
-            
-            // Générer le contenu HTML pour les personnes
             let personnesHTML = '';
+            
             categoriesPersonnes.forEach(category => {
                 if (data[category] && data[category].length > 0) {
                     let categoryTitle = '';
@@ -2279,8 +2209,10 @@
                 }
             });
             
-            // Générer le contenu HTML pour les biens
+            // Récupérer les données des biens (étape 3)
+            const categoriesBiens = ['immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
             let biensHTML = '';
+            
             categoriesBiens.forEach(category => {
                 if (data[category] && data[category].length > 0) {
                     let categoryTitle = '';
@@ -2336,8 +2268,10 @@
                 }
             });
             
-            // Générer le contenu HTML pour les dettes et créances
+            // Récupérer les données des dettes et créances (étape 4)
             let dettesHTML = '';
+            const categoriesDettes = ['creances', 'dettes', 'sadaqa'];
+            
             categoriesDettes.forEach(category => {
                 if (data[category] && data[category].length > 0) {
                     let categoryTitle = '';
@@ -2376,7 +2310,7 @@
                 }
             });
             
-            // Générer le contenu HTML pour les devoirs religieux
+            // Récupérer les données des devoirs religieux (étape 4)
             let devoirsHTML = '';
             
             if (data.zakatStatus || data.jeuneStatus || data.hadjStatus) {
@@ -2426,8 +2360,10 @@
                 devoirsHTML += `</div>`;
             }
             
-            // Générer le contenu HTML pour les données numériques
+            // Récupérer les données numériques (étape 5)
             let numeriqueHTML = '';
+            const categoriesNumerique = ['reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
+            
             categoriesNumerique.forEach(category => {
                 if (data[category] && data[category].length > 0) {
                     let categoryTitle = '';
@@ -2532,7 +2468,8 @@
             font-weight: bold; 
             margin: 20px 0;
         }
-                .title { 
+        
+        .title { 
             font-size: 24px; 
             font-weight: bold; 
             margin: 15px 0;
@@ -2874,4 +2811,4 @@
         }, 30000);
     </script>
 </body>
-</html>
+            </html>
