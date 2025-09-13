@@ -7,250 +7,403 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
-  /* Inclure ici l’intégralité du CSS fourni initialement (plus de 300 lignes) */
-  :root {
-    --primary: #C9B178;
-    --primary-dark: #A89262;
-    --secondary: #2D4C68;
-    --accent: #3A5F7E;
-    --light: #F8F5EE;
-    --dark: #1E1E24;
-    --success: #4CAF50;
-    --error: #E74C3C;
-    --radius: 16px;
-    --shadow: 0 10px 30px rgba(0,0,0,0.08);
-    --transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
+:root {
+  --primary: #C9B178;
+  --primary-dark: #A89262;
+  --secondary: #2D4C68;
+  --accent: #3A5F7E;
+  --light: #F8F5EE;
+  --dark: #1E1E24;
+  --success: #4CAF50;
+  --error: #E74C3C;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%);
+  color: var(--dark);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex-grow: 1;
+}
+.header {
+  text-align: center;
+  padding: 40px 0;
+  margin-bottom: 30px;
+  position: relative;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--secondary);
+  margin-bottom: 25px;
+  font-weight: 400;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.bismillah {
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin: 25px 0;
+  font-weight: 600;
+}
+/* Continues on with other detailed styles... */
+.step-dots {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 40px;
+  gap: 12px;
+}
+.step-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #EDE8DD;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.step-dot.active {
+  background-color: var(--primary);
+  transform: scale(1.2);
+}
+.step-dot.completed {
+  background-color: var(--success);
+}
+.progress-container {
+  background: white;
+  border-radius: var(--radius);
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+}
+.progress-bar {
+  height: 8px;
+  background: #EDE8DD;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  width: 20%;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+.step-indicator {
+  font-size: 1.1rem;
+  color: var(--secondary);
+  font-weight: 500;
+}
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+@media (min-width: 992px) {
+  .form-container {
+    grid-template-columns: 1fr 1fr;
   }
-  * {margin: 0; padding: 0; box-sizing: border-box;}
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%);
-    color: var(--dark);
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-  .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-  .header {text-align: center; padding: 40px 0; margin-bottom: 30px; position: relative;}
-  .logo {font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; letter-spacing: 1px;}
-  .subtitle {font-size: 1.2rem; color: var(--secondary); margin-bottom: 25px; font-weight: 400; max-width:600px; margin-left:auto; margin-right:auto;}
-  .bismillah {font-size: 2.2rem; color: var(--primary); margin: 25px 0; font-weight: 600;}
-  /* Continuer avec le reste du CSS complet ici selon ton code initial */
+}
+.form-section {
+  background: white;
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.form-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--secondary);
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(201,177,120,0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title i {
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+.form-group {
+  margin-bottom: 25px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--secondary);
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #EDE8DD;
+  border-radius: 10px;
+  background: #FCFAF7;
+  color: var(--dark);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(201,177,120,0.2);
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #A0A0A0;
+}
+.required {
+  color: var(--error);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin: 40px 0;
+}
+.btn {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(168,146,98,0.4);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.btn-secondary:hover {
+  background: var(--primary);
+  color: white;
+}
+.save-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--success);
+  color: white;
+  padding: 10px 15px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+.save-indicator.visible {
+  opacity: 1;
+}
+footer {
+  flex-shrink: 0;
+  text-align: center;
+  background: #fff;
+  padding: 20px 10px;
+  border-top: 1px solid #ddd;
+  font-size: 0.9rem;
+  color: var(--secondary);
+}
 </style>
 </head>
 <body>
-<div class="container" id="main-content">
-  <div class="header">
-    <div class="logo">Al Wassiya</div>
-    <div class="subtitle">Votre Testament Islamique Simplifié</div>
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-  </div>
+  <div class="container" id="main-content">
+    <div class="header">
+      <div class="logo">Al Wassiya</div>
+      <div class="subtitle">Votre Testament Islamique Simplifié</div>
+      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+    </div>
 
-  <div class="step-dots" id="stepDots">
-    <div class="step-dot active" data-step="1"></div>
-    <div class="step-dot" data-step="2"></div>
-    <div class="step-dot" data-step="3"></div>
-    <div class="step-dot" data-step="4"></div>
-    <div class="step-dot" data-step="5"></div>
-  </div>
+    <div class="step-dots" id="stepDots">
+      <div class="step-dot active" data-step="1"></div>
+      <div class="step-dot" data-step="2"></div>
+      <div class="step-dot" data-step="3"></div>
+      <div class="step-dot" data-step="4"></div>
+      <div class="step-dot" data-step="5"></div>
+    </div>
 
-  <div class="progress-container">
-    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
-    <div class="step-indicator" id="stepIndicator">Étape 1 sur 5 : Informations personnelles et volontés générales</div>
-  </div>
+    <div class="progress-container">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+      <div class="step-indicator" id="stepIndicator">Étape 1 sur 5 : Informations personnelles et volontés générales</div>
+    </div>
 
-  <form id="testamentForm" novalidate>
-    <!-- Étape 1 : Informations personnelles -->
-    <div id="step1" class="form-step">
-      <div class="form-container">
-        <div class="form-section">
-          <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
-          <div class="form-group">
-            <label for="sexe">Sexe <span class="required">*</span></label>
-            <select id="sexe" name="sexe" required onchange="toggleConjointField()">
-              <option value="">Sélectionner</option>
-              <option value="homme">Homme</option>
-              <option value="femme">Femme</option>
-            </select>
-            <div class="validation-error" id="sexe-error" style="display:none;">Veuillez sélectionner votre sexe</div>
-          </div>
-          <div class="form-group">
-            <label for="prenom">Prénom <span class="required">*</span></label>
-            <input id="prenom" name="prenom" type="text" required placeholder="Votre prénom" />
-            <div class="validation-error" id="prenom-error" style="display:none;">Veuillez saisir votre prénom</div>
-          </div>
-          <div class="form-group">
-            <label for="nom">Nom de famille <span class="required">*</span></label>
-            <input id="nom" name="nom" type="text" required placeholder="Votre nom de famille" />
-            <div class="validation-error" id="nom-error" style="display:none;">Veuillez saisir votre nom</div>
-          </div>
-          <div class="form-group">
-            <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
-            <input id="dateNaissance" name="dateNaissance" type="date" required />
-            <div class="validation-error" id="dateNaissance-error" style="display:none;">Veuillez saisir votre date de naissance</div>
-          </div>
-          <div class="form-group">
-            <label for="lieuNaissance">Lieu de naissance</label>
-            <input id="lieuNaissance" name="lieuNaissance" type="text" placeholder="Ville et pays de naissance" />
-          </div>
-          <div class="form-group">
-            <label for="adresse">Adresse actuelle <span class="required">*</span></label>
-            <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
-            <div class="validation-error" id="adresse-error" style="display:none;">Veuillez saisir votre adresse</div>
-          </div>
-          <div class="form-group">
-            <label for="nationalite">Nationalité</label>
-            <input id="nationalite" name="nationalite" type="text" placeholder="Votre nationalité" />
-          </div>
-          <div class="form-group">
-            <label for="situationFamiliale">Situation familiale</label>
-            <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
-              <option value="">Sélectionner</option>
-              <option value="celibataire">Célibataire</option>
-              <option value="marie">Marié(e)</option>
-              <option value="divorce">Divorcé(e)</option>
-              <option value="veuf">Veuf/Veuve</option>
-            </select>
-          </div>
-          <div class="form-group" id="conjointGroup" style="display:none;">
-            <label id="conjointLabel" for="conjoint">Identité de l'époux/épouse</label>
-            <input id="conjoint" name="conjoint" type="text" placeholder="Nom et prénom du conjoint" />
-          </div>
-        </div>
+    <form id="testamentForm" novalidate>
+      <!-- Étape 1: Informations personnelles -->
+      <div id="step1" class="form-step">
+        <div class="form-container">
 
-        <div class="form-section">
-          <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
-          <div class="form-group">
-            <label for="volontesObseques">Volontés concernant les obsèques</label>
-            <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
+            <div class="form-group">
+              <label for="sexe">Sexe <span class="required">*</span></label>
+              <select id="sexe" name="sexe" required onchange="toggleConjointField()">
+                <option value="">Sélectionner</option>
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
+              </select>
+              <div class="validation-error" id="sexe-error" style="display:none;">Veuillez sélectionner votre sexe</div>
+            </div>
+
+            <div class="form-group">
+              <label for="prenom">Prénom <span class="required">*</span></label>
+              <input id="prenom" name="prenom" type="text" required placeholder="Votre prénom" />
+              <div class="validation-error" id="prenom-error" style="display:none;">Veuillez saisir votre prénom</div>
+            </div>
+
+            <div class="form-group">
+              <label for="nom">Nom de famille <span class="required">*</span></label>
+              <input id="nom" name="nom" type="text" required placeholder="Votre nom de famille" />
+              <div class="validation-error" id="nom-error" style="display:none;">Veuillez saisir votre nom</div>
+            </div>
+
+            <div class="form-group">
+              <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
+              <input id="dateNaissance" name="dateNaissance" type="date" required />
+              <div class="validation-error" id="dateNaissance-error" style="display:none;">Veuillez saisir votre date de naissance</div>
+            </div>
+
+            <div class="form-group">
+              <label for="lieuNaissance">Lieu de naissance</label>
+              <input id="lieuNaissance" name="lieuNaissance" type="text" placeholder="Ville et pays de naissance" />
+            </div>
+
+            <div class="form-group">
+              <label for="adresse">Adresse actuelle <span class="required">*</span></label>
+              <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
+              <div class="validation-error" id="adresse-error" style="display:none;">Veuillez saisir votre adresse</div>
+            </div>
+
+            <div class="form-group">
+              <label for="nationalite">Nationalité</label>
+              <input id="nationalite" name="nationalite" type="text" placeholder="Votre nationalité" />
+            </div>
+
+            <div class="form-group">
+              <label for="situationFamiliale">Situation familiale</label>
+              <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
+                <option value="">Sélectionner</option>
+                <option value="celibataire">Célibataire</option>
+                <option value="marie">Marié(e)</option>
+                <option value="divorce">Divorcé(e)</option>
+                <option value="veuf">Veuf/Veuve</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="conjointGroup" style="display:none;">
+              <label id="conjointLabel" for="conjoint">Identité de l'époux/épouse</label>
+              <input id="conjoint" name="conjoint" type="text" placeholder="Nom et prénom du conjoint" />
+            </div>
+
           </div>
-          <div class="form-group">
-            <label for="recommandationsFamille">Recommandations à la famille</label>
-            <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
+
+            <div class="form-group">
+              <label for="volontesObseques">Volontés concernant les obsèques</label>
+              <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="recommandationsFamille">Recommandations à la famille</label>
+              <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
+              <input id="executeurTestament" name="executeurTestament" type="text" placeholder="Nom de la personne de confiance" />
+            </div>
+
+            <div class="form-group">
+              <label for="contactExecuteur">Contact de l'exécuteur</label>
+              <input id="contactExecuteur" name="contactExecuteur" type="text" placeholder="Téléphone ou email" />
+            </div>
+
+            <div class="form-group">
+              <label for="autresVolontes">Autres volontés ou instructions</label>
+              <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
+            </div>
+
           </div>
-          <div class="form-group">
-            <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
-            <input id="executeurTestament" name="executeurTestament" type="text" placeholder="Nom de la personne de confiance" />
-          </div>
-          <div class="form-group">
-            <label for="contactExecuteur">Contact de l'exécuteur</label>
-            <input id="contactExecuteur" name="contactExecuteur" type="text" placeholder="Téléphone ou email" />
-          </div>
-          <div class="form-group">
-            <label for="autresVolontes">Autres volontés ou instructions</label>
-            <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
-          </div>
+
         </div>
       </div>
+    </form>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-  let etapeActuelle = 1;
-  const totalEtapes = 5;
+  </div>
+  <footer>
+    © 2025 Al Wassiya - Testament Islamique Simplifié
+  </footer>
 
-  function initialiserIndicateursEtape() {
-    const stepDotsContainer = document.getElementById('stepDots');
-    stepDotsContainer.innerHTML = '';
-    for (let i=1; i <= totalEtapes; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'step-dot';
-      dot.dataset.step = i;
-      if (i === 1) dot.classList.add('active');
-      dot.addEventListener('click', () => {
-        if (i < etapeActuelle || validerEtape(etapeActuelle)) {
-          changerEtape(i);
-        }
-      });
-      stepDotsContainer.appendChild(dot);
-    }
-  }
+  <div class="save-indicator" id="saveIndicator">Sauvegarde effectuée</div>
 
-  function validerEtape(etape) {
-    if (etape === 1) {
-      const champsObligatoires = [
-        document.getElementById('sexe'),
-        document.getElementById('prenom'),
-        document.getElementById('nom'),
-        document.getElementById('dateNaissance'),
-        document.getElementById('adresse'),
-      ];
-      let valide = true;
-      champsObligatoires.forEach(champ => {
-        if(!champ.value.trim()) {
-          valide = false;
-          champ.classList.add('invalid');
-          document.getElementById(`${champ.id}-error`).style.display = 'block';
-        } else {
-          champ.classList.remove('invalid');
-          document.getElementById(`${champ.id}-error`).style.display = 'none';
-        }
-      });
-      if(!valide) {
-        alert('Veuillez remplir tous les champs obligatoires avant de continuer.');
-        document.querySelector('.form-section').scrollIntoView({behavior: 'smooth'});
-      }
-      return valide;
-    }
-    return true;
-  }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // Ajout toutes fonctions JS complètes de navigation, validation, toggle conjoint, ajout dynamique, génération PDF et sauvegarde.
+    // Les fonctions sont implémentées exactement comme dans les messages précédents, respectant la structure originale.
+  </script>
+</body>
+</html>
+<!-- Début deuxième tranche (~lignes 224 à 423) -->
 
-  function toggleConjointField() {
-    const situation = document.getElementById('situationFamiliale').value;
-    const group = document.getElementById('conjointGroup');
-    const label = document.getElementById('conjointLabel');
-    if (situation === 'marie' || situation === 'divorce') {
-      group.style.display = 'block';
-      label.textContent = situation === 'marie' ? 'Identité de l\'époux/épouse' : 'Identité de l\'ex-époux/ex-épouse';
-      document.getElementById('conjoint').placeholder = situation === 'marie' ? 'Nom et prénom du conjoint' : 'Nom et prénom de l\'ex-conjoint';
-    } else {
-      group.style.display = 'none';
-      document.getElementById('conjoint').value = '';
-    }
-  }
-
-  function changerEtape(etape) {
-    if (etape > etapeActuelle && !validerEtape(etapeActuelle)) return;
-    document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
-    document.getElementById(`step${etape}`).style.display = 'block';
-    document.getElementById('progressFill').style.width = `${(etape/totalEtapes)*100}%`;
-    document.querySelectorAll('.step-dot').forEach((dot,i) => {
-      dot.classList.remove('active','completed');
-      if (i+1 === etape) dot.classList.add('active');
-      else if (i+1 < etape) dot.classList.add('completed');
-    });
-    const texts = [
-      'Étape 1 sur 5 : Informations personnelles et volontés générales',
-      'Étape 2 sur 5 : Famille et proches',
-      'Étape 3 sur 5 : Biens matériels et financiers',
-      'Étape 4 sur 5 : Dettes et devoirs religieux',
-      'Étape 5 sur 5 : Données numériques et réseaux sociaux'
-    ];
-    document.getElementById('stepIndicator').textContent = texts[etape-1] || '';
-    document.getElementById('prevStepBtn').style.display = etape === 1 ? 'none' : 'inline-flex';
-    document.getElementById('nextStepBtn').innerHTML = etape === totalEtapes ? 'Finaliser et générer le PDF <i class="fas fa-file-pdf"></i>' : `Continuer vers l'étape suivante <i class="fas fa-arrow-right"></i>`;
-    etapeActuelle = etape;
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-
-  function nextStep() {
-    if (etapeActuelle < totalEtapes) changerEtape(etapeActuelle+1); else genererPDF();
-  }
-
-  function prevStep() {
-    if (etapeActuelle > 1) changerEtape(etapeActuelle-1);
-  }
-
-  // Fonction genererPDF avec jsPDF à intégrer dans partie suivante
-
-  window.addEventListener('load', () => {
-    initialiserIndicateursEtape();
-    toggleConjointField();
-  });
-</script>
-<!-- Étape 2: Famille et proches -->
+<!-- Étape 2 : Famille et proches -->
 <div id="step2" class="form-step" style="display:none;">
   <div class="form-container">
+
     <div class="form-section">
       <h2 class="section-title"><i class="fas fa-users"></i> Famille et proches</h2>
+
       <div class="family-category">
         <div class="category-header" onclick="toggleCategory('parents')">
           <div class="category-title"><i class="fas fa-user-friends"></i> Parents</div>
@@ -263,7 +416,7 @@
           </button>
         </div>
       </div>
-      <!-- Ajoute les catégories conjoint, frères-soeurs, enfants, amis semblablement -->
+
       <div class="family-category">
         <div class="category-header" onclick="toggleCategory('conjoints')">
           <div class="category-title"><i class="fas fa-ring"></i> Époux/Épouse</div>
@@ -315,7 +468,9 @@
           </button>
         </div>
       </div>
-    </div>  
+
+    </div>
+
     <div class="form-section">
       <h2 class="section-title"><i class="fas fa-info-circle"></i> Informations complémentaires</h2>
       <div class="form-group">
@@ -331,82 +486,536 @@
         <textarea id="personnesPrevenir" name="personnesPrevenir" placeholder="Liste des personnes à contacter en priorité en cas de décès"></textarea>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- Étape 3... (ajoute ici les sections bien, dettes, données) à copier de ton code initial -->
+<!-- Navigation Buttons -->
+<div class="actions">
+  <button type="button" class="btn btn-secondary" id="prevStepBtn" style="display:none;" onclick="prevStep()">
+    <i class="fas fa-arrow-left"></i> Étape précédente
+  </button>
+  <button type="button" class="btn btn-primary" id="nextStepBtn" onclick="nextStep()">
+    Continuer vers la famille <i class="fas fa-arrow-right"></i>
+  </button>
+</div>
 
-<!-- Fonctions addPerson et toggleCategory entre autres -->
+<!-- Functions for toggling categories -->
 <script>
   function toggleCategory(id) {
     const el = document.getElementById(id);
-    el.classList.toggle('active');
+    if (!el) return;
+    if (el.style.display === 'block') {
+      el.style.display = 'none';
+    } else {
+      el.style.display = 'block';
+    }
   }
+</script>
 
+<!-- Functions d’ajout dynamique -->
+
+<script>
   function addPerson(category) {
     const container = document.getElementById(`${category}-container`);
+    if (!container) return;
     const index = container.children.length;
 
     const div = document.createElement('div');
     div.className = 'person-entry';
     div.innerHTML = `
-      <div class="form-group"><label>Nom <span class="required">*</span></label><input type="text" name="${category}[${index}][nom]" required placeholder="Nom de famille"></div>
-      <div class="form-group"><label>Prénom <span class="required">*</span></label><input type="text" name="${category}[${index}][prenom]" required placeholder="Prénom"></div>
-      <div class="form-group"><label>Téléphone</label><input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone"></div>
-      <div class="form-group"><label>Adresse</label><textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea></div>
-      <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+      <div class="form-group">
+        <label>Nom <span class="required">*</span></label>
+        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom de famille" />
+      </div>
+      <div class="form-group">
+        <label>Prénom <span class="required">*</span></label>
+        <input type="text" name="${category}[${index}][prenom]" required placeholder="Prénom" />
+      </div>
+      <div class="form-group">
+        <label>Téléphone</label>
+        <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone" />
+      </div>
+      <div class="form-group">
+        <label>Adresse</label>
+        <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
+  }
+</script>
+
+<!-- Suite des fonctions JS dans partie suivante -->
+
+<!-- Fin deuxième tranche -->
+
+<!-- Début troisième tranche (~lignes 424 à 623) -->
+
+<!-- Étape 3 : Biens matériels et financiers -->
+<div id="step3" class="form-step" style="display:none;">
+  <div class="form-container">
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-home"></i> Biens immobiliers</h2>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('immobilier')">
+          <div class="category-title"><i class="fas fa-building"></i> Propriétés immobilières</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="immobilier" class="category-content" style="display:none;">
+          <div id="immobilier-container"></div>
+          <button type="button" class="add-person-btn" onclick="addAsset('immobilier')">
+            <i class="fas fa-plus"></i> Ajouter un bien immobilier
+          </button>
+        </div>
+      </div>
+      <div class="privacy-notice"><i class="fas fa-shield-alt"></i> Les informations personnelles que vous saisissez sont sous votre responsabilité.</div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-car"></i> Biens matériels</h2>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('materiel')">
+          <div class="category-title"><i class="fas fa-tshirt"></i> Biens de valeur</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="materiel" class="category-content" style="display:none;">
+          <div id="materiel-container"></div>
+          <button type="button" class="add-person-btn" onclick="addAsset('materiel')">
+            <i class="fas fa-plus"></i> Ajouter un bien matériel
+          </button>
+        </div>
+      </div>
+
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('personnels')">
+          <div class="category-title"><i class="fas fa-book"></i> Biens personnels</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="personnels" class="category-content" style="display:none;">
+          <div id="personnels-container"></div>
+          <button type="button" class="add-person-btn" onclick="addAsset('personnels')">
+            <i class="fas fa-plus"></i> Ajouter un bien personnel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-university"></i> Comptes bancaires</h2>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('comptes')">
+          <div class="category-title"><i class="fas fa-piggy-bank"></i> Comptes et épargnes</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="comptes" class="category-content" style="display:none;">
+          <div id="comptes-container"></div>
+          <button type="button" class="add-person-btn" onclick="addAsset('comptes')">
+            <i class="fas fa-plus"></i> Ajouter un compte bancaire
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-credit-card"></i> Cartes et accès bancaires</h2>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('cartes')">
+          <div class="category-title"><i class="fas fa-credit-card"></i> Cartes bancaires</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="cartes" class="category-content" style="display:none;">
+          <div id="cartes-container"></div>
+          <button type="button" class="add-person-btn" onclick="addAsset('cartes')">
+            <i class="fas fa-plus"></i> Ajouter une carte bancaire
+          </button>
+        </div>
+      </div>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('applications')">
+          <div class="category-title"><i class="fas fa-mobile-alt"></i> Applications bancaires</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="applications" class="category-content" style="display:none;">
+          <div id="applications-container"></div>
+          <button type="button" class="add-person-btn" onclick="addAsset('applications')">
+            <i class="fas fa-plus"></i> Ajouter une application bancaire
+          </button>
+        </div>
+      </div>
+      <div class="privacy-notice"><i class="fas fa-exclamation-triangle"></i> Pour votre sécurité, ne sauvegardez pas les mots de passe ou codes confidentiels.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Fonction d'ajout dynamique pour les biens et comptes -->
+<script>
+  function addAsset(category) {
+    const container = document.getElementById(`${category}-container`);
+    if (!container) return;
+    const index = container.children.length;
+
+    const div = document.createElement('div');
+    div.className = 'asset-entry';
+
+    if (category === 'immobilier') {
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Type de bien <span class="required">*</span></label>
+          <select name="${category}[${index}][type]" required>
+            <option value="">Sélectionner</option>
+            <option value="maison">Maison</option>
+            <option value="appartement">Appartement</option>
+            <option value="terrain">Terrain</option>
+            <option value="local_commercial">Local commercial</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Adresse complète <span class="required">*</span></label>
+          <textarea name="${category}[${index}][adresse]" required placeholder="Adresse complète du bien"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Valeur estimée (€)</label>
+          <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur estimée"/>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+      `;
+    } else {
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Description <span class="required">*</span></label>
+          <input type="text" name="${category}[${index}][description]" required placeholder="Description du bien"/>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+      `;
+    }
+
+    container.appendChild(div);
+  }
+</script>
+
+<!-- Suite dans la prochaine tranche -->
+
+<!-- Fin troisième tranche -->
+
+<!-- Début quatrième tranche (~lignes 624 à 823) -->
+
+<!-- Étape 4 : Dettes, créances, et devoirs religieux -->
+<div id="step4" class="form-step" style="display:none;">
+  <div class="form-container">
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> Créances à percevoir</h2>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('creances')">
+          <div class="category-title"><i class="fas fa-money-check"></i> Créances financières</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="creances" class="category-content" style="display:none;">
+          <div id="creances-container"></div>
+          <button type="button" class="add-person-btn" onclick="addDebt('creances')">
+            <i class="fas fa-plus"></i> Ajouter une créance
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Dettes à régler</h2>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('dettes')">
+          <div class="category-title"><i class="fas fa-money-bill-wave"></i> Dettes et emprunts</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="dettes" class="category-content" style="display:none;">
+          <div id="dettes-container"></div>
+          <button type="button" class="add-person-btn" onclick="addDebt('dettes')">
+            <i class="fas fa-plus"></i> Ajouter une dette
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-hand-holding-heart"></i> Sadaqa / Aumônes</h2>
+      <div class="asset-category">
+        <div class="category-header" onclick="toggleCategory('sadaqa')">
+          <div class="category-title"><i class="fas fa-hand-holding-usd"></i> Dons et aumônes</div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="sadaqa" class="category-content" style="display:none;">
+          <div id="sadaqa-container"></div>
+          <button type="button" class="add-person-btn" onclick="addSadaqa()">
+            <i class="fas fa-plus"></i> Ajouter une sadaqa
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-praying-hands"></i> Devoirs religieux</h2>
+      <div class="form-group">
+        <label for="zakatStatus">Zakat</label>
+        <select id="zakatStatus" name="zakatStatus">
+          <option value="">Sélectionner</option>
+          <option value="versee">Versée</option>
+          <option value="non-versee">Non versée</option>
+          <option value="partielle">Partiellement versée</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="jeuneStatus">Jeûne du Ramadan à rattraper</label>
+        <select id="jeuneStatus" name="jeuneStatus">
+          <option value="">Sélectionner</option>
+          <option value="0">Aucun jour à rattraper</option>
+          <option value="plus">Plus de 10 jours</option>
+          <option value="1">1 jour</option>
+          <option value="2">2 jours</option>
+          <option value="3">3 jours</option>
+          <option value="4">4 jours</option>
+          <option value="5">5 jours</option>
+          <option value="6">6 jours</option>
+          <option value="7">7 jours</option>
+          <option value="8">8 jours</option>
+          <option value="9">9 jours</option>
+          <option value="10">10 jours</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="jeuneNotes">Notes sur le jeûne</label>
+        <textarea id="jeuneNotes" name="jeuneNotes" placeholder="Compléments d’information"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="hadjStatus">Hadj</label>
+        <select id="hadjStatus" name="hadjStatus">
+          <option value="">Sélectionner</option>
+          <option value="accompli">Accompli</option>
+          <option value="non-accompli">Non accompli</option>
+          <option value="partiel">Partiellement accompli (Omra seulement)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="hadjNotes">Notes sur le Hadj</label>
+        <textarea id="hadjNotes" name="hadjNotes" placeholder="Compléments d’information"></textarea>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function addDebt(category) {
+    const container = document.getElementById(`${category}-container`);
+    if (!container) return;
+    const index = container.children.length;
+
+    const div = document.createElement('div');
+    div.className = 'asset-entry';
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Type de ${category} <span class="required">*</span></label>
+        <input type="text" name="${category}[${index}][type]" required placeholder="Type" />
+      </div>
+      <div class="form-group">
+        <label>Montant (€) <span class="required">*</span></label>
+        <input type="number" name="${category}[${index}][montant]" required placeholder="Montant" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
     `;
     container.appendChild(div);
   }
 
-  // Fonction ajout similaire pour biens, dettes, réseaux sociaux etc. à compléter dans les prochaines parties
+  function addSadaqa() {
+    const container = document.getElementById("sadaqa-container");
+    const index = container.children.length;
 
-  // Front-end basique gestion comptes utilisateur & sauvegarde locale
-  const usersDB = JSON.parse(localStorage.getItem('usersDB') || '{}');
-  let currentUser = null;
-
-  function creerCompte(emailOrPhone, password) {
-    if(usersDB[emailOrPhone]) return false; // utilisateur déja existant
-    usersDB[emailOrPhone] = { password, data: null };
-    localStorage.setItem('usersDB', JSON.stringify(usersDB));
-    return true;
+    const div = document.createElement('div');
+    div.className = 'asset-entry';
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Description <span class="required">*</span></label>
+        <input type="text" name="sadaqa[${index}][description]" required placeholder="Description" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
   }
-
-  function connexion(emailOrPhone, password) {
-    if(usersDB[emailOrPhone] && usersDB[emailOrPhone].password === password) {
-      currentUser = emailOrPhone;
-      chargerDonneesCompte();
-      return true;
-    }
-    return false;
-  }
-
-  function sauvegarderCompte() {
-    if(!currentUser) return;
-    const formData = new FormData(document.getElementById('testamentForm'));
-    const data = {};
-    for(const [key, val] of formData.entries()) data[key] = val;
-    usersDB[currentUser].data = data;
-    localStorage.setItem('usersDB', JSON.stringify(usersDB));
-    alert('Compte sauvegardé.');
-  }
-
-  function chargerDonneesCompte() {
-    if(!currentUser) return;
-    const data = usersDB[currentUser].data;
-    if(!data) return;
-    for(const key in data) {
-      const el = document.querySelector(`[name="${key}"]`);
-      if(el) el.value = data[key];
-    }
-  }
-
-  // Etapes navigation, sauvegarde automatique et generation PDF a venir
 </script>
+
+<!-- Fin quatrième tranche -->
+
+<!-- Début cinquième tranche (~lignes 824 à 1023) -->
+
+<!-- Étape 5 : Données numériques et réseaux sociaux -->
+<div id="step5" class="form-step" style="display:none;">
+  <div class="form-container">
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-globe"></i> Réseaux sociaux</h2>
+      <div id="reseaux-sociaux-container"></div>
+      <button type="button" class="add-person-btn" onclick="addReseauSocial()">
+        <i class="fas fa-plus"></i> Ajouter un réseau social
+      </button>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-envelope"></i> Comptes Email</h2>
+      <div id="emails-container"></div>
+      <button type="button" class="add-person-btn" onclick="addEmail()">
+        <i class="fas fa-plus"></i> Ajouter un compte email
+      </button>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-cloud"></i> Services Cloud</h2>
+      <div id="cloud-container"></div>
+      <button type="button" class="add-person-btn" onclick="addCloud()">
+        <i class="fas fa-plus"></i> Ajouter un service cloud
+      </button>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title"><i class="fas fa-desktop"></i> Appareils sécurisés</h2>
+      <div id="appareils-container"></div>
+      <button type="button" class="add-person-btn" onclick="addAppareil()">
+        <i class="fas fa-plus"></i> Ajouter un appareil
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Gestion navigation entre étapes
+  // Ajouts dynamiques réseaux sociaux, emails, cloud, appareils
+  function addReseauSocial() {
+    const container = document.getElementById('reseaux-sociaux-container');
+    const index = container.children.length;
+
+    const div = document.createElement('div');
+    div.className = 'person-entry';
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Réseau social <span class="required">*</span></label>
+        <input type="text" name="reseaux[${index}][nom]" required placeholder="Nom du réseau social" />
+      </div>
+      <div class="form-group">
+        <label>Compte / URL</label>
+        <input type="text" name="reseaux[${index}][compte]" placeholder="Nom de compte ou URL" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function addEmail() {
+    const container = document.getElementById('emails-container');
+    const index = container.children.length;
+
+    const div = document.createElement('div');
+    div.className = 'person-entry';
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Adresse Email <span class="required">*</span></label>
+        <input type="email" name="emails[${index}][adresse]" required placeholder="Votre adresse email" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function addCloud() {
+    const container = document.getElementById('cloud-container');
+    const index = container.children.length;
+
+    const div = document.createElement('div');
+    div.className = 'person-entry';
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Service Cloud <span class="required">*</span></label>
+        <input type="text" name="cloud[${index}][service]" required placeholder="Nom du service cloud" />
+      </div>
+      <div class="form-group">
+        <label>Identifiant / URL</label>
+        <input type="text" name="cloud[${index}][identifiant]" placeholder="Identifiant ou URL" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function addAppareil() {
+    const container = document.getElementById('appareils-container');
+    const index = container.children.length;
+
+    const div = document.createElement('div');
+    div.className = 'person-entry';
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Appareil sécurisé <span class="required">*</span></label>
+        <input type="text" name="appareils[${index}][nom]" required placeholder="Nom de l'appareil" />
+      </div>
+      <div class="form-group">
+        <label>Détails</label>
+        <textarea name="appareils[${index}][details]" placeholder="Informations complémentaires"></textarea>
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
+  }
+</script>
+
+<!-- Fin cinquième tranche -->
+<!-- Début sixième tranche (~lignes 1024 à 1223) -->
+
+<!-- Fonctions JavaScript - Navigation entre étapes -->
+<script>
+  let etapeActuelle = 1;
+  const totalEtapes = 5;
+
+  function changerEtape(nouvelleEtape) {
+    if(nouvelleEtape > totalEtapes || nouvelleEtape < 1) return;
+    
+    if(nouvelleEtape > etapeActuelle && !validerEtape(etapeActuelle)) return;
+
+    document.querySelectorAll(".form-step").forEach(section => section.style.display = "none");
+    document.getElementById(`step${nouvelleEtape}`).style.display = "block";
+
+    const progressFill = document.getElementById("progressFill");
+    progressFill.style.width = `${(nouvelleEtape / totalEtapes) * 100}%`;
+
+    document.querySelectorAll(".step-dot").forEach((dot, idx) => {
+      dot.classList.remove("active");
+      dot.classList.remove("completed");
+      if(idx + 1 < nouvelleEtape) dot.classList.add("completed");
+      else if(idx + 1 === nouvelleEtape) dot.classList.add("active");
+    });
+
+    const labelEtapes = [
+      "Étape 1 sur 5 : Informations personnelles et volontés générales",
+      "Étape 2 sur 5 : Famille et proches",
+      "Étape 3 sur 5 : Biens matériels et financiers",
+      "Étape 4 sur 5 : Dettes et devoirs religieux",
+      "Étape 5 sur 5 : Données numériques et réseaux sociaux"
+    ];
+
+    document.getElementById("stepIndicator").textContent = labelEtapes[nouvelleEtape - 1];
+
+    document.getElementById("prevStepBtn").style.display = nouvelleEtape === 1 ? "none" : "inline-flex";
+    const nextBtn = document.getElementById("nextStepBtn");
+    nextBtn.innerHTML = nouvelleEtape === totalEtapes ? 'Finaliser et générer le PDF <i class="fas fa-file-pdf"></i>' : 'Continuer <i class="fas fa-arrow-right"></i>';
+
+    etapeActuelle = nouvelleEtape;
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
   function nextStep() {
-    if (etapeActuelle < totalEtapes) {
+    if(etapeActuelle < totalEtapes) {
       changerEtape(etapeActuelle + 1);
     } else {
       genererPDF();
@@ -414,433 +1023,725 @@
   }
 
   function prevStep() {
-    if (etapeActuelle > 1) {
+    if(etapeActuelle > 1) {
       changerEtape(etapeActuelle - 1);
     }
   }
 
-  function changerEtape(etape) {
-    if (etape > etapeActuelle && !validerEtape(etapeActuelle)) return;
-    document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
-    document.getElementById(`step${etape}`).style.display = 'block';
-    document.getElementById('progressFill').style.width = `${(etape / totalEtapes) * 100}%`;
-    document.querySelectorAll('.step-dot').forEach((dot, i) => {
-      dot.classList.remove('active', 'completed');
-      if (i + 1 === etape) dot.classList.add('active');
-      else if (i + 1 < etape) dot.classList.add('completed');
-    });
-    const stepsTexts = [
-      'Étape 1 : Informations personnelles et volontés générales',
-      'Étape 2 : Famille et proches',
-      'Étape 3 : Biens matériels et financiers',
-      'Étape 4 : Dettes et devoirs religieux',
-      'Étape 5 : Données numériques et réseaux sociaux'
-    ];
-    document.getElementById('stepIndicator').textContent = stepsTexts[etape - 1];
-    document.getElementById('prevStepBtn').style.display = (etape === 1) ? 'none' : 'inline-flex';
-    document.getElementById('nextStepBtn').innerHTML = (etape === totalEtapes) ? 'Finaliser et générer le PDF <i class="fas fa-file-pdf"></i>' : 'Continuer vers l\'étape suivante <i class="fas fa-arrow-right"></i>';
-    etapeActuelle = etape;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Validation sommaire étape 1 : champs obligatoires
-  function validerEtape(etape) {
-    if (etape === 1) {
-      const required = ['sexe', 'prenom', 'nom', 'dateNaissance', 'adresse'];
+  // Validation pour l'étape 1
+  function validerEtape(numero) {
+    if(numero === 1) {
+      const champsRequis = ["sexe", "prenom", "nom", "dateNaissance", "adresse"];
       let valide = true;
-      required.forEach(id => {
+      champsRequis.forEach(id => {
         const el = document.getElementById(id);
-        if (!el || !el.value.trim()) {
+        if(!el || !el.value.trim()) {
           valide = false;
-          el.classList.add('invalid');
-          const err = document.getElementById(`${id}-error`);
-          if (err) err.style.display = 'block';
+          el.classList.add("invalid");
+          document.getElementById(`${id}-error`).style.display = "block";
         } else {
-          el.classList.remove('invalid');
-          const err = document.getElementById(`${id}-error`);
-          if (err) err.style.display = 'none';
+          el.classList.remove("invalid");
+          document.getElementById(`${id}-error`).style.display = "none";
         }
       });
-      if (!valide) {
-        alert('Veuillez remplir tous les champs obligatoires.');
-        return false;
-      }
+      if(!valide) alert("Veuillez compléter tous les champs obligatoires avant de continuer.");
+      return valide;
     }
     return true;
   }
 
-  // Ajout dynamiques et suppressions gérés dans la partie précédente
-
-  // Fonction jsPDF pour générer PDF complet
-  async function genererPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'pt', 'a4');
-    const margin = 40;
-    let y = margin;
-
-    function addText(text, options = {}) {
-      const fontSize = options.fontSize || 12;
-      const fontStyle = options.fontStyle || 'normal';
-      doc.setFontSize(fontSize);
-      doc.setFont('Times', fontStyle);
-      const lines = doc.splitTextToSize(text, doc.internal.pageSize.width - margin * 2);
-      for (let line of lines) {
-        if (y + 14 > doc.internal.pageSize.height - margin) {
-          doc.addPage();
-          y = margin;
-        }
-        doc.text(line, margin, y);
-        y += 14;
-      }
-      y += 10;
-    }
-
-    // En-tête du PDF
-    addText("Al Wassiya - Testament Islamique Simplifié", { fontSize: 18, fontStyle: 'bold' });
-    addText(`Date : ${new Date().toLocaleDateString('fr-FR')}`, { fontSize: 12 });
-
-    const formData = new FormData(document.getElementById('testamentForm'));
-
-    // IDENTITÉ
-    addText("IDENTITÉ DU TESTATEUR", { fontSize: 14, fontStyle: 'bold' });
-    ['sexe', 'prenom', 'nom', 'dateNaissance', 'lieuNaissance', 'adresse', 'nationalite', 'situationFamiliale', 'conjoint'].forEach(field => {
-      let val = formData.get(field) || 'Non précisé';
-      if (field === 'dateNaissance' && val !== 'Non précisé') {
-        val = new Date(val).toLocaleDateString('fr-FR');
-      }
-      addText(`${field.charAt(0).toUpperCase() + field.slice(1)} : ${val}`);
-    });
-
-    // VOLONTÉS GÉNÉRALES
-    addText("VOLONTÉS GÉNÉRALES", { fontSize: 14, fontStyle: 'bold' });
-    const volontesObseques = formData.get('volontesObseques') || 'Non précisé';
-    addText(`Volontés concernant les obsèques : ${volontesObseques}`);
-    const recommandationsFamille = formData.get('recommandationsFamille') || 'Non précisé';
-    addText(`Recommandations à la famille : ${recommandationsFamille}`);
-
-    // TODO : Parcourir toutes données dynamiques (famille, biens, dettes, numériques)
-    // à ajouter ici avec fonctions pour récupérer tous les inputs dynamiques
-    // Exemple : addText("Parents : ...");
-
-    // Pieds de page PDF sur chaque page
-    const totalPages = doc.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
-      doc.setPage(i);
-      doc.setFontSize(9);
-      doc.setTextColor(150);
-      doc.text(`Page ${i} / ${totalPages}`, doc.internal.pageSize.width - margin - 50, doc.internal.pageSize.height - 10);
-      doc.text("Généré par Al Wassiya - Testament Islamique Simplifié", margin, doc.internal.pageSize.height - 10);
-    }
-
-    doc.save(`Testament_AlWassiya_${new Date().getFullYear()}.pdf`);
-  }
-
-  // Gestion basique comptes front-end en localStorage (suite partie 2)
-  let usersDB = JSON.parse(localStorage.getItem('usersDB') || '{}');
-  let currentUser = null;
-
-  function creerCompte(mailOuTel, mdp) {
-    if (usersDB[mailOuTel]) return false; // Existe déjà
-    usersDB[mailOuTel] = { password: mdp, data: null };
-    localStorage.setItem('usersDB', JSON.stringify(usersDB));
-    return true;
-  }
-
-  function connexion(mailOuTel, mdp) {
-    if (usersDB[mailOuTel] && usersDB[mailOuTel].password === mdp) {
-      currentUser = mailOuTel;
-      chargerDonneesCompte();
-      return true;
-    }
-    return false;
-  }
-
-  function sauvegarderCompte() {
-    if (!currentUser) return;
-    const formData = new FormData(document.getElementById('testamentForm'));
-    const data = {};
-    for (let [key, value] of formData.entries()) {
-      data[key] = value;
-    }
-    usersDB[currentUser].data = data;
-    localStorage.setItem('usersDB', JSON.stringify(usersDB));
-    alert('Compte sauvegardé avec succès.');
-  }
-
-  function chargerDonneesCompte() {
-    if (!currentUser) return;
-    const data = usersDB[currentUser].data;
-    if (!data) return;
-    for (const key in data) {
-      const el = document.querySelector(`[name="${key}"]`);
-      if (el) el.value = data[key];
+  // Affichage conditionnel du champ conjoint
+  function toggleConjointField() {
+    const situation = document.getElementById("situationFamiliale").value;
+    const conjointGroup = document.getElementById("conjointGroup");
+    const label = document.getElementById("conjointLabel");
+    if(situation === "marie" || situation === "divorce") {
+      conjointGroup.style.display = "block";
+      label.textContent = situation === "marie" ? "Identité du conjoint" : "Identité de l'ex-conjoint";
+    } else {
+      conjointGroup.style.display = "none";
+      const conjointInput = document.getElementById("conjoint");
+      if(conjointInput) conjointInput.value = "";
     }
   }
-
 </script>
+
+<!-- Début fonctions d'ajouts dynamiques -->
 <script>
-  // Ajout dynamique de personnes par catégorie familiale
   function addPerson(category) {
     const container = document.getElementById(`${category}-container`);
+    if (!container) return;
     const index = container.children.length;
-
-    const personEntry = document.createElement('div');
-    personEntry.className = 'person-entry';
-    personEntry.innerHTML = `
+    const div = document.createElement("div");
+    div.className = "person-entry";
+    div.innerHTML = `
       <div class="form-group">
         <label>Nom <span class="required">*</span></label>
-        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom de famille">
+        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom de famille" />
       </div>
       <div class="form-group">
         <label>Prénom <span class="required">*</span></label>
-        <input type="text" name="${category}[${index}][prenom]" required placeholder="Prénom">
+        <input type="text" name="${category}[${index}][prenom]" required placeholder="Prénom" />
       </div>
       <div class="form-group">
         <label>Téléphone</label>
-        <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
+        <input type="tel" name="${category}[${index}][telephone]" placeholder="Téléphone" />
       </div>
       <div class="form-group">
         <label>Adresse</label>
         <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
       </div>
-      <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+      <button type="button" onclick="this.parentElement.remove()">
         <i class="fas fa-trash"></i> Supprimer
       </button>
     `;
-    container.appendChild(personEntry);
+    container.appendChild(div);
   }
 
-  // Ajout dynamique d'actifs (biens immobiliers, matériels, personnels...)
   function addAsset(category) {
     const container = document.getElementById(`${category}-container`);
+    if (!container) return;
     const index = container.children.length;
-    const assetEntry = document.createElement('div');
-    assetEntry.className = 'asset-entry';
-
-    // Différents formulaires selon la catégorie
-    switch (category) {
-      case "immobilier":
-        assetEntry.innerHTML = `
-          <div class="form-group">
-            <label>Type de bien <span class="required">*</span></label>
-            <select name="${category}[${index}][type]" required>
-              <option value="">Sélectionner</option>
-              <option value="maison">Maison</option>
-              <option value="appartement">Appartement</option>
-              <option value="terrain">Terrain</option>
-              <option value="local_commercial">Local commercial</option>
-              <option value="autre">Autre</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Adresse complète <span class="required">*</span></label>
-            <textarea name="${category}[${index}][adresse]" required placeholder="Adresse du bien immobilier"></textarea>
-          </div>
-          <div class="form-group">
-            <label>Valeur estimée (€)</label>
-            <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
-          </div>
-          <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-            <i class="fas fa-trash"></i> Supprimer
-          </button>
-        `;
-        break;
-      // À compléter pour autres catégories materiel, personnels, comptes, cartes, applications...
-      // Idem pour dettes, créances, sadaqa, réseaux sociaux, emails, comptes online, cloud, appareils...
-      default:
-        assetEntry.innerHTML = `
-          <div class="form-group">
-            <label>Description <span class="required">*</span></label>
-            <input type="text" name="${category}[${index}][description]" required placeholder="Description">
-          </div>
-          <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-            <i class="fas fa-trash"></i> Supprimer
-          </button>
-        `;
+    const div = document.createElement("div");
+    div.className = "asset-entry";
+    if (category === "immobilier") {
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Type de bien <span class="required">*</span></label>
+          <select name="${category}[${index}][type]" required>
+            <option value="">Sélectionner</option>
+            <option value="maison">Maison</option>
+            <option value="appartement">Appartement</option>
+            <option value="terrain">Terrain</option>
+            <option value="local_commercial">Local commercial</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Adresse complète <span class="required">*</span></label>
+          <textarea name="${category}[${index}][adresse]" required placeholder="Adresse complète"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Valeur estimée (€)</label>
+          <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur estimée" />
+        </div>
+        <button type="button" onclick="this.parentElement.remove()">
+          <i class="fas fa-trash"></i> Supprimer
+        </button>
+      `;
+    } else {
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Description <span class="required">*</span></label>
+          <input type="text" name="${category}[${index}][description]" required placeholder="Description du bien" />
+        </div>
+        <button type="button" onclick="this.parentElement.remove()">
+          <i class="fas fa-trash"></i> Supprimer
+        </button>
+      `;
     }
-
-    container.appendChild(assetEntry);
+    container.appendChild(div);
   }
+</script>
 
-  // Ajout dynamique créance/dette
+<!-- La suite des fonctions et scripts sera dans les prochaines parties -->
+
+<!-- Fin sixième tranche -->
+<!-- Début septième tranche (~lignes 1224 à 1423) -->
+
+<!-- Fonctions d’ajout dettes, sadeqa, réseaux sociaux, emails, cloud, appareils -->
+<script>
   function addDebt(category) {
     const container = document.getElementById(`${category}-container`);
+    if (!container) return;
     const index = container.children.length;
-    const debtEntry = document.createElement('div');
-    debtEntry.className = 'asset-entry';
-
-    if (category === "creances") {
-      debtEntry.innerHTML = `
-        <div class="form-group">
-          <label>Type de créance <span class="required">*</span></label>
-          <input type="text" name="${category}[${index}][type]" required placeholder="Type de créance">
-        </div>
-        <div class="form-group">
-          <label>Montant (€) <span class="required">*</span></label>
-          <input type="number" name="${category}[${index}][montant]" required placeholder="Montant">
-        </div>
-        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-          <i class="fas fa-trash"></i> Supprimer
-        </button>
-      `;
-    } else if (category === "dettes") {
-      debtEntry.innerHTML = `
-        <div class="form-group">
-          <label>Type de dette <span class="required">*</span></label>
-          <input type="text" name="${category}[${index}][type]" required placeholder="Type de dette">
-        </div>
-        <div class="form-group">
-          <label>Montant (€) <span class="required">*</span></label>
-          <input type="number" name="${category}[${index}][montant]" required placeholder="Montant">
-        </div>
-        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-          <i class="fas fa-trash"></i> Supprimer
-        </button>
-      `;
-    }
-    container.appendChild(debtEntry);
+    const div = document.createElement("div");
+    div.className = "asset-entry";
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Type <span class="required">*</span></label>
+        <input type="text" name="${category}[${index}][type]" required placeholder="Type" />
+      </div>
+      <div class="form-group">
+        <label>Montant (€) <span class="required">*</span></label>
+        <input type="number" name="${category}[${index}][montant]" required placeholder="Montant" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
   }
 
-  // Ajout pour réseaux sociaux, emails, cloud, appareils...
-  // Ces fonctions suivent le même modèle : container.appendChild avec formulaire détaillé
-
-  // Gestion front-end simple du compte utilisateur
-  function afficherFormulaireCompte() {
-    // À implémenter : formulaire création/connexion simple pop-up ou section cachée
-    // Pour que utilisateur puisse saisir mail/tel + mdp
+  function addSadaqa() {
+    const container = document.getElementById("sadaqa-container");
+    const index = container.children.length;
+    const div = document.createElement("div");
+    div.className = "asset-entry";
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Description <span class="required">*</span></label>
+        <input type="text" name="sadaqa[${index}][description]" required placeholder="Description" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
   }
 
-  function gererConnexion() {
-    // Gestion validation connexion, rappel fonctions creerCompte et connexion
+  function addReseauSocial() {
+    const container = document.getElementById("reseaux-sociaux-container");
+    if (!container) return;
+    const index = container.children.length;
+    const div = document.createElement("div");
+    div.className = "person-entry";
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Réseau social <span class="required">*</span></label>
+        <input type="text" name="reseaux[${index}][nom]" required placeholder="Nom du réseau social" />
+      </div>
+      <div class="form-group">
+        <label>Compte / URL</label>
+        <input type="text" name="reseaux[${index}][compte]" placeholder="Nom de compte ou URL" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
   }
 
-  function gererCreationCompte() {
-    // Gestion validation création compte, appel creerCompte()
+  function addEmail() {
+    const container = document.getElementById("emails-container");
+    if (!container) return;
+    const index = container.children.length;
+    const div = document.createElement("div");
+    div.className = "person-entry";
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Adresse email <span class="required">*</span></label>
+        <input type="email" name="emails[${index}][adresse]" required placeholder="Votre adresse email" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
   }
 
-  // Sauvegarde data liée utilisateur après connexion
-  // Cette partie déjà esquissée, complète plus tard
+  function addCloud() {
+    const container = document.getElementById("cloud-container");
+    if (!container) return;
+    const index = container.children.length;
+    const div = document.createElement("div");
+    div.className = "person-entry";
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Service cloud <span class="required">*</span></label>
+        <input type="text" name="cloud[${index}][service]" required placeholder="Nom du service cloud" />
+      </div>
+      <div class="form-group">
+        <label>Identifiant / URL</label>
+        <input type="text" name="cloud[${index}][identifiant]" placeholder="Identifiant ou URL" />
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
+  }
 
-  // Autres fonctions utilitaires, navigation, validation champs etc
+  function addAppareil() {
+    const container = document.getElementById("appareils-container");
+    if (!container) return;
+    const index = container.children.length;
+    const div = document.createElement("div");
+    div.className = "person-entry";
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Appareil sécurisé <span class="required">*</span></label>
+        <input type="text" name="appareils[${index}][nom]" required placeholder="Nom de l'appareil" />
+      </div>
+      <div class="form-group">
+        <label>Détails</label>
+        <textarea name="appareils[${index}][details]" placeholder="Informations complémentaires"></textarea>
+      </div>
+      <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> Supprimer</button>
+    `;
+    container.appendChild(div);
+  }
 </script>
+
+<!-- Fonctions de génération PDF partielle -->
 <script>
-  // Génération PDF complète avec récupération de toutes les données dynamiques du formulaire  
   async function genererPDF() {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'pt', 'a4');
-    const margin = 40;
+    const doc = new jsPDF();
+
+    const margin = 20;
     let y = margin;
 
     function addText(text, options = {}) {
       const fontSize = options.fontSize || 12;
-      const fontStyle = options.fontStyle || 'normal';
+      const fontStyle = options.fontStyle || "normal";
+
       doc.setFontSize(fontSize);
-      doc.setFont('Times', fontStyle);
+      doc.setFont("times", fontStyle);
+
       const lines = doc.splitTextToSize(text, doc.internal.pageSize.width - margin * 2);
-      for (let line of lines) {
-        if (y + 14 > doc.internal.pageSize.height - margin) {
+      lines.forEach(line => {
+        if(y + 10 > doc.internal.pageSize.height - margin) {
           doc.addPage();
           y = margin;
         }
         doc.text(line, margin, y);
-        y += 14;
-      }
-      y += 10;
+        y += 10;
+      });
+      y += 5;
     }
 
-    addText("Al Wassiya - Testament Islamique Simplifié", { fontSize: 18, fontStyle: 'bold' });
-    addText(`Date de création : ${new Date().toLocaleDateString('fr-FR')}`, { fontSize: 12 });
+    addText("Al Wassiya - Testament Islamique Simplifié", { fontSize: 18, fontStyle: "bold" });
+    addText(`Date : ${new Date().toLocaleDateString("fr-FR")}`);
 
-    const formData = new FormData(document.getElementById('testamentForm'));
+    const form = document.getElementById("testamentForm");
+    const data = new FormData(form);
 
-    // Récupérer champs simples
-    const keysSimple = ['sexe', 'prenom', 'nom', 'dateNaissance', 'lieuNaissance', 'adresse', 'nationalite', 'situationFamiliale', 'conjoint', 
-                       'volontesObseques', 'recommandationsFamille', 'executeurTestament', 'contactExecuteur', 'autresVolontes',
-                       'autresProches', 'relationsParticulieres', 'personnesPrevenir', 'zakatStatus', 'jeuneStatus', 'jeuneNotes', 'hadjStatus', 'hadjNotes'];
-    addText("\nIDENTITÉ DU TESTATEUR", { fontSize: 14, fontStyle: 'bold' });
-    keysSimple.forEach(k => {
-      let val = formData.get(k);
-      if (val) {
-        if (k === 'dateNaissance') val = new Date(val).toLocaleDateString('fr-FR');
-        addText(`${k.charAt(0).toUpperCase() + k.slice(1).replace(/([A-Z])/g, ' $1')}: ${val}`);
+    const keysStatic = ["sexe", "prenom", "nom", "dateNaissance", "adresse", "volontesObseques", "recommandationsFamille"];
+
+    keysStatic.forEach(key => {
+      let val = data.get(key) || "Non précisé";
+      if(key === "dateNaissance" && val !== "Non précisé") {
+        val = new Date(val).toLocaleDateString("fr-FR");
       }
+      addText(`${key.charAt(0).toUpperCase() + key.slice(1)} : ${val}`);
     });
 
-    // Fonction helper pour extraire listes dynamiques (parents, biens, dettes, etc.)
-    function extractList(category) {
-      const result = [];
-      const pattern = new RegExp(`^${category}\\[(\\d+)\\]\\[(\\w+)\\]$`);
-      for (const [key, value] of formData.entries()) {
-        const m = key.match(pattern);
-        if (m) {
-          const i = parseInt(m[1]);
-          const field = m[2];
-          result[i] = result[i] || {};
-          result[i][field] = value;
-        }
-      }
-      return result.filter(x => x); // remove undefined
-    }
+    // TODO: Extraction des listes dynamiques (parents, conjoints, biens, dettes, etc.)
 
-    // Exemple affichage liste parents
-    const parents = extractList('parents');
-    if (parents.length > 0) {
-      addText("\nPARENTS", { fontSize: 14, fontStyle: 'bold' });
-      parents.forEach((p, i) => {
-        addText(`Parent ${i + 1}: ${p.prenom || ''} ${p.nom || ''}, Tel: ${p.telephone || 'N/A'}, Adresse: ${p.adresse || 'N/A'}`);
-      });
-    }
-    // Idem pour conjoints, freres-soeurs, enfants, amis, immobilier, materiel, personnels, comptes, cartes, applications, creances, dettes, sadaqa, reseaux_sociaux, emails, comptes_online, cloud, appareils
-
-    // Ajoute ici pour chaque catégorie en appelant extractList et affichant proprement
-
-    // Pieds de page sur chaque page PDF
-    const totalPages = doc.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
+    const pages = doc.getNumberOfPages();
+    for(let i=1; i<=pages; i++) {
       doc.setPage(i);
-      doc.setFontSize(9);
-      doc.setTextColor(150);
-      doc.text(`Page ${i} / ${totalPages}`, doc.internal.pageSize.width - margin - 50, doc.internal.pageSize.height - 10);
+      doc.setFontSize(8);
+      doc.text(`Page ${i} / ${pages}`, doc.internal.pageSize.width - margin - 40, doc.internal.pageSize.height - 10);
       doc.text("Généré par Al Wassiya - Testament Islamique Simplifié", margin, doc.internal.pageSize.height - 10);
     }
 
     doc.save(`Testament_AlWassiya_${new Date().getFullYear()}.pdf`);
   }
+</script>
 
-  // Sauvegarde automatique toutes les 30 secondes
+<!-- Fin septième tranche -->
+
+<!-- Début huitième tranche (~lignes 1424 à 1623) -->
+
+<!-- Sauvegarde automatique et gestion localStorage -->
+<script>
+  const INTERVAL_SAVE_MS = 30000;
+
+  function sauvegarderBrouillon() {
+    const form = document.getElementById("testamentForm");
+    const data = new FormData(form);
+    const obj = {};
+    for (const [key, value] of data.entries()) {
+      obj[key] = value;
+    }
+    localStorage.setItem("testamentBrouillon", JSON.stringify(obj));
+    const indicator = document.getElementById("saveIndicator");
+    indicator.classList.add("visible");
+    setTimeout(() => {
+      indicator.classList.remove("visible");
+    }, 1500);
+  }
+
+  function chargerBrouillon() {
+    const brouillon = localStorage.getItem("testamentBrouillon");
+    if (!brouillon) return;
+    const data = JSON.parse(brouillon);
+    const form = document.getElementById("testamentForm");
+    for (const key in data) {
+      if(form.elements.namedItem(key)) {
+        form.elements.namedItem(key).value = data[key];
+      }
+    }
+  }
+
+  window.addEventListener("load", () => {
+    chargerBrouillon();
+    changerEtape(1);
+    initialiserIndicateurs();
+  });
+
   setInterval(() => {
-    const form = document.getElementById('testamentForm');
-    const formData = new FormData(form);
-    let hasContent = false;
-    for (const [, value] of formData.entries()) {
-      if (value.trim() !== '') {
-        hasContent = true;
+    const form = document.getElementById("testamentForm");
+    const data = new FormData(form);
+    let hasData = false;
+    for (const [, value] of data.entries()) {
+      if(value.trim() !== "") {
+        hasData = true;
         break;
       }
     }
-    if (hasContent) sauvegarderBrouillon();
-  }, 30000);
+    if(hasData) {
+      sauvegarderBrouillon();
+    }
+  }, INTERVAL_SAVE_MS);
 
-  function sauvegarderBrouillon() {
-    const formData = new FormData(document.getElementById('testamentForm'));
-    const data = {};
-    for (const [key, value] of formData.entries()) data[key] = value;
-    localStorage.setItem('testamentBrouillon', JSON.stringify(data));
-    const indicator = document.getElementById('saveIndicator');
-    indicator.classList.add('visible');
-    setTimeout(() => indicator.classList.remove('visible'), 2000);
+  // Initialisation des indicateurs des étapes
+  function initialiserIndicateurs() {
+    const container = document.getElementById("stepDots");
+    container.innerHTML = "";
+    for(let i = 1; i <= 5; i++) {
+      const dot = document.createElement("div");
+      dot.className = "step-dot";
+      if(i === 1) dot.classList.add("active");
+      dot.dataset.step = i;
+      dot.addEventListener("click", () => {
+        if(i <= etapeActuelle || validerEtape(etapeActuelle)){
+          changerEtape(i);
+        }
+      });
+      container.appendChild(dot);
+    }
+  }
+</script>
+
+<!-- Gestion comptes utilisateurs front-end : Création, connexion, sauvegarde -->
+
+<div id="accountSection" style="max-width: 400px; margin: 40px auto; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+  <h3>Gestion du compte utilisateur</h3>
+
+  <div id="loginForm">
+    <h4>Connexion</h4>
+    <input type="text" id="loginIdentifier" placeholder="Email ou téléphone" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <input type="password" id="loginPassword" placeholder="Mot de passe" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <button onclick="loginUser()" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+  </div>
+
+  <div id="registerForm" style="margin-top: 20px;">
+    <h4>Créer un compte</h4>
+    <input type="text" id="registerIdentifier" placeholder="Email ou téléphone" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <input type="password" id="registerPassword" placeholder="Mot de passe" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <button onclick="registerUser()" class="btn btn-secondary" style="width: 100%;">Créer un compte</button>
+  </div>
+
+  <div id="accountActions" style="margin-top: 20px; display: none;">
+    <p>Connecté en tant que <strong id="currentUserLabel"></strong></p>
+    <button onclick="logoutUser()" class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;">Déconnexion</button>
+    <button onclick="saveUserData()" class="btn btn-primary" style="width: 100%;">Sauvegarder mes données</button>
+  </div>
+
+  <div id="accountMessage" style="color: red; margin-top: 10px;"></div>
+</div>
+
+<script>
+  let usersDB = JSON.parse(localStorage.getItem("usersDB") || "{}");
+  let currentUser = null;
+
+  function registerUser() {
+    const id = document.getElementById("registerIdentifier").value.trim();
+    const pwd = document.getElementById("registerPassword").value;
+    const msg = document.getElementById("accountMessage");
+    if(!id || !pwd) {
+      msg.textContent = "Veuillez remplir tous les champs pour créer un compte.";
+      return;
+    }
+    if(usersDB[id]) {
+      msg.textContent = "Un compte existe déjà avec cet identifiant.";
+      return;
+    }
+    usersDB[id] = { password: pwd, data: null };
+    localStorage.setItem("usersDB", JSON.stringify(usersDB));
+    msg.style.color = "green";
+    msg.textContent = "Compte créé avec succès. Vous pouvez vous connecter.";
+    document.getElementById("registerIdentifier").value = "";
+    document.getElementById("registerPassword").value = "";
   }
 
-  // Rappel et remplissage données si brouillon présent
-  window.addEventListener('load', () => {
-    const saved = localStorage.getItem('testamentBrouillon');
-    if (saved) {
-      const data = JSON.parse(saved);
-      for (const key in data) {
-        const el = document.querySelector(`[name="${key}"]`);
-        if (el) el.value = data[key];
+  function loginUser() {
+    const id = document.getElementById("loginIdentifier").value.trim();
+    const pwd = document.getElementById("loginPassword").value;
+    const msg = document.getElementById("accountMessage");
+    if(!id || !pwd) {
+      msg.textContent = "Veuillez remplir tous les champs pour vous connecter.";
+      return;
+    }
+    if(!usersDB[id] || usersDB[id].password !== pwd) {
+      msg.textContent = "Identifiant ou mot de passe incorrect.";
+      return;
+    }
+    currentUser = id;
+    document.getElementById("currentUserLabel").textContent = currentUser;
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("accountActions").style.display = "block";
+    msg.textContent = "";
+    loadUserData();
+  }
+
+  function logoutUser() {
+    currentUser = null;
+    document.getElementById("currentUserLabel").textContent = "";
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("registerForm").style.display = "block";
+    document.getElementById("accountActions").style.display = "none";
+    document.getElementById("accountMessage").textContent = "";
+    clearForm();
+  }
+
+  function saveUserData() {
+    if(!currentUser) {
+      alert("Veuillez vous connecter pour sauvegarder vos données.");
+      return;
+    }
+    const form = document.getElementById("testamentForm");
+    const data = {};
+    new FormData(form).forEach((value, key) => {
+      data[key] = value;
+    });
+    usersDB[currentUser].data = data;
+    localStorage.setItem("usersDB", JSON.stringify(usersDB));
+    alert("Données sauvegardées avec succès.");
+  }
+
+  function loadUserData() {
+    if(!currentUser) return;
+    const data = usersDB[currentUser]?.data;
+    if(!data) return;
+    const form = document.getElementById("testamentForm");
+    for(let key in data) {
+      const el = form.elements.namedItem(key);
+      if(el) el.value = data[key];
+    }
+  }
+
+  function clearForm() {
+    const form = document.getElementById("testamentForm");
+    form.reset();
+  }
+</script>
+
+<!-- Fin huitième tranche -->
+
+<!-- Début neuvième tranche (~lignes 1624 à 1823) -->
+
+<!-- Eventuelles fonctions complémentaires JavaScript -->
+
+<script>
+  // Extraction des données dynamiques depuis FormData
+  function extractData(prefix, formData) {
+    const regex = new RegExp(`^${prefix}\\[(\\d+)\\]\\[(.+)\\]$`);
+    const data = {};
+    for (const [key, value] of formData.entries()) {
+      const match = key.match(regex);
+      if (match) {
+        const index = match[1];
+        const field = match[2];
+        if (!data[index]) data[index] = {};
+        data[index][field] = value;
       }
     }
-  });
+    return Object.values(data);
+  }
 
+  // Exemple d'usage dans genererPDF pour extraction liste parents
+  // const parents = extractData('parents', formData);
+
+  // Fonction pour convertir date ISO en texte français
+  function formatDateFR(dateStr) {
+    if(!dateStr) return "Non précisé";
+    try {
+      return new Date(dateStr).toLocaleDateString("fr-FR");
+    } catch(e) {
+      return dateStr;
+    }
+  }
 </script>
+
+<!-- Suite de la page et autres fonctions à implémenter -->
+
+<!-- Fin neuvième tranche -->
+
+<!-- Début dixième tranche (~lignes 1824 à 2023) -->
+
+<!-- Finalisation de la génération PDF -->
+
+<script>
+  async function genererPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const margin = 20;
+    let y = margin;
+
+    function addText(text, options = {}) {
+      const fontSize = options.fontSize || 12;
+      const fontStyle = options.fontStyle || "normal";
+
+      doc.setFontSize(fontSize);
+      doc.setFont("times", fontStyle);
+
+      const lines = doc.splitTextToSize(text, doc.internal.pageSize.width - margin * 2);
+      for (const line of lines) {
+        if (y + 10 > doc.internal.pageSize.height - margin) {
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(line, margin, y);
+        y += 10;
+      }
+      y += 5;
+    }
+
+    addText("Al Wassiya - Testament Islamique Simplifié", { fontSize: 18, fontStyle: "bold" });
+
+    addText(`Date : ${new Date().toLocaleDateString("fr-FR")}`);
+
+    const form = document.getElementById("testamentForm");
+    const formData = new FormData(form);
+
+    const keysStatic = ['sexe', 'prenom', 'nom', 'dateNaissance', 'adresse', 'volontesObseques', 'recommandationsFamille'];
+
+    for (const key of keysStatic) {
+      let val = formData.get(key) || "Non précisé";
+      if (key === 'dateNaissance' && val !== "Non précisé") val = formatDateFR(val);
+      addText(`${key.charAt(0).toUpperCase() + key.slice(1)} : ${val}`);
+    }
+
+    // Extraction et affichage listes dynamiques (exemple Parents)
+    const parents = extractData('parents', formData);
+    if (parents.length > 0) {
+      addText("\nParents :", { fontSize: 14, fontStyle: "bold" });
+      parents.forEach((p, i) => {
+        addText(`Parent ${i + 1} : ${p.prenom || ""} ${p.nom || ""}, Tel : ${p.telephone || "N/A"}`);
+      });
+    }
+
+    // TODO : autres listes (conjoints, enfants, biens, dettes...)
+
+    // Pagination footer
+    const pagesCount = doc.getNumberOfPages();
+    for (let i = 1; i <= pagesCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.text(`Page ${i} / ${pagesCount}`, doc.internal.pageSize.width - margin - 50, doc.internal.pageSize.height - 10);
+      doc.text("Généré par Al Wassiya - Testament Islamique Simplifié", margin, doc.internal.pageSize.height - 10);
+    }
+
+    doc.save(`Testament_AlWasiya_${new Date().getFullYear()}.pdf`);
+  }
+</script>
+
+<!-- Fin dixième tranche -->
+
+<!-- Début onzième tranche (~lignes 2024 à 2223) -->
+
+<!-- Divers scripts utilitaires -->
+
+<script>
+  // Nettoyage du formulaire au déchargement ou à la déconnexion
+  function clearForm() {
+    const form = document.getElementById("testamentForm");
+    form.reset();
+  }
+
+  // Event listeners navigation boutons (à placer après le DOM ready)
+  const prevBtn = document.getElementById("prevStepBtn");
+  const nextBtn = document.getElementById("nextStepBtn");
+
+  if (prevBtn) prevBtn.addEventListener("click", prevStep);
+  if (nextBtn) nextBtn.addEventListener("click", nextStep);
+
+  // Gestion clic points de progression déjà implémentée dans initialiserIndicateurs()
+
+  // Autofocus sur premier champ lors du changement d’étape (optionnel)
+  function focusFirstInput(stepNum) {
+    const step = document.getElementById(`step${stepNum}`);
+    if (!step) return;
+    const inputs = step.querySelectorAll("input, select, textarea");
+    if (inputs.length > 0) inputs[0].focus();
+  }
+
+  // Exemple d’utilisation
+  document.addEventListener("DOMContentLoaded", () => {
+    focusFirstInput(1);
+  });
+</script>
+
+<!-- Styles additionnels pour formulaire dynamique -->
+
+<style>
+  .person-entry, .asset-entry {
+    background: #FAF9F7;
+    border: 1px solid #E2D8B7;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .person-entry button, .asset-entry button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--error);
+  }
+</style>
+
+<!-- Fin onzième tranche -->
+<!-- Début douzième tranche (~lignes 2224 à fin) -->
+
+<!-- Nettoyage du formulaire au déchargement ou à la déconnexion -->
+<script>
+  function clearForm() {
+    const form = document.getElementById("testamentForm");
+    form.reset();
+  }
+
+  // Event listeners navigation boutons (à placer après le DOM ready)
+  const prevBtn = document.getElementById("prevStepBtn");
+  const nextBtn = document.getElementById("nextStepBtn");
+
+  if (prevBtn) prevBtn.addEventListener("click", prevStep);
+  if (nextBtn) nextBtn.addEventListener("click", nextStep);
+
+  // Autofocus sur premier champ lors du changement d’étape (optionnel)
+  function focusFirstInput(stepNum) {
+    const step = document.getElementById(`step${stepNum}`);
+    if (!step) return;
+    const inputs = step.querySelectorAll("input, select, textarea");
+    if (inputs.length > 0) inputs[0].focus();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    focusFirstInput(1);
+  });
+</script>
+
+<!-- Styles additionnels pour formulaire dynamique -->
+
+<style>
+  .person-entry, .asset-entry {
+    background: #FAF9F7;
+    border: 1px solid #E2D8B7;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .person-entry button, .asset-entry button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--error);
+  }
+</style>
+
+<footer>
+  <p>© 2025 Al Wassiya - Testament Islamique Simplifié</p>
+  <p>Tous droits réservés.</p>
+</footer>
+
+<div class="save-indicator" id="saveIndicator">Sauvegarde effectuée</div>
+
+</body>
+</html>
