@@ -6,6 +6,7 @@
 <title>Al Wassiya - Votre Testament Islamique Simplifié</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
     --primary: #C9B178;
@@ -90,7 +91,7 @@
   .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-    width: 15%;
+    width: 20%;
     border-radius: 4px;
     transition: var(--transition);
   }
@@ -119,6 +120,26 @@
   }
   .step-dot.completed {
     background-color: var(--success);
+  }
+
+  /* Form step visibility */
+  .form-step {
+    display: none;
+  }
+  .form-step.active {
+    display: block;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* Quranic Verse */
@@ -226,6 +247,26 @@
     color: var(--error);
   }
 
+  /* Validation errors */
+  .validation-error {
+    color: var(--error);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding: 5px;
+    background-color: rgba(231, 76, 60, 0.1);
+    border-radius: 5px;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+  }
+
+  /* Dynamic fields */
+  .dynamic-field {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #F8F8F8;
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+  }
+
   /* Buttons */
   .actions {
     display: flex;
@@ -263,6 +304,10 @@
   .btn-secondary:hover {
     background: var(--primary);
     color: white;
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   /* Save indicator */
@@ -312,13 +357,13 @@
 
     <form id="testamentForm" novalidate>
       <!-- Étape 1 : Informations personnelles -->
-      <div id="step1" class="form-step">
+      <div id="step1" class="form-step active">
         <div class="form-container">
           <div class="form-section">
             <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
             <div class="form-group">
               <label for="sexe">Sexe <span class="required">*</span></label>
-              <select id="sexe" name="sexe" required onchange="toggleConjointField()">
+              <select id="sexe" name="sexe" required>
                 <option value="">Sélectionner</option>
                 <option value="homme">Homme</option>
                 <option value="femme">Femme</option>
@@ -355,7 +400,7 @@
             </div>
             <div class="form-group">
               <label for="situationFamiliale">Situation familiale</label>
-              <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
+              <select id="situationFamiliale" name="situationFamiliale">
                 <option value="">Sélectionner</option>
                 <option value="celibataire">Célibataire</option>
                 <option value="marie">Marié(e)</option>
@@ -393,3 +438,1145 @@
           </div>
         </div>
       </div>
+
+      <!-- Étape 2 : Héritiers -->
+      <div id="step2" class="form-step">
+        <div class="quranic-verse">
+          <div class="arabic-verse">يُوصِيكُمُ اللَّهُ فِي أَوْلَادِكُمْ ۖ لِلذَّكَرِ مِثْلُ حَظِّ الْأُنثَيَيْنِ</div>
+          <p>"Allah vous recommande, au sujet de vos enfants : au mâle, une part équivalente à celle de deux femelles."</p>
+          <div class="translation-note">Coran, Sourate An-Nisa (4:11)</div>
+        </div>
+
+        <div class="form-container">
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-users"></i> Enfants</h2>
+            <div class="form-group">
+              <label for="nombreEnfants">Nombre d'enfants</label>
+              <input type="number" id="nombreEnfants" name="nombreEnfants" min="0" max="20" value="0" />
+            </div>
+            <div id="enfantsContainer"></div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-user-friends"></i> Parents</h2>
+            <div class="form-group">
+              <label for="pere">Père</label>
+              <select id="pere" name="pere">
+                <option value="">Sélectionner</option>
+                <option value="vivant">Vivant</option>
+                <option value="decede">Décédé</option>
+              </select>
+            </div>
+            <div class="form-group" id="pereInfoGroup" style="display: none;">
+              <label for="pereInfo">Informations sur le père</label>
+              <input type="text" id="pereInfo" name="pereInfo" placeholder="Nom complet du père" />
+            </div>
+            <div class="form-group">
+              <label for="mere">Mère</label>
+              <select id="mere" name="mere">
+                <option value="">Sélectionner</option>
+                <option value="vivant">Vivante</option>
+                <option value="decede">Décédée</option>
+              </select>
+            </div>
+            <div class="form-group" id="mereInfoGroup" style="display: none;">
+              <label for="mereInfo">Informations sur la mère</label>
+              <input type="text" id="mereInfo" name="mereInfo" placeholder="Nom complet de la mère" />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-heart"></i> Frères et Sœurs</h2>
+            <div class="form-group">
+              <label for="nombreFreres">Nombre de frères</label>
+              <input type="number" id="nombreFreres" name="nombreFreres" min="0" max="20" value="0" />
+            </div>
+            <div id="freresContainer"></div>
+            <div class="form-group">
+              <label for="nombreSoeurs">Nombre de sœurs</label>
+              <input type="number" id="nombreSoeurs" name="nombreSoeurs" min="0" max="20" value="0" />
+            </div>
+            <div id="soeursContainer"></div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-users"></i> Autres héritiers</h2>
+            <div class="form-group">
+              <label for="autresHeritiers">Autres héritiers légaux</label>
+              <textarea id="autresHeritiers" name="autresHeritiers" placeholder="Grands-parents, oncles, tantes, etc. (précisez le lien de parenté)"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 3 : Biens et Patrimoine -->
+      <div id="step3" class="form-step">
+        <div class="form-container">
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-home"></i> Biens immobiliers</h2>
+            <div class="form-group">
+              <label for="nombreBiensImmobiliers">Nombre de biens immobiliers</label>
+              <input type="number" id="nombreBiensImmobiliers" name="nombreBiensImmobiliers" min="0" max="20" value="0" />
+            </div>
+            <div id="biensImmobiliersContainer"></div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-car"></i> Véhicules</h2>
+            <div class="form-group">
+              <label for="nombreVehicules">Nombre de véhicules</label>
+              <input type="number" id="nombreVehicules" name="nombreVehicules" min="0" max="10" value="0" />
+            </div>
+            <div id="vehiculesContainer"></div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-university"></i> Comptes bancaires</h2>
+            <div class="form-group">
+              <label for="nombreComptes">Nombre de comptes</label>
+              <input type="number" id="nombreComptes" name="nombreComptes" min="0" max="10" value="0" />
+            </div>
+            <div id="comptesContainer"></div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-gem"></i> Autres biens</h2>
+            <div class="form-group">
+              <label for="bijoux">Bijoux et objets précieux</label>
+              <textarea id="bijoux" name="bijoux" placeholder="Description et estimation"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="investissements">Investissements et placements</label>
+              <textarea id="investissements" name="investissements" placeholder="Actions, obligations, assurance-vie, etc."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="autresBiens">Autres biens mobiliers</label>
+              <textarea id="autresBiens" name="autresBiens" placeholder="Meubles, équipements, collections, etc."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 4 : Dettes et Obligations -->
+      <div id="step4" class="form-step">
+        <div class="form-container">
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Dettes financières</h2>
+            <div class="form-group">
+              <label for="nombreDettes">Nombre de dettes</label>
+              <input type="number" id="nombreDettes" name="nombreDettes" min="0" max="10" value="0" />
+            </div>
+            <div id="dettesContainer"></div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-hands"></i> Obligations religieuses</h2>
+            <div class="form-group">
+              <label for="prieresMissees">Prières manquées estimées</label>
+              <input type="number" id="prieresMissees" name="prieresMissees" min="0" placeholder="Nombre approximatif" />
+            </div>
+            <div class="form-group">
+              <label for="jeunesMisses">Jeûnes manqués estimés</label>
+              <input type="number" id="jeunesMisses" name="jeunesMisses" min="0" placeholder="Nombre de jours approximatif" />
+            </div>
+            <div class="form-group">
+              <label for="zakatDue">Zakat due</label>
+              <input type="number" id="zakatDue" name="zakatDue" min="0" step="0.01" placeholder="Montant en euros" />
+            </div>
+            <div class="form-group">
+              <label for="hajjAccompli">Hajj accompli</label>
+              <select id="hajjAccompli" name="hajjAccompli">
+                <option value="">Sélectionner</option>
+                <option value="oui">Oui</option>
+                <option value="non">Non</option>
+                <option value="prevu">Prévu/En cours</option>
+              </select>
+            </div>
+            <div class="form-group" id="hajjMontantGroup" style="display: none;">
+              <label for="hajjMontant">Montant prévu pour le Hajj</label>
+              <input type="number" id="hajjMontant" name="hajjMontant" min="0" step="0.01" placeholder="Montant en euros" />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-handshake"></i> Autres obligations</h2>
+            <div class="form-group">
+              <label for="dettesPersonnelles">Dettes envers des personnes</label>
+              <textarea id="dettesPersonnelles" name="dettesPersonnelles" placeholder="Dettes familiales, amicales, etc."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="engagements">Engagements et promesses</label>
+              <textarea id="engagements" name="engagements" placeholder="Promesses faites, engagements à honorer"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 5 : Legs et Finalisation -->
+      <div id="step5" class="form-step">
+        <div class="quranic-verse">
+          <div class="arabic-verse">مِن بَعْدِ وَصِيَّةٍ يُوصِي بِهَا أَوْ دَيْنٍ</div>
+          <p>"Après exécution du testament qu'il aurait fait ou paiement d'une dette"</p>
+          <div class="translation-note">Coran, Sourate An-Nisa (4:11)</div>
+        </div>
+
+        <div class="form-container">
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-gift"></i> Legs (maximum 1/3)</h2>
+            <div class="form-group">
+              <label for="nombreLegs">Nombre de legs</label>
+              <input type="number" id="nombreLegs" name="nombreLegs" min="0" max="10" value="0" />
+            </div>
+            <div id="legsContainer"></div>
+            <div class="form-group">
+              <label for="chariteGenerale">Don général à des œuvres de charité</label>
+              <textarea id="chariteGenerale" name="chariteGenerale" placeholder="Montant et organismes bénéficiaires"></textarea>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-pen"></i> Attestation finale</h2>
+            <div class="form-group">
+              <label for="lieuRedaction">Lieu de rédaction</label>
+              <input type="text" id="lieuRedaction" name="lieuRedaction" placeholder="Ville" required />
+              <div class="validation-error" id="lieuRedaction-error" style="display:none;">Veuillez saisir le lieu</div>
+            </div>
+            <div class="form-group">
+              <label for="dateRedaction">Date de rédaction</label>
+              <input type="date" id="dateRedaction" name="dateRedaction" required />
+              <div class="validation-error" id="dateRedaction-error" style="display:none;">Veuillez saisir la date</div>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="attestation" name="attestation" required />
+                J'atteste que ce testament reflète mes dernières volontés et qu'il est conforme à mes convictions islamiques <span class="required">*</span>
+              </label>
+              <div class="validation-error" id="attestation-error" style="display:none;">Vous devez cocher cette case</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
+          <i class="fas fa-arrow-left"></i> Précédent
+        </button>
+        <button type="button" id="nextBtn" class="btn btn-primary">
+          Suivant <i class="fas fa-arrow-right"></i>
+        </button>
+        <button type="button" id="generatePdfBtn" class="btn btn-primary" style="display: none;">
+          <i class="fas fa-download"></i> Télécharger le Testament PDF
+        </button>
+      </div>
+    </form>
+
+    <div class="save-indicator" id="saveIndicator">
+      <i class="fas fa-check"></i> Sauvegardé automatiquement
+    </div>
+  </div>
+<script>
+class TestamentManager {
+  constructor() {
+    this.currentStep = 1;
+    this.totalSteps = 5;
+    this.formData = {};
+    this.init();
+  }
+
+  init() {
+    this.bindEvents();
+    this.loadSavedData();
+    this.setupDynamicFields();
+    this.updateProgress();
+  }
+
+  bindEvents() {
+    // Navigation buttons
+    document.getElementById('nextBtn').addEventListener('click', () => this.nextStep());
+    document.getElementById('prevBtn').addEventListener('click', () => this.prevStep());
+    document.getElementById('generatePdfBtn').addEventListener('click', () => this.generatePDF());
+
+    // Step dots navigation
+    document.querySelectorAll('.step-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const step = parseInt(e.target.dataset.step);
+        if (step <= this.currentStep || this.validateStep(this.currentStep)) {
+          this.goToStep(step);
+        }
+      });
+    });
+
+    // Auto-save on input change
+    document.getElementById('testamentForm').addEventListener('input', () => {
+      this.saveData();
+      this.showSaveIndicator();
+    });
+
+    // Dynamic field handlers
+    this.setupFieldHandlers();
+  }
+
+  setupFieldHandlers() {
+    // Situation familiale and conjoint
+    document.getElementById('situationFamiliale').addEventListener('change', (e) => {
+      this.toggleConjointField();
+    });
+
+    document.getElementById('sexe').addEventListener('change', (e) => {
+      this.toggleConjointField();
+    });
+
+    // Parents info
+    document.getElementById('pere').addEventListener('change', (e) => {
+      this.toggleField('pereInfoGroup', e.target.value === 'vivant');
+    });
+
+    document.getElementById('mere').addEventListener('change', (e) => {
+      this.toggleField('mereInfoGroup', e.target.value === 'vivant');
+    });
+
+    // Hajj amount
+    document.getElementById('hajjAccompli').addEventListener('change', (e) => {
+      this.toggleField('hajjMontantGroup', e.target.value === 'non' || e.target.value === 'prevu');
+    });
+
+    // Dynamic lists
+    ['nombreEnfants', 'nombreFreres', 'nombreSoeurs', 'nombreBiensImmobiliers', 
+     'nombreVehicules', 'nombreComptes', 'nombreDettes', 'nombreLegs'].forEach(id => {
+      document.getElementById(id).addEventListener('change', (e) => {
+        this.updateDynamicFields(id, parseInt(e.target.value));
+      });
+    });
+  }
+
+  setupDynamicFields() {
+    // Initialize all dynamic field containers
+    this.updateDynamicFields('nombreEnfants', 0);
+    this.updateDynamicFields('nombreFreres', 0);
+    this.updateDynamicFields('nombreSoeurs', 0);
+    this.updateDynamicFields('nombreBiensImmobiliers', 0);
+    this.updateDynamicFields('nombreVehicules', 0);
+    this.updateDynamicFields('nombreComptes', 0);
+    this.updateDynamicFields('nombreDettes', 0);
+    this.updateDynamicFields('nombreLegs', 0);
+  }
+
+  toggleConjointField() {
+    const situation = document.getElementById('situationFamiliale').value;
+    const sexe = document.getElementById('sexe').value;
+    const conjointGroup = document.getElementById('conjointGroup');
+    const conjointLabel = document.getElementById('conjointLabel');
+    
+    if (situation === 'marie') {
+      conjointGroup.style.display = 'block';
+      if (sexe === 'homme') {
+        conjointLabel.textContent = 'Identité de l\'épouse';
+        document.getElementById('conjoint').placeholder = 'Nom et prénom de l\'épouse';
+      } else if (sexe === 'femme') {
+        conjointLabel.textContent = 'Identité de l\'époux';
+        document.getElementById('conjoint').placeholder = 'Nom et prénom de l\'époux';
+      } else {
+        conjointLabel.textContent = 'Identité de l\'époux/épouse';
+        document.getElementById('conjoint').placeholder = 'Nom et prénom du conjoint';
+      }
+    } else {
+      conjointGroup.style.display = 'none';
+    }
+  }
+
+  toggleField(fieldId, show) {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.style.display = show ? 'block' : 'none';
+    }
+  }
+
+  updateDynamicFields(fieldType, count) {
+    const containers = {
+      'nombreEnfants': 'enfantsContainer',
+      'nombreFreres': 'freresContainer',
+      'nombreSoeurs': 'soeursContainer',
+      'nombreBiensImmobiliers': 'biensImmobiliersContainer',
+      'nombreVehicules': 'vehiculesContainer',
+      'nombreComptes': 'comptesContainer',
+      'nombreDettes': 'dettesContainer',
+      'nombreLegs': 'legsContainer'
+    };
+
+    const container = document.getElementById(containers[fieldType]);
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    for (let i = 0; i < count; i++) {
+      const div = document.createElement('div');
+      div.className = 'dynamic-field';
+      div.innerHTML = this.getDynamicFieldHTML(fieldType, i + 1);
+      container.appendChild(div);
+    }
+  }
+
+  getDynamicFieldHTML(fieldType, index) {
+    const templates = {
+      'nombreEnfants': `
+        <h4>Enfant ${index}</h4>
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" name="enfant_${index}_prenom" placeholder="Prénom de l'enfant">
+        </div>
+        <div class="form-group">
+          <label>Sexe</label>
+          <select name="enfant_${index}_sexe">
+            <option value="">Sélectionner</option>
+            <option value="garcon">Garçon</option>
+            <option value="fille">Fille</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date de naissance</label>
+          <input type="date" name="enfant_${index}_naissance">
+        </div>
+      `,
+      'nombreFreres': `
+        <h4>Frère ${index}</h4>
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" name="frere_${index}_nom" placeholder="Nom et prénom du frère">
+        </div>
+        <div class="form-group">
+          <label>Statut</label>
+          <select name="frere_${index}_statut">
+            <option value="vivant">Vivant</option>
+            <option value="decede">Décédé</option>
+          </select>
+        </div>
+      `,
+      'nombreSoeurs': `
+        <h4>Sœur ${index}</h4>
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" name="soeur_${index}_nom" placeholder="Nom et prénom de la sœur">
+        </div>
+        <div class="form-group">
+          <label>Statut</label>
+          <select name="soeur_${index}_statut">
+            <option value="vivant">Vivante</option>
+            <option value="decede">Décédée</option>
+          </select>
+        </div>
+      `,
+      'nombreBiensImmobiliers': `
+        <h4>Bien immobilier ${index}</h4>
+        <div class="form-group">
+          <label>Type de bien</label>
+          <select name="bien_${index}_type">
+            <option value="">Sélectionner</option>
+            <option value="maison">Maison</option>
+            <option value="appartement">Appartement</option>
+            <option value="terrain">Terrain</option>
+            <option value="local_commercial">Local commercial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Adresse</label>
+          <input type="text" name="bien_${index}_adresse" placeholder="Adresse complète">
+        </div>
+        <div class="form-group">
+          <label>Valeur estimée (€)</label>
+          <input type="number" name="bien_${index}_valeur" min="0" step="0.01" placeholder="Valeur en euros">
+        </div>
+      `,
+      'nombreVehicules': `
+        <h4>Véhicule ${index}</h4>
+        <div class="form-group">
+          <label>Marque et modèle</label>
+          <input type="text" name="vehicule_${index}_modele" placeholder="Ex: Peugeot 308">
+        </div>
+        <div class="form-group">
+          <label>Année</label>
+          <input type="number" name="vehicule_${index}_annee" min="1900" max="2030" placeholder="Année">
+        </div>
+        <div class="form-group">
+          <label>Valeur estimée (€)</label>
+          <input type="number" name="vehicule_${index}_valeur" min="0" step="0.01" placeholder="Valeur en euros">
+        </div>
+      `,
+      'nombreComptes': `
+        <h4>Compte bancaire ${index}</h4>
+        <div class="form-group">
+          <label>Banque</label>
+          <input type="text" name="compte_${index}_banque" placeholder="Nom de la banque">
+        </div>
+        <div class="form-group">
+          <label>Type de compte</label>
+          <select name="compte_${index}_type">
+            <option value="">Sélectionner</option>
+            <option value="courant">Compte courant</option>
+            <option value="epargne">Compte épargne</option>
+            <option value="livret">Livret</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Solde approximatif (€)</label>
+          <input type="number" name="compte_${index}_solde" min="0" step="0.01" placeholder="Montant en euros">
+        </div>
+      `,
+      'nombreDettes': `
+        <h4>Dette ${index}</h4>
+        <div class="form-group">
+          <label>Type de dette</label>
+          <select name="dette_${index}_type">
+            <option value="">Sélectionner</option>
+            <option value="pret_immobilier">Prêt immobilier</option>
+            <option value="pret_voiture">Prêt voiture</option>
+            <option value="credit_consommation">Crédit consommation</option>
+            <option value="dette_personnelle">Dette personnelle</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Créancier</label>
+          <input type="text" name="dette_${index}_creancier" placeholder="Banque ou nom de la personne">
+        </div>
+        <div class="form-group">
+          <label>Montant dû (€)</label>
+          <input type="number" name="dette_${index}_montant" min="0" step="0.01" placeholder="Montant en euros">
+        </div>
+      `,
+      'nombreLegs': `
+        <h4>Legs ${index}</h4>
+        <div class="form-group">
+          <label>Bénéficiaire</label>
+          <input type="text" name="legs_${index}_beneficiaire" placeholder="Nom ou organisme bénéficiaire">
+        </div>
+        <div class="form-group">
+          <label>Type de legs</label>
+          <select name="legs_${index}_type">
+            <option value="">Sélectionner</option>
+            <option value="argent">Somme d'argent</option>
+            <option value="bien">Bien spécifique</option>
+            <option value="pourcentage">Pourcentage du patrimoine</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Description/Montant</label>
+          <textarea name="legs_${index}_description" placeholder="Décrivez le legs (montant, bien, pourcentage, etc.)"></textarea>
+        </div>
+      `
+    };
+
+    return templates[fieldType] || '';
+  }
+
+  validateStep(step) {
+    let isValid = true;
+    const requiredFields = this.getRequiredFields(step);
+    
+    // Clear previous errors
+    document.querySelectorAll('.validation-error').forEach(el => el.style.display = 'none');
+    
+    requiredFields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      const errorEl = document.getElementById(fieldId + '-error');
+      
+      if (field && (!field.value.trim() || (field.type === 'checkbox' && !field.checked))) {
+        if (errorEl) {
+          errorEl.style.display = 'block';
+        }
+        field.style.borderColor = 'var(--error)';
+        isValid = false;
+      } else if (field) {
+        field.style.borderColor = '#EDE8DD';
+      }
+    });
+    
+    return isValid;
+  }
+
+  getRequiredFields(step) {
+    const requiredByStep = {
+      1: ['sexe', 'prenom', 'nom', 'dateNaissance', 'adresse'],
+      2: [], // No required fields in step 2
+      3: [], // No required fields in step 3
+      4: [], // No required fields in step 4
+      5: ['lieuRedaction', 'dateRedaction', 'attestation']
+    };
+    
+    return requiredByStep[step] || [];
+  }
+
+  nextStep() {
+    if (this.currentStep < this.totalSteps && this.validateStep(this.currentStep)) {
+      this.currentStep++;
+      this.updateStepDisplay();
+      this.updateProgress();
+    }
+  }
+
+  prevStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+      this.updateStepDisplay();
+      this.updateProgress();
+    }
+  }
+
+  goToStep(step) {
+    if (step >= 1 && step <= this.totalSteps) {
+      this.currentStep = step;
+      this.updateStepDisplay();
+      this.updateProgress();
+    }
+  }
+
+  updateStepDisplay() {
+    // Hide all steps
+    document.querySelectorAll('.form-step').forEach(step => {
+      step.classList.remove('active');
+    });
+    
+    // Show current step
+    const currentStepEl = document.getElementById(`step${this.currentStep}`);
+    if (currentStepEl) {
+      currentStepEl.classList.add('active');
+    }
+    
+    // Update buttons
+    this.updateButtons();
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  updateButtons() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const generateBtn = document.getElementById('generatePdfBtn');
+    
+    prevBtn.style.display = this.currentStep > 1 ? 'inline-flex' : 'none';
+    
+    if (this.currentStep === this.totalSteps) {
+      nextBtn.style.display = 'none';
+      generateBtn.style.display = 'inline-flex';
+    } else {
+      nextBtn.style.display = 'inline-flex';
+      generateBtn.style.display = 'none';
+    }
+  }
+
+  updateProgress() {
+    const progressFill = document.getElementById('progressFill');
+    const stepIndicator = document.getElementById('stepIndicator');
+    const stepDots = document.querySelectorAll('.step-dot');
+    
+    // Update progress bar
+    const progressPercent = (this.currentStep / this.totalSteps) * 100;
+    progressFill.style.width = progressPercent + '%';
+    
+    // Update step indicator text
+    const stepTitles = {
+      1: 'Informations personnelles et volontés générales',
+      2: 'Héritiers et famille',
+      3: 'Biens et patrimoine',
+      4: 'Dettes et obligations',
+      5: 'Legs et finalisation'
+    };
+    
+    stepIndicator.textContent = `Étape ${this.currentStep} sur ${this.totalSteps} : ${stepTitles[this.currentStep]}`;
+    
+    // Update step dots
+    stepDots.forEach((dot, index) => {
+      const step = index + 1;
+      dot.classList.remove('active', 'completed');
+      
+      if (step === this.currentStep) {
+        dot.classList.add('active');
+      } else if (step < this.currentStep) {
+        dot.classList.add('completed');
+      }
+    });
+  }
+
+  saveData() {
+    const formData = new FormData(document.getElementById('testamentForm'));
+    const data = {};
+    
+    for (let [key, value] of formData.entries()) {
+      data[key] = value;
+    }
+    
+    // Add current step
+    data._currentStep = this.currentStep;
+    
+    localStorage.setItem('testamentData', JSON.stringify(data));
+  }
+
+  loadSavedData() {
+    const savedData = localStorage.getItem('testamentData');
+    if (savedData) {
+      const data = JSON.parse(savedData);
+      
+      // Restore form values
+      Object.keys(data).forEach(key => {
+        if (key === '_currentStep') {
+          // We'll start from step 1 anyway for user experience
+          return;
+        }
+        
+        const field = document.querySelector(`[name="${key}"]`);
+        if (field) {
+          if (field.type === 'checkbox') {
+            field.checked = data[key] === 'on';
+          } else {
+            field.value = data[key];
+          }
+        }
+      });
+      
+      // Trigger change events to update dynamic fields
+      this.triggerFieldUpdates();
+    }
+    
+    // Set today as default for date fields if empty
+    const dateFields = ['dateNaissance', 'dateRedaction'];
+    dateFields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field && !field.value && fieldId === 'dateRedaction') {
+        field.value = new Date().toISOString().split('T')[0];
+      }
+    });
+  }
+
+  triggerFieldUpdates() {
+    // Trigger events to update dynamic fields based on saved data
+    ['situationFamiliale', 'sexe', 'pere', 'mere', 'hajjAccompli'].forEach(id => {
+      const field = document.getElementById(id);
+      if (field && field.value) {
+        field.dispatchEvent(new Event('change'));
+      }
+    });
+    
+    // Update dynamic lists
+    ['nombreEnfants', 'nombreFreres', 'nombreSoeurs', 'nombreBiensImmobiliers', 
+     'nombreVehicules', 'nombreComptes', 'nombreDettes', 'nombreLegs'].forEach(id => {
+      const field = document.getElementById(id);
+      if (field && field.value) {
+        this.updateDynamicFields(id, parseInt(field.value));
+      }
+    });
+  }
+
+  showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('visible');
+    setTimeout(() => {
+      indicator.classList.remove('visible');
+    }, 2000);
+  }
+
+  // Partie 3/3 sera le code de génération PDF
+}
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', () => {
+  window.testamentManager = new TestamentManager();
+});
+</script>
+<script>
+// Extend the TestamentManager class with PDF generation
+TestamentManager.prototype.generatePDF = function() {
+  if (!this.validateStep(5)) {
+    alert('Veuillez compléter tous les champs requis avant de générer le PDF.');
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p', 'mm', 'a4');
+  
+  // PDF styling constants
+  const pageWidth = doc.internal.pageSize.width;
+  const pageHeight = doc.internal.pageSize.height;
+  const margin = 20;
+  const lineHeight = 7;
+  let currentY = margin;
+  
+  // Helper functions for PDF generation
+  const addTitle = (title, fontSize = 16) => {
+    doc.setFontSize(fontSize);
+    doc.setFont(undefined, 'bold');
+    doc.text(title, pageWidth / 2, currentY, { align: 'center' });
+    currentY += lineHeight * 1.5;
+  };
+  
+  const addSection = (title, fontSize = 12) => {
+    if (currentY > pageHeight - 30) {
+      doc.addPage();
+      currentY = margin;
+    }
+    doc.setFontSize(fontSize);
+    doc.setFont(undefined, 'bold');
+    doc.text(title, margin, currentY);
+    currentY += lineHeight;
+  };
+  
+  const addText = (text, fontSize = 10) => {
+    if (!text) return;
+    doc.setFontSize(fontSize);
+    doc.setFont(undefined, 'normal');
+    const lines = doc.splitTextToSize(text, pageWidth - (margin * 2));
+    
+    lines.forEach(line => {
+      if (currentY > pageHeight - 20) {
+        doc.addPage();
+        currentY = margin;
+      }
+      doc.text(line, margin, currentY);
+      currentY += lineHeight;
+    });
+  };
+  
+  const addField = (label, value, fontSize = 10) => {
+    if (!value) return;
+    doc.setFontSize(fontSize);
+    doc.setFont(undefined, 'bold');
+    doc.text(label + ': ', margin, currentY);
+    doc.setFont(undefined, 'normal');
+    doc.text(value, margin + 40, currentY);
+    currentY += lineHeight;
+  };
+  
+  const getFieldValue = (fieldName) => {
+    const field = document.querySelector(`[name="${fieldName}"]`);
+    return field ? field.value : '';
+  };
+  
+  const getSelectText = (fieldName) => {
+    const field = document.querySelector(`[name="${fieldName}"]`);
+    if (field && field.value) {
+      const selectedOption = field.querySelector(`option[value="${field.value}"]`);
+      return selectedOption ? selectedOption.textContent : field.value;
+    }
+    return '';
+  };
+
+  // Start PDF generation
+  try {
+    // Header
+    addTitle('TESTAMENT ISLAMIQUE (WASSIYA)', 18);
+    addTitle('بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم', 14);
+    currentY += 10;
+
+    // Section 1: Identité
+    addSection('1. IDENTITÉ DU DÉFUNT');
+    addField('Sexe', getSelectText('sexe'));
+    addField('Prénom', getFieldValue('prenom'));
+    addField('Nom de famille', getFieldValue('nom'));
+    addField('Date de naissance', getFieldValue('dateNaissance'));
+    addField('Lieu de naissance', getFieldValue('lieuNaissance'));
+    addField('Adresse actuelle', getFieldValue('adresse'));
+    addField('Nationalité', getFieldValue('nationalite'));
+    addField('Situation familiale', getSelectText('situationFamiliale'));
+    
+    const conjoint = getFieldValue('conjoint');
+    if (conjoint) {
+      addField('Conjoint', conjoint);
+    }
+    
+    currentY += 5;
+
+    // Section 2: Volontés générales
+    addSection('2. VOLONTÉS GÉNÉRALES');
+    
+    const volontesObseques = getFieldValue('volontesObseques');
+    if (volontesObseques) {
+      addText('Volontés concernant les obsèques:');
+      addText(volontesObseques);
+      currentY += 3;
+    }
+    
+    const recommandations = getFieldValue('recommandationsFamille');
+    if (recommandations) {
+      addText('Recommandations à la famille:');
+      addText(recommandations);
+      currentY += 3;
+    }
+    
+    const executeur = getFieldValue('executeurTestament');
+    if (executeur) {
+      addField('Exécuteur testamentaire', executeur);
+      const contactExecuteur = getFieldValue('contactExecuteur');
+      if (contactExecuteur) {
+        addField('Contact exécuteur', contactExecuteur);
+      }
+    }
+    
+    const autresVolontes = getFieldValue('autresVolontes');
+    if (autresVolontes) {
+      addText('Autres volontés:');
+      addText(autresVolontes);
+    }
+    
+    currentY += 10;
+
+    // Section 3: Héritiers
+    addSection('3. HÉRITIERS');
+    
+    // Parents
+    const pere = getSelectText('pere');
+    const mere = getSelectText('mere');
+    if (pere || mere) {
+      addText('Parents:');
+      if (pere) addField('Père', pere);
+      if (getFieldValue('pereInfo')) addField('Informations père', getFieldValue('pereInfo'));
+      if (mere) addField('Mère', mere);
+      if (getFieldValue('mereInfo')) addField('Informations mère', getFieldValue('mereInfo'));
+      currentY += 3;
+    }
+    
+    // Enfants
+    const nombreEnfants = parseInt(getFieldValue('nombreEnfants')) || 0;
+    if (nombreEnfants > 0) {
+      addText(`Enfants (${nombreEnfants}):`);
+      for (let i = 1; i <= nombreEnfants; i++) {
+        const prenom = getFieldValue(`enfant_${i}_prenom`);
+        const sexe = getSelectText(`enfant_${i}_sexe`);
+        const naissance = getFieldValue(`enfant_${i}_naissance`);
+        if (prenom) {
+          addField(`Enfant ${i}`, `${prenom}${sexe ? ' (' + sexe + ')' : ''}${naissance ? ' né(e) le ' + naissance : ''}`);
+        }
+      }
+      currentY += 3;
+    }
+    
+    // Frères et sœurs
+    const nombreFreres = parseInt(getFieldValue('nombreFreres')) || 0;
+    const nombreSoeurs = parseInt(getFieldValue('nombreSoeurs')) || 0;
+    
+    if (nombreFreres > 0) {
+      addText(`Frères (${nombreFreres}):`);
+      for (let i = 1; i <= nombreFreres; i++) {
+        const nom = getFieldValue(`frere_${i}_nom`);
+        const statut = getSelectText(`frere_${i}_statut`);
+        if (nom) {
+          addField(`Frère ${i}`, `${nom}${statut ? ' (' + statut + ')' : ''}`);
+        }
+      }
+      currentY += 3;
+    }
+    
+    if (nombreSoeurs > 0) {
+      addText(`Sœurs (${nombreSoeurs}):`);
+      for (let i = 1; i <= nombreSoeurs; i++) {
+        const nom = getFieldValue(`soeur_${i}_nom`);
+        const statut = getSelectText(`soeur_${i}_statut`);
+        if (nom) {
+          addField(`Sœur ${i}`, `${nom}${statut ? ' (' + statut + ')' : ''}`);
+        }
+      }
+      currentY += 3;
+    }
+    
+    const autresHeritiers = getFieldValue('autresHeritiers');
+    if (autresHeritiers) {
+      addText('Autres héritiers légaux:');
+      addText(autresHeritiers);
+    }
+    
+    currentY += 10;
+
+    // Section 4: Patrimoine
+    addSection('4. PATRIMOINE');
+    
+    // Biens immobiliers
+    const nombreBiens = parseInt(getFieldValue('nombreBiensImmobiliers')) || 0;
+    if (nombreBiens > 0) {
+      addText(`Biens immobiliers (${nombreBiens}):`);
+      for (let i = 1; i <= nombreBiens; i++) {
+        const type = getSelectText(`bien_${i}_type`);
+        const adresse = getFieldValue(`bien_${i}_adresse`);
+        const valeur = getFieldValue(`bien_${i}_valeur`);
+        if (type || adresse) {
+          addField(`Bien ${i}`, `${type}${adresse ? ' - ' + adresse : ''}${valeur ? ' (' + valeur + '€)' : ''}`);
+        }
+      }
+      currentY += 3;
+    }
+    
+    // Véhicules
+    const nombreVehicules = parseInt(getFieldValue('nombreVehicules')) || 0;
+    if (nombreVehicules > 0) {
+      addText(`Véhicules (${nombreVehicules}):`);
+      for (let i = 1; i <= nombreVehicules; i++) {
+        const modele = getFieldValue(`vehicule_${i}_modele`);
+        const annee = getFieldValue(`vehicule_${i}_annee`);
+        const valeur = getFieldValue(`vehicule_${i}_valeur`);
+        if (modele) {
+          addField(`Véhicule ${i}`, `${modele}${annee ? ' (' + annee + ')' : ''}${valeur ? ' - ' + valeur + '€' : ''}`);
+        }
+      }
+      currentY += 3;
+    }
+    
+    // Comptes bancaires
+    const nombreComptes = parseInt(getFieldValue('nombreComptes')) || 0;
+    if (nombreComptes > 0) {
+      addText(`Comptes bancaires (${nombreComptes}):`);
+      for (let i = 1; i <= nombreComptes; i++) {
+        const banque = getFieldValue(`compte_${i}_banque`);
+        const type = getSelectText(`compte_${i}_type`);
+        const solde = getFieldValue(`compte_${i}_solde`);
+        if (banque) {
+          addField(`Compte ${i}`, `${banque}${type ? ' (' + type + ')' : ''}${solde ? ' - ' + solde + '€' : ''}`);
+        }
+      }
+      currentY += 3;
+    }
+    
+    // Autres biens
+    const bijoux = getFieldValue('bijoux');
+    const investissements = getFieldValue('investissements');
+    const autresBiens = getFieldValue('autresBiens');
+    
+    if (bijoux) {
+      addText('Bijoux et objets précieux:');
+      addText(bijoux);
+      currentY += 3;
+    }
+    
+    if (investissements) {
+      addText('Investissements et placements:');
+      addText(investissements);
+      currentY += 3;
+    }
+    
+    if (autresBiens) {
+      addText('Autres biens mobiliers:');
+      addText(autresBiens);
+    }
+    
+    currentY += 10;
+
+    // Section 5: Dettes et obligations
+    addSection('5. DETTES ET OBLIGATIONS');
+    
+    // Dettes financières
+    const nombreDettes = parseInt(getFieldValue('nombreDettes')) || 0;
+    if (nombreDettes > 0) {
+      addText(`Dettes financières (${nombreDettes}):`);
+      for (let i = 1; i <= nombreDettes; i++) {
+        const type = getSelectText(`dette_${i}_type`);
+        const creancier = getFieldValue(`dette_${i}_creancier`);
+        const montant = getFieldValue(`dette_${i}_montant`);
+        if (type || creancier) {
+          addField(`Dette ${i}`, `${type}${creancier ? ' - ' + creancier : ''}${montant ? ' (' + montant + '€)' : ''}`);
+        }
+      }
+      currentY += 3;
+    }
+    
+    // Obligations religieuses
+    const prieresMissees = getFieldValue('prieresMissees');
+    const jeunesMisses = getFieldValue('jeunesMisses');
+    const zakatDue = getFieldValue('zakatDue');
+    const hajjAccompli = getSelectText('hajjAccompli');
+    const hajjMontant = getFieldValue('hajjMontant');
+    
+    if (prieresMissees || jeunesMisses || zakatDue || hajjAccompli) {
+      addText('Obligations religieuses:');
+      if (prieresMissees) addField('Prières manquées', prieresMissees);
+      if (jeunesMisses) addField('Jeûnes manqués', jeunesMisses + ' jours');
+      if (zakatDue) addField('Zakat due', zakatDue + '€');
+      if (hajjAccompli) {
+        addField('Hajj', hajjAccompli);
+        if (hajjMontant) addField('Montant prévu Hajj', hajjMontant + '€');
+      }
+      currentY += 3;
+    }
+    
+    const dettesPersonnelles = getFieldValue('dettesPersonnelles');
+    if (dettesPersonnelles) {
+      addText('Dettes envers des personnes:');
+      addText(dettesPersonnelles);
+      currentY += 3;
+    }
+    
+    const engagements = getFieldValue('engagements');
+    if (engagements) {
+      addText('Engagements et promesses:');
+      addText(engagements);
+    }
+    
+    currentY += 10;
+
+    // Section 6: Legs (maximum 1/3)
+    addSection('6. LEGS (MAXIMUM 1/3 DU PATRIMOINE)');
+    
+    const nombreLegs = parseInt(getFieldValue('nombreLegs')) || 0;
+    if (nombreLegs > 0) {
+      addText(`Legs spécifiques (${nombreLegs}):`);
+      for (let i = 1; i <= nombreLegs; i++) {
+        const beneficiaire = getFieldValue(`legs_${i}_beneficiaire`);
+        const type = getSelectText(`legs_${i}_type`);
+        const description = getFieldValue(`legs_${i}_description`);
+        if (beneficiaire) {
+          addField(`Legs ${i}`, `${beneficiaire}${type ? ' (' + type + ')' : ''}`);
+          if (description) {
+            addText(`Description: ${description}`);
+          }
+          currentY += 2;
+        }
+      }
+      currentY += 3;
+    }
+    
+    const chariteGenerale = getFieldValue('chariteGenerale');
+    if (chariteGenerale) {
+      addText('Don général à des œuvres de charité:');
+      addText(chariteGenerale);
+    }
+    
+    currentY += 15;
+
+    // Section finale
+    addSection('7. ATTESTATION FINALE');
+    addField('Lieu de rédaction', getFieldValue('lieuRedaction'));
+    addField('Date de rédaction', getFieldValue('dateRedaction'));
+    
+    currentY += 10;
+    addText('Je soussigné(e) atteste que ce testament reflète mes dernières volontés et qu\'il est conforme à mes convictions islamiques.');
+    
+    currentY += 20;
+    addText('Signature:');
+    addText('_________________________');
+    
+    // Footer on each page
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.text('Al Wassiya - Testament Islamique', margin, pageHeight - 10);
+      doc.text(`Page ${i}/${totalPages}`, pageWidth - margin - 20, pageHeight - 10);
+    }
+    
+    // Generate filename
+    const nom = getFieldValue('nom') || 'Testament';
+    const prenom = getFieldValue('prenom') || '';
+    const date = new Date().toISOString().split('T')[0];
+    const filename = `Testament_${prenom}_${nom}_${date}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '');
+    
+    // Save the PDF
+    doc.save(filename);
+    
+    // Show success message
+    alert('Testament PDF généré avec succès !');
+    
+  } catch (error) {
+    console.error('Erreur lors de la génération du PDF:', error);
+    alert('Erreur lors de la génération du PDF. Veuillez réessayer.');
+  }
+};
+</script>
+
+</body>
+</html>
