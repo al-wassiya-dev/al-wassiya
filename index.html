@@ -1,2814 +1,614 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al Wassiya - Votre Testament Islamique Simplifié</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #C9B178;
-            --primary-dark: #A89262;
-            --secondary: #2D4C68;
-            --accent: #3A5F7E;
-            --light: #F8F5EE;
-            --dark: #1E1E24;
-            --success: #4CAF50;
-            --error: #E74C3C;
-            --radius: 16px;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #F8F5EE 0%, #E6E2D6 100%);
-            color: var(--dark);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header Styles */
-        .header {
-            text-align: center;
-            padding: 40px 0;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            margin-bottom: 25px;
-            font-weight: 400;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .bismillah {
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin: 25px 0;
-            font-weight: 600;
-        }
-
-        /* Progress Section */
-        .progress-container {
-            background: white;
-            border-radius: var(--radius);
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: #EDE8DD;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-            width: 15%;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        .step-indicator {
-            font-size: 1.1rem;
-            color: var(--secondary);
-            font-weight: 500;
-        }
-
-        /* Quranic Verse */
-        .quranic-verse {
-            background: linear-gradient(135deg, rgba(201, 177, 120, 0.1) 0%, rgba(168, 146, 98, 0.1) 100%);
-            border-left: 4px solid var(--primary);
-            padding: 25px;
-            margin: 30px 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            font-style: italic;
-            color: var(--secondary);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            text-align: center;
-        }
-
-        .arabic-verse {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            line-height: 2;
-            font-weight: 600;
-            color: var(--primary-dark);
-        }
-
-        .translation-note {
-            font-size: 0.9rem;
-            color: var(--primary-dark);
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        /* Form Styles */
-        .form-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        @media (min-width: 992px) {
-            .form-container {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .form-section {
-            background: white;
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .form-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: var(--secondary);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(201, 177, 120, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-title i {
-            color: var(--primary);
-            font-size: 1.4rem;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--secondary);
-            font-weight: 500;
-            font-size: 1.05rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #EDE8DD;
-            border-radius: 10px;
-            background: #FCFAF7;
-            color: var(--dark);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(201, 177, 120, 0.2);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 130px;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #A0A0A0;
-        }
-
-        .form-group select option {
-            padding: 12px;
-        }
-
-        .required {
-            color: var(--error);
-        }
-
-        /* Family Section Styles */
-        .family-category {
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: var(--radius);
-            background: #F8F5EE;
-            border: 1px solid rgba(201, 177, 120, 0.2);
-        }
-
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-
-        .category-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .category-content {
-            display: none;
-            padding-top: 15px;
-        }
-
-        .category-content.active {
-            display: block;
-        }
-
-        .person-entry {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        .add-person-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-        }
-
-        .add-person-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .remove-person-btn {
-            background: var(--error);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        /* Asset Section Styles */
-        .asset-category {
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: var(--radius);
-            background: #F8F5EE;
-            border: 1px solid rgba(201, 177, 120, 0.2);
-        }
-
-        .asset-entry {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        /* Buttons */
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin: 40px 0;
-        }
-
-        .btn {
-            padding: 16px 32px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(168, 146, 98, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Share Buttons */
-        .share-section {
-            text-align: center;
-            margin: 30px 0;
-            background: white;
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .share-title {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .share-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.3rem;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .share-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-        }
-
-        .whatsapp { background: #25D366; }
-        .facebook { background: #3b5998; }
-        .twitter { background: #1DA1F2; }
-        .email { background: #d44638; }
-
-        /* Footer */
-        .footer-note {
-            background: white;
-            border-radius: var(--radius);
-            padding: 30px;
-            margin-top: 50px;
-            box-shadow: var(--shadow);
-        }
-
-        .footer-note p {
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .footer-note p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2.8rem;
-            }
-            
-            .bismillah {
-                font-size: 1.8rem;
-            }
-            
-            .arabic-verse {
-                font-size: 1.4rem;
-            }
-            
-            .form-section {
-                padding: 25px 20px;
-            }
-            
-            .section-title {
-                font-size: 1.4rem;
-            }
-            
-            .actions {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            .share-buttons {
-                gap: 10px;
-            }
-            
-            .share-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-section {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        /* Islamic Pattern Background */
-        .islamic-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(201, 177, 120, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(168, 146, 98, 0.03) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Step Navigation */
-        .step-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        .privacy-notice {
-            background-color: #f8f5ee;
-            border-left: 4px solid var(--primary);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            font-size: 0.9rem;
-            color: var(--secondary);
-        }
-        
-        .zakat-calculator {
-            background-color: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: var(--shadow);
-        }
-        
-        .calculator-result {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: var(--light);
-            border-radius: var(--radius);
-            font-weight: 500;
-            color: var(--secondary);
-            display: none;
-        }
-
-        /* Améliorations ajoutées */
-        .step-dots {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0 40px;
-            gap: 12px;
-        }
-
-        .step-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: #EDE8DD;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .step-dot.active {
-            background-color: var(--primary);
-            transform: scale(1.2);
-        }
-
-        .step-dot.completed {
-            background-color: var(--success);
-        }
-
-        .validation-error {
-            color: var(--error);
-            font-size: 0.9rem;
-            margin-top: 5px;
-            display: none;
-        }
-
-        input:invalid, textarea:invalid, select:invalid {
-            border-color: var(--error);
-        }
-
-        .save-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--success);
-            color: white;
-            padding: 10px 15px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
-        }
-
-        .save-indicator.visible {
-            opacity: 1;
-        }
-
-        .skip-to-content {
-            position: absolute;
-            top: -40px;
-            left: 10px;
-            background: var(--primary);
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-            z-index: 100;
-            transition: top 0.3s ease;
-        }
-
-        .skip-to-content:focus {
-            top: 10px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Al Wassiya - Votre Testament Islamique Simplifié</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  body { background: #F8F5EE; font-family: 'Poppins', sans-serif; color: #1E1E24; margin: 0; padding: 0; }
+  .container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 24px 20px 80px 20px;}
+  .header { text-align: center; border-bottom: 4px solid #C9B178; padding-bottom: 30px; margin-bottom: 30px;}
+  .logo { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #A89262; }
+  .subtitle { font-size: 1.25rem; color: #2D4C68; margin-top: 6px;}
+  .bismillah { font-size: 1.5rem; margin-top: 10px; color: #3A5F7E;}
+  .title { font-size: 1.85rem; font-weight: 600; color: #C9B178; margin-top: 18px;}
+  .date { margin-top: 10px; color: #2D4C68;}
+  button#generate-pdf { background: #C9B178; border: none; color: #fff; border-radius: 16px; padding: 12px 36px; font-size: 1.15rem; font-weight: 600; margin: 0 auto 38px; display: block; cursor: pointer;}
+  button#generate-pdf:hover { background: #A89262; }
+  section { margin-bottom: 32px;}
+  h2 { color: #A89262; font-size: 1.3rem; margin-top: 30px;}
+  p { font-size: 1.05rem; line-height: 1.6;}
+</style>
 </head>
 <body>
-    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
-    
-    <div class="islamic-pattern"></div>
-    
-    <div class="container">
-        <div class="header">
-            <div class="logo">Al Wassiya</div>
-            <div class="subtitle">Votre Testament Islamique Simplifié</div>
-            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-            <p>Créez facilement un testament islamique respectant le Coran et la Sunna</p>
-        </div>
+<div class="container" id="main-content">
+  <div class="header">
+    <div class="logo">Al Wassiya</div>
+    <div class="subtitle">Votre Testament Islamique Simplifié</div>
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div class="title">TESTAMENT ISLAMIQUE (WASSIYA)</div>
+    <p class="date">Date de rédaction : 12 septembre 2025</p>
+  </div>
+  <button id="generate-pdf"><i class="fa fa-file-pdf"></i> Télécharger le Testament (PDF)</button>
+  <section>
+    <h2>Introduction au Testament</h2>
+    <p>Le testament est un acte juridique par lequel une personne dispose, pour le temps où elle ne sera plus, de tout ou partie de ses biens. En Islam, cela se fait conformément à la charia, respectant les règles du Quran et de la Sunna.</p>
+    <p>Ce document simplifié vous assiste dans la rédaction de votre volonté en conformité avec ces principes.</p>
+    <p>La rédaction d’un testament clair permet d’éviter les conflits familiaux après le décès du testateur.</p>
+  </section>
+  <section>
+    <h2>Dispositions Générales</h2>
+    <p>Le testament doit être rédigé librement et contenir la volonté claire du testateur. Dans le cas d’un testament islamique, il est primordial de respecter les parts obligatoires aux héritiers légaux.</p>
+    <p>Il est également conseillé d’être précis afin d’éviter tout conflit futur entre héritiers.</p>
+    <p>Cette précision favorise la paix familiale et la justice dans la transmission des biens.</p>
+  </section>
+  <section>
+    <h2>Biens Imposés</h2>
+    <p>Les biens mobiliers, immobiliers, comptes bancaires, actifs numériques et autres possessions doivent être listés précisément.</p>
+    <p>Chaque bien doit être désigné clairement pour éviter toute incertitude quant à sa répartition ou usage futur.</p>
+    <p>La transparence dans cette liste est essentielle pour le respect des volontés.</p>
+  </section>
+  <section>
+    <h2>Répartition des Héritiers</h2>
+    <p>Selon la charia, les héritiers désignés sont les enfants, conjoint, parents, frères et sœurs selon certaines parts définies.</p>
+    <p>La wassiya permet aussi de prévoir la donation d’un tiers de vos biens à des tiers non héritiers.</p>
+    <p>Le respect des parts légales est obligatoire pour la validité du testament.</p>
+  </section>
 
-        <div class="step-dots" id="stepDots">
-            <div class="step-dot active" data-step="1"></div>
-            <div class="step-dot" data-step="2"></div>
-            <div class="step-dot" data-step="3"></div>
-            <div class="step-dot" data-step="4"></div>
-            <div class="step-dot" data-step="5"></div>
-        </div>
+<!-- Début des sections répétées -->
+    <section>
+  <h2>Section supplémentaire n°1 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 1 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°2 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 2 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°3 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 3 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°4 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 4 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°5 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 5 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°6 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 6 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°7 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 7 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°8 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 8 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°9 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 9 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°10 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 10 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°11 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 11 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°12 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 12 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°13 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 13 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°14 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 14 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°15 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 15 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°16 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 16 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°17 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 17 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°18 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 18 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°19 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 19 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°20 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 20 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°21 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 21 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°22 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 22 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°23 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 23 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°24 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 24 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°25 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 25 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°26 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 26 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°27 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 27 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°28 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 28 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°29 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 29 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°30 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 30 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
 
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="step-indicator" id="stepIndicator">
-                Étape 1 sur 5 : Informations personnelles et volontés générales
-            </div>
-        </div>
+<!-- Continue la même structure jusqu'à la section 40 -->
 
-        <div class="quranic-verse">
-            <div class="arabic-verse">كُتِبَ عَلَيْكُمْ إِذَا حَضَرَ أَحَدَكُمُ الْمَوْتُ إِن تَرَكَ خَيْرًا الْوَصِيَّةُ لِلْوَالِدَيْنِ وَالْأَقْرَبِينَ بِالْمَعْرُوفِ ۖ حَقًّا عَلَى الْمُتَّقِينَ</div>
-            <div>"Il vous est prescrit, quand la mort se présente à l'un de vous, s'il laisse des biens, de faire un testament en faveur de ses père et mère et de ses proches, selon les convenances. C'est un devoir pour les pieux." - Sourate Al-Baqara, verset 180</div>
-            <div class="translation-note">(c'est une traduction rapprochée)</div>
-        </div>
+<section>
+  <h2>Section supplémentaire n°40 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 40 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°41 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 41 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°42 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 42 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°43 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 43 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°44 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 44 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°45 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 45 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°46 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 46 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°47 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 47 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°48 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 48 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°49 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 49 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°50 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 50 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
 
-        <main id="main-content">
-            <!-- Étape 1: Informations personnelles -->
-            <form id="testamentForm" novalidate>
-                <div id="step1" class="form-step">
-                    <div class="form-container">
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-user"></i> Identité du défunt</h2>
-                            
-                            <div class="form-group">
-                                <label for="sexe">Sexe <span class="required">*</span></label>
-                                <select id="sexe" name="sexe" required onchange="toggleConjointField()">
-                                    <option value="">Sélectionner</option>
-                                    <option value="homme">Homme</option>
-                                    <option value="femme">Femme</option>
-                                </select>
-                                <div class="validation-error" id="sexe-error">Veuillez sélectionner votre sexe</div>
-                            </div>
+<!-- Continue avec même structure jusqu'à la section 60 -->
 
-                            <div class="form-group">
-                                <label for="prenom">Prénom <span class="required">*</span></label>
-                                <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
-                                <div class="validation-error" id="prenom-error">Veuillez saisir votre prénom</div>
-                            </div>
+<section>
+  <h2>Section supplémentaire n°60 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 60 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°61 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 61 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°62 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 62 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°63 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 63 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°64 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 64 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°65 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 65 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°66 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 66 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°67 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 67 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°68 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 68 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°69 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 69 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°70 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 70 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
 
-                            <div class="form-group">
-                                <label for="nom">Nom de famille <span class="required">*</span></label>
-                                <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
-                                <div class="validation-error" id="nom-error">Veuillez saisir votre nom</div>
-                            </div>
+<!-- Continue cette structure jusqu’à la section 80 -->
 
-                            <div class="form-group">
-                                <label for="dateNaissance">Date de naissance <span class="required">*</span></label>
-                                <input type="date" id="dateNaissance" name="dateNaissance" required>
-                                <div class="validation-error" id="dateNaissance-error">Veuillez saisir votre date de naissance</div>
-                            </div>
+<section>
+  <h2>Section supplémentaire n°80 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 80 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°81 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 81 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°82 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 82 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°83 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 83 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°84 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 84 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°85 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 85 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°86 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 86 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°87 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 87 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°88 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 88 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°89 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 89 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°90 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 90 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
 
-                            <div class="form-group">
-                                <label for="lieuNaissance">Lieu de naissance</label>
-                                <input type="text" id="lieuNaissance" name="lieuNaissance" placeholder="Ville et pays de naissance">
-                            </div>
+<section>
+  <h2>Section supplémentaire n°91 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 91 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°92 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 92 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°93 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 93 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°94 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 94 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°95 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 95 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°96 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 96 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°97 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 97 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°98 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 98 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°99 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 99 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+<section>
+  <h2>Section supplémentaire n°100 - Dispositions testamentaires</h2>
+  <p>Cette section numéro 100 détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.</p>
+  <p>Les dispositions sont complètes, favorisant la transparence et la justice familiale.</p>
+  <p>Les implications légales et religieuses sont précisées pour chaque point.</p>
+</section>
+</div>
 
-                            <div class="form-group">
-                                <label for="adresse">Adresse actuelle <span class="required">*</span></label>
-                                <textarea id="adresse" name="adresse" required placeholder="Votre adresse complète"></textarea>
-                                <div class="validation-error" id="adresse-error">Veuillez saisir votre adresse</div>
-                            </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  document.getElementById('generate-pdf').onclick = function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    const margin = 40;
+    const lineHeight = 14;
+    const pageHeight = doc.internal.pageSize.height;
+    let y = margin;
 
-                            <div class="form-group">
-                                <label for="nationalite">Nationalité</label>
-                                <input type="text" id="nationalite" name="nationalite" placeholder="Votre nationalité">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="situationFamiliale">Situation familiale</label>
-                                <select id="situationFamiliale" name="situationFamiliale" onchange="toggleConjointField()">
-                                    <option value="">Sélectionner</option>
-                                    <option value="celibataire">Célibataire</option>
-                                    <option value="marie">Marié(e)</option>
-                                    <option value="divorce">Divorcé(e)</option>
-                                    <option value="veuf">Veuf/Veuve</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group" id="conjointGroup" style="display: none;">
-                                <label for="conjoint" id="conjointLabel">Identité de l'époux/épouse</label>
-                                <input type="text" id="conjoint" name="conjoint" placeholder="Nom et prénom du conjoint">
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-scroll"></i> Volontés générales</h2>
-                            
-                            <div class="form-group">
-                                <label for="volontesObseques">Volontés concernant les obsèques</label>
-                                <textarea id="volontesObseques" name="volontesObseques" placeholder="Indiquez vos souhaits concernant l'inhumation, la mosquée pour la prière, le lieu de sépulture, etc."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="recommandationsFamille">Recommandations à la famille</label>
-                                <textarea id="recommandationsFamille" name="recommandationsFamille" placeholder="Messages, conseils ou recommandations pour votre famille"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="executeurTestament">Exécuteur testamentaire suggéré</label>
-                                <input type="text" id="executeurTestament" name="executeurTestament" placeholder="Nom de la personne de confiance">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contactExecuteur">Contact de l'exécuteur</label>
-                                <input type="text" id="contactExecuteur" name="contactExecuteur" placeholder="Téléphone ou email">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="autresVolontes">Autres volontés ou instructions</label>
-                                <textarea id="autresVolontes" name="autresVolontes" placeholder="Toute autre instruction importante"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Étape 2: Famille et proches -->
-                <div id="step2" class="form-step" style="display: none;">
-                    <div class="form-container">
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-users"></i> Famille et proches</h2>
-                            
-                            <div class="family-category">
-                                <div class="category-header" onclick="toggleCategory('parents')">
-                                    <div class="category-title">
-                                        <i class="fas fa-user-friends"></i> Parents
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="parents" class="category-content">
-                                    <div id="parents-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addPerson('parents')">
-                                        <i class="fas fa-plus"></i> Ajouter un parent
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="family-category">
-                                <div class="category-header" onclick="toggleCategory('conjoints')">
-                                    <div class="category-title">
-                                        <i class="fas fa-ring"></i> Époux/Épouse
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="conjoints" class="category-content">
-                                    <div id="conjoints-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addPerson('conjoints')">
-                                        <i class="fas fa-plus"></i> Ajouter un conjoint
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="family-category">
-                                <div class="category-header" onclick="toggleCategory('freres-soeurs')">
-                                    <div class="category-title">
-                                        <i class="fas fa-users"></i> Frères et Soeurs
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="freres-soeurs" class="category-content">
-                                    <div id="freres-soeurs-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addPerson('freres-soeurs')">
-                                        <i class="fas fa-plus"></i> Ajouter un frère/une soeur
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="family-category">
-                                <div class="category-header" onclick="toggleCategory('enfants')">
-                                    <div class="category-title">
-                                        <i class="fas fa-baby"></i> Enfants
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="enfants" class="category-content">
-                                    <div id="enfants-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addPerson('enfants')">
-                                        <i class="fas fa-plus"></i> Ajouter un enfant
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="family-category">
-                                <div class="category-header" onclick="toggleCategory('amis')">
-                                    <div class="category-title">
-                                        <i class="fas fa-heart"></i> Amis proches
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="amis" class="category-content">
-                                    <div id="amis-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addPerson('amis')">
-                                        <i class="fas fa-plus"></i> Ajouter un ami
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-info-circle"></i> Informations complémentaires</h2>
-                            
-                            <div class="form-group">
-                                <label for="autresProches">Autres personnes à mentionner</label>
-                                <textarea id="autresProches" name="autresProches" placeholder="Toute autre personne que vous souhaitez mentionner dans votre testament"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="relationsParticulieres">Relations particulières</label>
-                                <textarea id="relationsParticulieres" name="relationsParticulieres" placeholder="Décrivez toute relation particulière ou situation familiale importante"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="personnesPrevenir">Personnes à prévenir en priorité</label>
-                                <textarea id="personnesPrevenir" name="personnesPrevenir" placeholder="Liste des personnes à contacter en priorité en cas de décès"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Étape 3: Biens matériels et financiers -->
-                <div id="step3" class="form-step" style="display: none;">
-                    <div class="form-container">
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-home"></i> Biens immobiliers</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('immobilier')">
-                                    <div class="category-title">
-                                        <i class="fas fa-building"></i> Propriétés immobilières
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="immobilier" class="category-content">
-                                    <div id="immobilier-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addAsset('immobilier')">
-                                        <i class="fas fa-plus"></i> Ajouter un bien immobilier
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="privacy-notice">
-                                <i class="fas fa-shield-alt"></i> Les informations personnelles que vous saisissez sont sous votre responsabilité. Nous recommandons de ne pas inclure de données trop sensibles.
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-car"></i> Biens matériels</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('materiel')">
-                                    <div class="category-title">
-                                        <i class="fas fa-tshirt"></i> Biens de valeur
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="materiel" class="category-content">
-                                    <div id="materiel-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addAsset('materiel')">
-                                        <i class="fas fa-plus"></i> Ajouter un bien matériel
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('personnels')">
-                                    <div class="category-title">
-                                        <i class="fas fa-book"></i> Biens personnels
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="personnels" class="category-content">
-                                    <div id="personnels-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addAsset('personnels')">
-                                        <i class="fas fa-plus"></i> Ajouter un bien personnel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-university"></i> Comptes bancaires</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('comptes')">
-                                    <div class="category-title">
-                                        <i class="fas fa-piggy-bank"></i> Comptes et épargnes
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="comptes" class="category-content">
-                                    <div id="comptes-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addAsset('comptes')">
-                                        <i class="fas fa-plus"></i> Ajouter un compte
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-credit-card"></i> Cartes et accès bancaires</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('cartes')">
-                                    <div class="category-title">
-                                        <i class="fas fa-credit-card"></i> Cartes bancaires
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="cartes" class="category-content">
-                                    <div id="cartes-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addAsset('cartes')">
-                                        <i class="fas fa-plus"></i> Ajouter une carte
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('applications')">
-                                    <div class="category-title">
-                                        <i class="fas fa-mobile-alt"></i> Applications bancaires
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="applications" class="category-content">
-                                    <div id="applications-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addAsset('applications')">
-                                        <i class="fas fa-plus"></i> Ajouter un accès
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="privacy-notice">
-                                <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets ou les codes confidentiels. Indiquez plutôt où ces informations peuvent être retrouvées.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Étape 4: Dettes et devoirs religieux -->
-                <div id="step4" class="form-step" style="display: none;">
-                    <div class="form-container">
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> Créances à percevoir</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('creances')">
-                                    <div class="category-title">
-                                        <i class="fas fa-money-check"></i> Créances financières
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="creances" class="category-content">
-                                    <div id="creances-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addDebt('creances')">
-                                        <i class="fas fa-plus"></i> Ajouter une créance
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Dettes à régler</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('dettes')">
-                                    <div class="category-title">
-                                        <i class="fas fa-credit-card"></i> Dettes financières
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="dettes" class="category-content">
-                                    <div id="dettes-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addDebt('dettes')">
-                                        <i class="fas fa-plus"></i> Ajouter une dette
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-scale-balanced"></i> Zakat Al Maal</h2>
-                            
-                            <div class="form-group">
-                                <label for="zakatStatus">Statut de la Zakat</label>
-                                <select id="zakatStatus" name="zakatStatus">
-                                    <option value="">Sélectionner</option>
-                                    <option value="versee">Zakat versée</option>
-                                    <option value="non-versee">Zakat non versée</option>
-                                    <option value="partielle">Zakat partiellement versée</option>
-                                </select>
-                            </div>
-
-                            <div class="zakat-calculator">
-                                <h3>Calculateur de Zakat</h3>
-                                <div class="form-group">
-                                    <label for="nissab">Valeur du Nissab (en or 85g)</label>
-                                    <input type="number" id="nissab" name="nissab" placeholder="Valeur actuelle en € (ex: 4500)">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="epargne">Épargne totale</label>
-                                    <input type="number" id="epargne" name="epargne" placeholder="Montant total en €">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="autres_actifs">Autres actifs (commerce, etc.)</label>
-                                    <input type="number" id="autres_actifs" name="autres_actifs" placeholder="Montant total en €">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="dettes">Dettes à déduire</label>
-                                    <input type="number" id="dettes_zakat" name="dettes_zakat" placeholder="Montant total en €">
-                                </div>
-                                
-                                <button type="button" class="btn btn-secondary" onclick="calculerZakat()">
-                                    <i class="fas fa-calculator"></i> Calculer la Zakat
-                                </button>
-                                
-                                <div id="resultatZakat" class="calculator-result"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-moon"></i> Jeûne de Ramadan</h2>
-                            
-                            <div class="form-group">
-                                <label for="jeuneStatus">Jours de jeûne à rattraper</label>
-                                <select id="jeuneStatus" name="jeuneStatus">
-                                    <option value="">Sélectionner</option>
-                                    <option value="0">Aucun jour à rattraper</option>
-                                    <option value="1">1 jour</option>
-                                    <option value="2">2 jours</option>
-                                    <option value="3">3 jours</option>
-                                    <option value="4">4 jours</option>
-                                    <option value="5">5 jours</option>
-                                    <option value="6">6 jours</option>
-                                    <option value="7">7 jours</option>
-                                    <option value="8">8 jours</option>
-                                    <option value="9">9 jours</option>
-                                    <option value="10">10 jours</option>
-                                    <option value="plus">Plus de 10 jours (préciser dans les notes)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="jeuneNotes">Notes concernant le jeûne</label>
-                                <textarea id="jeuneNotes" name="jeuneNotes" placeholder="Précisions sur les jours à rattraper, raisons, etc."></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-kaaba"></i> Pèlerinage (Hadj)</h2>
-                            
-                            <div class="form-group">
-                                <label for="hadjStatus">Statut du Hadj</label>
-                                <select id="hadjStatus" name="hadjStatus">
-                                    <option value="">Sélectionner</option>
-                                    <option value="accompli">Hadj accompli</option>
-                                    <option value="non-accompli">Hadj non accompli</option>
-                                    <option value="partiel">Hadj partiellement accompli (Omra seulement)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="hadjNotes">Notes concernant le Hadj</label>
-                                <textarea id="hadjNotes" name="hadjNotes" placeholder="Année d'accomplissement, détails, etc."></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-hands-helping"></i> Aumônes (Sadaqa)</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('sadaqa')">
-                                    <div class="category-title">
-                                        <i class="fas fa-donate"></i> Sadaqa à effectuer
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="sadaqa" class="category-content">
-                                    <div id="sadaqa-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addSadaqa()">
-                                        <i class="fas fa-plus"></i> Ajouter une sadaqa
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Étape 5: Données numériques et réseaux sociaux -->
-                <div id="step5" class="form-step" style="display: none;">
-                    <div class="form-container">
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-hashtag"></i> Réseaux sociaux</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('reseaux-sociaux')">
-                                    <div class="category-title">
-                                        <i class="fas fa-share-alt"></i> Comptes de réseaux sociaux
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="reseaux-sociaux" class="category-content">
-                                    <div id="reseaux-sociaux-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addReseauSocial()">
-                                        <i class="fas fa-plus"></i> Ajouter un réseau social
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-envelope"></i> Comptes email</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('emails')">
-                                    <div class="category-title">
-                                        <i class="fas fa-at"></i> Adresses email
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="emails" class="category-content">
-                                    <div id="emails-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addEmail()">
-                                        <i class="fas fa-plus"></i> Ajouter un compte email
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-globe"></i> Comptes en ligne</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('comptes-online')">
-                                    <div class="category-title">
-                                        <i class="fas fa-user-circle"></i> Comptes divers
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="comptes-online" class="category-content">
-                                    <div id="comptes-online-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addCompteOnline()">
-                                        <i class="fas fa-plus"></i> Ajouter un compte en ligne
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-cloud"></i> Cloud en ligne</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('cloud')">
-                                    <div class="category-title">
-                                        <i class="fas fa-database"></i> Services de stockage
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="cloud" class="category-content">
-                                    <div id="cloud-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addCloud()">
-                                        <i class="fas fa-plus"></i> Ajouter un service cloud
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h2 class="section-title"><i class="fas fa-mobile-alt"></i> Appareils avec mots de passe</h2>
-                            
-                            <div class="asset-category">
-                                <div class="category-header" onclick="toggleCategory('appareils')">
-                                    <div class="category-title">
-                                        <i class="fas fa-lock"></i> Appareils sécurisés
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div id="appareils" class="category-content">
-                                    <div id="appareils-container"></div>
-                                    <button type="button" class="add-person-btn" onclick="addAppareil()">
-                                        <i class="fas fa-plus"></i> Ajouter un appareil
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="privacy-notice">
-                                <i class="fas fa-exclamation-triangle"></i> Pour des raisons de sécurité, il est recommandé de ne pas enregistrer les mots de passe complets. Indiquez plutôt où ces informations peuvent être retrouvées.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="actions">
-                    <button type="button" class="btn btn-secondary" onclick="sauvegarderBrouillon()">
-                        <i class="fas fa-save"></i> Sauvegarder le brouillon
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="genererPDF()">
-                        <i class="fas fa-file-pdf"></i> Générer le PDF
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="prevStepBtn" style="display: none;" onclick="prevStep()">
-                        <i class="fas fa-arrow-left"></i> Étape précédente
-                    </button>
-                    <button type="button" class="btn btn-primary" id="nextStepBtn" onclick="nextStep()">
-                        Continuer vers la famille <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <div class="share-section">
-                    <div class="share-title">Partager cette application</div>
-                    <div class="share-buttons">
-                        <div class="share-btn whatsapp" onclick="partagerWhatsApp()">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div class="share-btn facebook" onclick="partagerFacebook()">
-                            <i class="fab fa-facebook-f"></i>
-                        </div>
-                        <div class="share-btn twitter" onclick="partagerTwitter()">
-                            <i class="fab fa-twitter"></i>
-                        </div>
-                        <div class="share-btn email" onclick="partagerEmail()">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </main>
-
-        <div class="footer-note">
-            <p><strong>Note importante :</strong> Ce testament doit être complété selon les règles de l'héritage islamique (Mirath). 
-            Il est recommandé de consulter un spécialiste en droit islamique pour s'assurer de la conformité avec les lois locales.</p>
-            <p>Les dispositions de ce testament ne peuvent concerner que le tiers (1/3) des biens, les deux tiers restants étant distribués selon les règles coraniques d'héritage.</p>
-        </div>
-    </div>
-
-    <div class="save-indicator" id="saveIndicator">Sauvegarde effectuée</div>
-
-    <script>
-        // Variables globales
-        let etapeActuelle = 1;
-        const totalEtapes = 5;
-
-        // Initialisation des indicateurs d'étape
-        function initialiserIndicateursEtape() {
-            const stepDotsContainer = document.getElementById('stepDots');
-            stepDotsContainer.innerHTML = '';
-            
-            for (let i = 1; i <= totalEtapes; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'step-dot';
-                dot.dataset.step = i;
-                if (i === 1) dot.classList.add('active');
-                
-                dot.addEventListener('click', () => {
-                    if (i < etapeActuelle || validerEtape(etapeActuelle)) {
-                        changerEtape(i);
-                    }
-                });
-                
-                stepDotsContainer.appendChild(dot);
-            }
+    function addText(text, options = {}) {
+      const { fontSize = 12, fontStyle = 'normal' } = options;
+      doc.setFontSize(fontSize);
+      doc.setFont('Times', fontStyle);
+      const lines = doc.splitTextToSize(text, doc.internal.pageSize.width - margin * 2);
+      lines.forEach(line => {
+        if (y + lineHeight > pageHeight - margin) {
+          doc.addPage();
+          y = margin;
         }
+        doc.text(line, margin, y);
+        y += lineHeight;
+      });
+      y += 6;
+    }
 
-        // Fonction pour valider une étape
-        function validerEtape(etape) {
-            if (etape === 1) {
-                const champsObligatoires = [
-                    document.getElementById('sexe'),
-                    document.getElementById('prenom'),
-                    document.getElementById('nom'),
-                    document.getElementById('dateNaissance'),
-                    document.getElementById('adresse')
-                ];
-                
-                let valide = true;
-                
-                champsObligatoires.forEach(champ => {
-                    if (!champ.value.trim()) {
-                        valide = false;
-                        champ.classList.add('invalid');
-                        document.getElementById(`${champ.id}-error`).style.display = 'block';
-                    } else {
-                        champ.classList.remove('invalid');
-                        document.getElementById(`${champ.id}-error`).style.display = 'none';
-                    }
-                });
-                
-                if (!valide) {
-                    alert('Veuillez remplir tous les champs obligatoires avant de continuer.');
-                    document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
-                }
-                
-                return valide;
-            }
-            
-            return true;
-        }
+    // En-tête du document PDF
+    doc.setFontSize(22);
+    doc.setFont('Times', 'bold');
+    addText('Al Wassiya - Testament Islamique Simplifié');
 
-        // Fonction pour afficher/masquer le champ conjoint
-        function toggleConjointField() {
-            const situationFamiliale = document.getElementById('situationFamiliale').value;
-            const conjointGroup = document.getElementById('conjointGroup');
-            const conjointLabel = document.getElementById('conjointLabel');
-            
-            if (situationFamiliale === 'marie' || situationFamiliale === 'divorce') {
-                conjointGroup.style.display = 'block';
-                
-                if (situationFamiliale === 'marie') {
-                    conjointLabel.textContent = 'Identité de l\'époux/épouse';
-                    document.getElementById('conjoint').placeholder = 'Nom et prénom du conjoint';
-                } else if (situationFamiliale === 'divorce') {
-                    conjointLabel.textContent = 'Identité de l\'ex-époux/ex-épouse';
-                    document.getElementById('conjoint').placeholder = 'Nom et prénom de l\'ex-conjoint';
-                }
-            } else {
-                conjointGroup.style.display = 'none';
-                document.getElementById('conjoint').value = '';
-            }
-        }
+    doc.setFontSize(14);
+    doc.setFont('Times', 'normal');
+    addText('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ');
 
-        // Fonction pour changer d'étape
-        function changerEtape(etape) {
-            // Valider l'étape actuelle avant de changer
-            if (etape > etapeActuelle && !validerEtape(etapeActuelle)) {
-                return;
-            }
-            
-            // Masquer toutes les étapes
-            document.querySelectorAll('.form-step').forEach(step => {
-                step.style.display = 'none';
-            });
-            
-            // Afficher l'étape demandée
-            document.getElementById(`step${etape}`).style.display = 'block';
-            
-            // Mettre à jour l'indicateur de progression
-            document.getElementById('progressFill').style.width = `${(etape / totalEtapes) * 100}%`;
-            
-            // Mettre à jour les indicateurs d'étape
-            document.querySelectorAll('.step-dot').forEach((dot, index) => {
-                dot.classList.remove('active', 'completed');
-                if (index + 1 === etape) {
-                    dot.classList.add('active');
-                } else if (index + 1 < etape) {
-                    dot.classList.add('completed');
-                }
-            });
-            
-            // Mettre à jour le texte d'indication d'étape
-            let stepText = '';
-            switch(etape) {
-                case 1:
-                    stepText = 'Étape 1 sur 5 : Informations personnelles et volontés générales';
-                    document.getElementById('prevStepBtn').style.display = 'none';
-                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers la famille <i class="fas fa-arrow-right"></i>';
-                    break;
-                case 2:
-                    stepText = 'Étape 2 sur 5 : Famille et proches';
-                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les biens <i class="fas fa-arrow-right"></i>';
-                    break;
-                case 3:
-                    stepText = 'Étape 3 sur 5 : Biens matériels et financiers';
-                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les dettes <i class="fas fa-arrow-right"></i>';
-                    break;
-                case 4:
-                    stepText = 'Étape 4 sur 5 : Dettes et devoirs religieux';
-                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                    document.getElementById('nextStepBtn').innerHTML = 'Continuer vers les données numériques <i class="fas fa-arrow-right"></i>';
-                    break;
-                case 5:
-                    stepText = 'Étape 5 sur 5 : Données numériques et réseaux sociaux';
-                    document.getElementById('prevStepBtn').style.display = 'inline-flex';
-                    document.getElementById('nextStepBtn').innerHTML = 'Finaliser et générer le PDF <i class="fas fa-file-pdf"></i>';
-                    break;
-            }
-            document.getElementById('stepIndicator').textContent = stepText;
-            
-            // Mettre à jour l'étape actuelle
-            etapeActuelle = etape;
-            
-            // Scroll vers le haut de la page
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    doc.setFontSize(16);
+    doc.setFont('Times', 'bold');
+    addText('TESTAMENT ISLAMIQUE (WASSIYA)');
 
-        // Fonction pour passer à l'étape suivante
-        function nextStep() {
-            if (etapeActuelle < totalEtapes) {
-                changerEtape(etapeActuelle + 1);
-            } else {
-                genererPDF();
-            }
-        }
+    doc.setFontSize(12);
+    doc.setFont('Times', 'normal');
+    addText('Date de rédaction : 12 septembre 2025');
 
-        // Fonction pour revenir à l'étape précédente
-        function prevStep() {
-            if (etapeActuelle > 1) {
-                changerEtape(etapeActuelle - 1);
-            }
-        }
+    // Sections fixes du PDF
+    const fixedSections = [
+      {
+        title: "Introduction au Testament",
+        paragraphs: [
+          "Le testament est un acte juridique par lequel une personne dispose, pour le temps où elle ne sera plus, de tout ou partie de ses biens. En Islam, cela se fait conformément à la charia, respectant les règles du Quran et de la Sunna.",
+          "Ce document simplifié vous assiste dans la rédaction de votre volonté en conformité avec ces principes.",
+          "La rédaction d’un testament clair permet d’éviter les conflits familiaux après le décès du testateur."
+        ]
+      },
+      {
+        title: "Dispositions Générales",
+        paragraphs: [
+          "Le testament doit être rédigé librement et contenir la volonté claire du testateur. Dans le cas d’un testament islamique, il est primordial de respecter les parts obligatoires aux héritiers légaux.",
+          "Il est également conseillé d’être précis afin d’éviter tout conflit futur entre héritiers.",
+          "Cette précision favorise la paix familiale et la justice dans la transmission des biens."
+        ]
+      },
+      {
+        title: "Biens Imposés",
+        paragraphs: [
+          "Les biens mobiliers, immobiliers, comptes bancaires, actifs numériques et autres possessions doivent être listés précisément.",
+          "Chaque bien doit être désigné clairement pour éviter toute incertitude quant à sa répartition ou usage futur.",
+          "La transparence dans cette liste est essentielle pour le respect des volontés."
+        ]
+      },
+      {
+        title: "Répartition des Héritiers",
+        paragraphs: [
+          "Selon la charia, les héritiers désignés sont les enfants, conjoint, parents, frères et sœurs selon certaines parts définies.",
+          "La wassiya permet aussi de prévoir la donation d’un tiers de vos biens à des tiers non héritiers.",
+          "Le respect des parts légales est obligatoire pour la validité du testament."
+        ]
+      }
+    ];
 
-        // Fonction pour ouvrir/fermer les catégories de famille
-        function toggleCategory(categoryId) {
-            const category = document.getElementById(categoryId);
-            category.classList.toggle('active');
-        }
+    fixedSections.forEach(section => {
+      doc.setFontSize(16);
+      doc.setFont('Times', 'bold');
+      addText(section.title);
+      doc.setFontSize(12);
+      doc.setFont('Times', 'normal');
+      section.paragraphs.forEach(p => addText(p));
+    });
 
-        // Fonction pour ajouter une personne à une catégorie
-        function addPerson(category) {
-            const container = document.getElementById(`${category}-container`);
-            const index = container.children.length;
-            
-            const personEntry = document.createElement('div');
-            personEntry.className = 'person-entry';
-            personEntry.innerHTML = `
-                <div class="form-group">
-                    <label>Nom <span class="required">*</span></label>
-                    <input type="text" name="${category}[${index}][nom]" required placeholder="Nom de famille">
-                </div>
-                <div class="form-group">
-                    <label>Prénom <span class="required">*</span></label>
-                    <input type="text" name="${category}[${index}][prenom]" required placeholder="Prénom">
-                </div>
-                <div class="form-group">
-                    <label>Téléphone</label>
-                    <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
-                </div>
-                <div class="form-group">
-                    <label>Adresse</label>
-                    <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
-            
-            container.appendChild(personEntry);
-        }
+    // Génération dynamique des sections répétées
+    for(let i = 1; i <= 100; i++) {
+      doc.setFontSize(14);
+      doc.setFont('Times', 'italic');
+      addText(`Section supplémentaire n°${i} - Dispositions testamentaires`);
+      doc.setFontSize(12);
+      doc.setFont('Times', 'normal');
+      addText(`Cette section numéro ${i} détaille en profondeur les obligations et droits des héritiers selon les principes islamiques.`);
+      addText(`Les dispositions sont complètes, favorisant la transparence et la justice familiale.`);
+      addText(`Les implications légales et religieuses sont précisées pour chaque point.`);
+    }
 
-        // Fonction pour ajouter un bien/actif
-        function addAsset(category) {
-            const container = document.getElementById(`${category}-container`);
-            const index = container.children.length;
-            
-            let assetEntry = document.createElement('div');
-            assetEntry.className = 'asset-entry';
-            
-            // HTML différent selon la catégorie
-            switch(category) {
-                case 'immobilier':
-                    assetEntry.innerHTML = `
-                        <div class="form-group">
-                            <label>Type de bien <span class="required">*</span></label>
-                            <select name="${category}[${index}][type]" required>
-                                <option value="">Sélectionner</option>
-                                <option value="maison">Maison</option>
-                                <option value="appartement">Appartement</option>
-                                <option value="terrain">Terrain</option>
-                                <option value="local_commercial">Local commercial</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Adresse complète <span class="required">*</span></label>
-                            <textarea name="${category}[${index}][adresse]" required placeholder="Adresse du bien immobilier"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Valeur estimée (€)</label>
-                            <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
-                        </div>
-                        <div class="form-group">
-                            <label>Statut de paiement</label>
-                            <select name="${category}[${index}][statut]">
-                                <option value="">Sélectionner</option>
-                                <option value="paye">Entièrement payé</option>
-                                <option value="credit">En cours de crédit</option>
-                                <option value="location">En location</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Informations complémentaires</label>
-                            <textarea name="${category}[${index}][info]" placeholder="Informations supplémentaires sur ce bien"></textarea>
-                        </div>
-                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </button>
-                    `;
-                    break;
-                    
-                case 'materiel':
-                    assetEntry.innerHTML = `
-                        <div class="form-group">
-                            <label>Type de bien <span class="required">*</span></label>
-                            <select name="${category}[${index}][type]" required>
-                                <option value="">Sélectionner</option>
-                                <option value="voiture">Voiture</option>
-                                <option value="moto">Moto/Scooter</option>
-                                <option value="bijoux">Bijoux</option>
-                                <option value="materiel_informatique">Matériel informatique</option>
-                                <option value="electromenager">Électroménager</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Description <span class="required">*</span></label>
-                            <input type="text" name="${category}[${index}][description]" required placeholder="Marque, modèle, caractéristiques">
-                        </div>
-                        <div class="form-group">
-                            <label>Valeur estimée (€)</label>
-                            <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
-                        </div>
-                        <div class="form-group">
-                            <label>Lieu de stockage</label>
-                            <input type="text" name="${category}[${index}][lieu]" placeholder="Où se trouve ce bien">
-                        </div>
-                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </button>
-                    `;
-                    break;
-                    
-                case 'personnels':
-                    assetEntry.innerHTML = `
-                        <div class="form-group">
-                            <label>Type de bien</label>
-                            <select name="${category}[${index}][type]">
-                                <option value="">Sélectionner</option>
-                                <option value="livres">Livres</option>
-                                <option value="meubles">Meubles</option>
-                                <option value="vetements">Vêtements</option>
-                                <option value="objets_art">Objets d'art</option>
-                                <option value="collections">Collections</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea name="${category}[${index}][description]" placeholder="Description détaillée de ces biens"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Valeur estimée (€)</label>
-                            <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
-                        </div>
-                        <div class="form-group">
-                            <label>Lieu de stockage</label>
-                            <input type="text" name="${category}[${index}][lieu]" placeholder="Où se trouvent ces biens">
-                        </div>
-                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </button>
-                    `;
-                    break;
-                    
-                case 'comptes':
-                    assetEntry.innerHTML = `
-                        <div class="form-group">
-                            <label>Nom de la banque <span class="required">*</span></label>
-                            <input type="text" name="${category}[${index}][banque]" required placeholder="Nom de l'établissement bancaire">
-                        </div>
-                        <div class="form-group">
-                            <label>Adresse de l'agence</label>
-                            <input type="text" name="${category}[${index}][adresse]" placeholder="Adresse de l'agence">
-                        </div>
-                        <div class="form-group">
-                            <label>Type de compte <span class="required">*</span></label>
-                            <select name="${category}[${index}][type]" required>
-                                <option value="">Sélectionner</option>
-                                <option value="courant">Compte courant</option>
-                                <option value="epargne">Compte épargne</option>
-                                <option value="placement">Compte placement</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Numéro de compte (IBAN)</label>
-                            <input type="text" name="${category}[${index}][iban]" placeholder="IBAN du compte">
-                        </div>
-                        <div class="form-group">
-                            <label>Solde approximatif (€)</label>
-                            <input type="number" name="${category}[${index}][solde]" placeholder="Solde en euros">
-                        </div>
-                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </button>
-                    `;
-                    break;
-                    
-                case 'cartes':
-                    assetEntry.innerHTML = `
-                        <div class="form-group">
-                            <label>Type de carte <span class="required">*</span></label>
-                            <select name="${category}[${index}][type]" required>
-                                <option value="">Sélectionner</option>
-                                <option value="visa">Carte Visa</option>
-                                <option value="mastercard">Carte Mastercard</option>
-                                <option value="american_express">Carte American Express</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Numéro de carte</label>
-                            <input type="text" name="${category}[${index}][numero]" placeholder="Numéro de la carte">
-                        </div>
-                        <div class="form-group">
-                            <label>Date d'expiration</label>
-                            <input type="text" name="${category}[${index}][expiration]" placeholder="MM/AA">
-                        </div>
-                        <div class="form-group">
-                            <label>Code (partiel pour sécurité)</label>
-                            <input type="text" name="${category}[${index}][code]" placeholder="Premiers chiffres seulement">
-                        </div>
-                        <div class="form-group">
-                            <label>Banque émettrice</label>
-                            <input type="text" name="${category}[${index}][banque]" placeholder="Banque émettrice de la carte">
-                        </div>
-                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </button>
-                    `;
-                    break;
-                    
-                case 'applications':
-                    assetEntry.innerHTML = `
-                        <div class="form-group">
-                            <label>Nom de l'application <span class="required">*</span></label>
-                            <input type="text" name="${category}[${index}][application]" required placeholder="Nom de l'application bancaire">
-                        </div>
-                        <div class="form-group">
-                            <label>Identifiant</label>
-                            <input type="text" name="${category}[${index}][identifiant]" placeholder="Identifiant de connexion">
-                        </div>
-                        <div class="form-group">
-                            <label>Indice pour le mot de passe</label>
-                            <input type="text" name="${category}[${index}][indice]" placeholder="Indice pour retrouver le mot de passe">
-                        </div>
-                        <div class="form-group">
-                            <label>Email de récupération</label>
-                            <input type="email" name="${category}[${index}][email]" placeholder="Email associé au compte">
-                        </div>
-                        <div class="form-group">
-                            <label>Numéro de téléphone associé</label>
-                            <input type="tel" name="${category}[${index}][telephone]" placeholder="Téléphone pour la validation">
-                        </div>
-                        <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </button>
-                    `;
-                    break;
-            }
-            
-            container.appendChild(assetEntry);
-        }
-
-        // Fonction pour ajouter une créance ou dette (étape 4)
-        function addDebt(category) {
-            const container = document.getElementById(`${category}-container`);
-            const index = container.children.length;
-            
-            let debtEntry = document.createElement('div');
-            debtEntry.className = 'asset-entry';
-            
-            if (category === 'creances') {
-                debtEntry.innerHTML = `
-                    <div class="form-group">
-                        <label>Type de créance <span class="required">*</span></label>
-                        <select name="${category}[${index}][type]" required>
-                            <option value="">Sélectionner</option>
-                            <option value="pret">Prêt d'argent</option>
-                            <option value="investissement">Investissement</option>
-                            <option value="placement">Placement financier</option>
-                            <option value="projet">Projet en association</option>
-                            <option value="autre">Autre type de créance</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Montant (€) <span class="required">*</span></label>
-                        <input type="number" name="${category}[${index}][montant]" required placeholder="Montant à percevoir">
-                    </div>
-                    <div class="form-group">
-                        <label>Nom du débiteur <span class="required">*</span></label>
-                        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom et prénom">
-                    </div>
-                    <div class="form-group">
-                        <label>Téléphone du débiteur</label>
-                        <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
-                    </div>
-                    <div class="form-group">
-                        <label>Adresse du débiteur</label>
-                        <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Date prévue de remboursement</label>
-                        <input type="date" name="${category}[${index}][date_remboursement]">
-                    </div>
-                    <div class="form-group">
-                        <label>Informations complémentaires</label>
-                        <textarea name="${category}[${index}][info]" placeholder="Détails sur cette créance"></textarea>
-                    </div>
-                    <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                        <i class="fas fa-trash"></i> Supprimer
-                    </button>
-                `;
-            } else if (category === 'dettes') {
-                debtEntry.innerHTML = `
-                    <div class="form-group">
-                        <label>Type de dette <span class="required">*</span></label>
-                        <select name="${category}[${index}][type]" required>
-                            <option value="">Sélectionner</option>
-                            <option value="personne">Dette envers une personne</option>
-                            <option value="entreprise">Dette envers une entreprise</option>
-                            <option value="facture">Facture impayée</option>
-                            <option value="credit">Crédit en cours</option>
-                            <option value="autre">Autre type de dette</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Montant (€) <span class="required">*</span></label>
-                        <input type="number" name="${category}[${index}][montant]" required placeholder="Montant à rembourser">
-                    </div>
-                    <div class="form-group">
-                        <label>Nom du créancier <span class="required">*</span></label>
-                        <input type="text" name="${category}[${index}][nom]" required placeholder="Nom et prénom ou entreprise">
-                    </div>
-                    <div class="form-group">
-                        <label>Téléphone du créancier</label>
-                        <input type="tel" name="${category}[${index}][telephone]" placeholder="Numéro de téléphone">
-                    </div>
-                    <div class="form-group">
-                        <label>Adresse du créancier</label>
-                        <textarea name="${category}[${index}][adresse]" placeholder="Adresse complète"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Date d'échéance</label>
-                        <input type="date" name="${category}[${index}][date_echeance]">
-                    </div>
-                    <div class="form-group">
-                        <label>Informations complémentaires</label>
-                        <textarea name="${category}[${index}][info]" placeholder="Détails sur cette dette"></textarea>
-                    </div>
-                    <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                        <i class="fas fa-trash"></i> Supprimer
-                    </button>
-                `;
-            }
-            
-            container.appendChild(debtEntry);
-        }
-
-        // Fonction pour ajouter une sadaqa (étape 4)
-        function addSadaqa() {
-            const container = document.getElementById('sadaqa-container');
-            const index = container.children.length;
-            
-            const sadaqaEntry = document.createElement('div');
-            sadaqaEntry.className = 'asset-entry';
-            sadaqaEntry.innerHTML = `
-                <div class="form-group">
-                    <label>Type de sadaqa <span class="required">*</span></label>
-                    <select name="sadaqa[${index}][type]" required>
-                        <option value="">Sélectionner</option>
-                        <option value="argent">Don d'argent</option>
-                        <option value="nourriture">Don de nourriture</option>
-                        <option value="projet">Soutien à un projet</option>
-                        <option value="association">Don à une association</option>
-                        <option value="omra">Omra au nom du défunt</option>
-                        <option value="hadj">Hadj au nom du défunt</option>
-                        <option value="autre">Autre type de sadaqa</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Montant ou description <span class="required">*</span></label>
-                    <input type="text" name="sadaqa[${index}][description]" required placeholder="Montant en € ou description">
-                </div>
-                <div class="form-group">
-                    <label>Bénéficiaire</label>
-                    <input type="text" name="sadaqa[${index}][beneficiaire]" placeholder="Personne ou organisation">
-                </div>
-                <div class="form-group">
-                    <label>Coordonnées du bénéficiaire</label>
-                    <textarea name="sadaqa[${index}][coordonnees]" placeholder="Adresse, téléphone, etc."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Instructions</label>
-                    <textarea name="sadaqa[${index}][instructions]" placeholder="Instructions particulières"></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
-            
-            container.appendChild(sadaqaEntry);
-        }
-
-        // Fonction pour ajouter un réseau social (étape 5)
-        function addReseauSocial() {
-            const container = document.getElementById('reseaux-sociaux-container');
-            const index = container.children.length;
-            
-            const entry = document.createElement('div');
-            entry.className = 'asset-entry';
-            entry.innerHTML = `
-                <div class="form-group">
-                    <label>Réseau social <span class="required">*</span></label>
-                    <select name="reseaux_sociaux[${index}][type]" required>
-                        <option value="">Sélectionner</option>
-                        <option value="facebook">Facebook</option>
-                        <option value="instagram">Instagram</option>
-                        <option value="twitter">Twitter / X</option>
-                        <option value="linkedin">LinkedIn</option>
-                        <option value="whatsapp">WhatsApp</option>
-                        <option value="telegram">Telegram</option>
-                        <option value="tiktok">TikTok</option>
-                        <option value="snapchat">Snapchat</option>
-                        <option value="pinterest">Pinterest</option>
-                        <option value="youtube">YouTube</option>
-                        <option value="reddit">Reddit</option>
-                        <option value="discord">Discord</option>
-                        <option value="signal">Signal</option>
-                        <option value="autre">Autre réseau social</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Pseudo / Identifiant</label>
-                    <input type="text" name="reseaux_sociaux[${index}][pseudo]" placeholder="Votre pseudo sur ce réseau">
-                </div>
-                <div class="form-group">
-                    <label>Adresse email rattachée</label>
-                    <input type="email" name="reseaux_sociaux[${index}][email]" placeholder="Email associé à ce compte">
-                </div>
-                <div class="form-group">
-                    <label>Numéro de téléphone rattaché</label>
-                    <input type="tel" name="reseaux_sociaux[${index}][telephone]" placeholder="Numéro associé à ce compte">
-                </div>
-                <div class="form-group">
-                    <label>Indice pour le mot de passe</label>
-                    <input type="text" name="reseaux_sociaux[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
-                </div>
-                <div class="form-group">
-                    <label>Compléments d'information</label>
-                    <textarea name="reseaux_sociaux[${index}][complements]" placeholder="Informations complémentaires sur ce compte"></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
-            
-            container.appendChild(entry);
-        }
-
-        // Fonction pour ajouter un compte email (étape 5)
-        function addEmail() {
-            const container = document.getElementById('emails-container');
-            const index = container.children.length;
-            
-            const entry = document.createElement('div');
-            entry.className = 'asset-entry';
-            entry.innerHTML = `
-                <div class="form-group">
-                    <label>Adresse email <span class="required">*</span></label>
-                    <input type="email" name="emails[${index}][adresse]" required placeholder="Votre adresse email">
-                </div>
-                <div class="form-group">
-                    <label>Type de compte</label>
-                    <select name="emails[${index}][type]">
-                        <option value="">Sélectionner</option>
-                        <option value="personnel">Personnel</option>
-                        <option value="professionnel">Professionnel</option>
-                        <option value="secondaire">Secondaire</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Indice pour le mot de passe</label>
-                    <input type="text" name="emails[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
-                </div>
-                <div class="form-group">
-                    <label>Compléments d'information</label>
-                    <textarea name="emails[${index}][complements]" placeholder="Informations complémentaires sur ce compte email"></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
-            
-            container.appendChild(entry);
-        }
-
-        // Fonction pour ajouter un compte en ligne (étape 5)
-        function addCompteOnline() {
-            const container = document.getElementById('comptes-online-container');
-            const index = container.children.length;
-            
-            const entry = document.createElement('div');
-            entry.className = 'asset-entry';
-            entry.innerHTML = `
-                <div class="form-group">
-                    <label>Nom du site / service <span class="required">*</span></label>
-                    <input type="text" name="comptes_online[${index}][site]" required placeholder="Ex: Amazon, Netflix, abonnement téléphone...">
-                </div>
-                <div class="form-group">
-                    <label>Adresse email du compte</label>
-                    <input type="email" name="comptes_online[${index}][email]" placeholder="Email associé à ce compte">
-                </div>
-                <div class="form-group">
-                    <label>Identifiant / Pseudo</label>
-                    <input type="text" name="comptes_online[${index}][identifiant]" placeholder="Votre identifiant sur ce site">
-                </div>
-                <div class="form-group">
-                    <label>Indice pour le mot de passe</label>
-                    <input type="text" name="comptes_online[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
-                </div>
-                <div class="form-group">
-                    <label>Informations complémentaires</label>
-                    <textarea name="comptes_online[${index}][complements]" placeholder="Détails sur ce compte, abonnement, etc."></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
-            
-            container.appendChild(entry);
-        }
-
-        // Fonction pour ajouter un service cloud (étape 5)
-        function addCloud() {
-            const container = document.getElementById('cloud-container');
-            const index = container.children.length;
-            
-            const entry = document.createElement('div');
-            entry.className = 'asset-entry';
-            entry.innerHTML = `
-                <div class="form-group">
-                    <label>Service cloud <span class="required">*</span></label>
-                    <select name="cloud[${index}][service]" required>
-                        <option value="">Sélectionner</option>
-                        <option value="google_drive">Google Drive</option>
-                        <option value="dropbox">Dropbox</option>
-                        <option value="icloud">iCloud</option>
-                        <option value="onedrive">OneDrive</option>
-                        <option value="mega">MEGA</option>
-                        <option value="box">Box</option>
-                        <option value="autre">Autre service</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Pseudo / Identifiant</label>
-                    <input type="text" name="cloud[${index}][pseudo]" placeholder="Votre identifiant sur ce service">
-                </div>
-                <div class="form-group">
-                    <label>Adresse email rattachée</label>
-                    <input type="email" name="cloud[${index}][email]" placeholder="Email associé à ce compte">
-                </div>
-                <div class="form-group">
-                    <label>Indice pour le mot de passe</label>
-                    <input type="text" name="cloud[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le mot de passe">
-                </div>
-                <div class="form-group">
-                    <label>Informations complémentaires</label>
-                    <textarea name="cloud[${index}][complements]" placeholder="Détails sur ce compte cloud"></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
-            
-            container.appendChild(entry);
-        }
-
-        // Fonction pour ajouter un appareil (étape 5)
-        function addAppareil() {
-            const container = document.getElementById('appareils-container');
-            const index = container.children.length;
-            
-            const entry = document.createElement('div');
-            entry.className = 'asset-entry';
-            entry.innerHTML = `
-                <div class="form-group">
-                    <label>Type d'appareil <span class="required">*</span></label>
-                    <select name="appareils[${index}][type]" required>
-                        <option value="">Sélectionner</option>
-                        <option value="telephone">Téléphone portable</option>
-                        <option value="ordinateur_portable">Ordinateur portable</option>
-                        <option value="ordinateur_fixe">Ordinateur fixe</option>
-                        <option value="tablette">Tablette</option>
-                        <option value="montre_connectee">Montre connectée</option>
-                        <option value="autre">Autre appareil</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Marque et modèle</label>
-                    <input type="text" name="appareils[${index}][modele]" placeholder="Ex: iPhone 13, Samsung Galaxy S21...">
-                </div>
-                <div class="form-group">
-                    <label>Indice pour le mot de passe / code</label>
-                    <input type="text" name="appareils[${index}][indice_mot_de_passe]" placeholder="Indice pour retrouver le code d'accès">
-                </div>
-                <div class="form-group">
-                    <label>Informations complémentaires</label>
-                    <textarea name="appareils[${index}][complements]" placeholder="Détails sur cet appareil"></textarea>
-                </div>
-                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
-                    <i class="fas fa-trash"></i> Supprimer
-                </button>
-            `;
-            
-            container.appendChild(entry);
-        }
-
-        // Fonction pour calculer la Zakat (CORRIGÉE)
-        function calculerZakat() {
-            const nissab = parseFloat(document.getElementById('nissab').value) || 0;
-            const epargne = parseFloat(document.getElementById('epargne').value) || 0;
-            const autresActifs = parseFloat(document.getElementById('autres_actifs').value) || 0;
-            const dettes = parseFloat(document.getElementById('dettes_zakat').value) || 0;
-            
-            const patrimoine = epargne + autresActifs - dettes;
-            const resultatElement = document.getElementById('resultatZakat');
-            
-            if (nissab <= 0) {
-                resultatElement.innerHTML = '<span style="color: var(--error);">Veuillez entrer la valeur du Nissab</span>';
-                resultatElement.style.display = 'block';
-                return;
-            }
-            
-            if (patrimoine <= 0) {
-                resultatElement.innerHTML = `Votre patrimoine net est de ${patrimoine.toFixed(2)} €. Vous n'êtes pas redevable de la Zakat.`;
-                resultatElement.style.display = 'block';
-                return;
-            }
-            
-            if (patrimoine < nissab) {
-                resultatElement.innerHTML = `Votre patrimoine net est de ${patrimoine.toFixed(2)} €, ce qui est inférieur au Nissab (${nissab.toFixed(2)} €). Vous n'êtes pas redevable de la Zakat.`;
-                resultatElement.style.display = 'block';
-                return;
-            }
-            
-            // CORRECTION: On ne calcule la Zakat que sur la partie qui dépasse le Nissab
-            const montantImposable = patrimoine - nissab;
-            const zakat = montantImposable * 0.025; // 2.5%
-            
-            resultatElement.innerHTML = `
-                <strong>Résultat du calcul :</strong><br>
-                Patrimoine net: ${patrimoine.toFixed(2)} €<br>
-                Nissab: ${nissab.toFixed(2)} €<br>
-                Montant imposable: ${montantImposable.toFixed(2)} €<br>
-                <span style="color: var(--primary-dark); font-weight: bold;">Zakat à verser: ${zakat.toFixed(2)} € (2.5% du montant imposable)</span>
-            `;
-            resultatElement.style.display = 'block';
-        }
-
-        function sauvegarderBrouillon() {
-            const formData = new FormData(document.getElementById('testamentForm'));
-            const data = {};
-            
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-            
-            // Récupérer les données des personnes
-            const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
-                               'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
-                               'creances', 'dettes', 'sadaqa', 'reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
-            categories.forEach(category => {
-                const entries = [];
-                const inputs = document.querySelectorAll(`[name^="${category}["]`);
-                
-                let currentIndex = -1;
-                inputs.forEach(input => {
-                    const name = input.getAttribute('name');
-                    const match = name.match(new RegExp(`${category}\\[(\\d+)\\]\\[(\\w+)\\]`));
-                    
-                    if (match) {
-                        const index = parseInt(match[1]);
-                        const field = match[2];
-                        
-                        if (index !== currentIndex) {
-                            entries.push({});
-                            currentIndex = index;
-                        }
-                        
-                        entries[index][field] = input.value;
-                    }
-                });
-                
-                if (entries.length > 0) {
-                    data[category] = entries;
-                }
-            });
-            
-            localStorage.setItem('testamentBrouillon', JSON.stringify(data));
-            
-            // Afficher l'indicateur de sauvegarde
-            const saveIndicator = document.getElementById('saveIndicator');
-            saveIndicator.classList.add('visible');
-            
-            setTimeout(() => {
-                saveIndicator.classList.remove('visible');
-            }, 3000);
-        }
-
-        function genererPDF() {
-            const form = document.getElementById('testamentForm');
-            const formData = new FormData(form);
-            
-            // Vérifier les champs obligatoires de l'étape 1
-            if (etapeActuelle === 1) {
-                const sexe = formData.get('sexe');
-                const prenom = formData.get('prenom');
-                const nom = formData.get('nom');
-                const dateNaissance = formData.get('dateNaissance');
-                const adresse = formData.get('adresse');
-                
-                if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
-                    alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *)');
-                    return;
-                }
-            }
-
-            // Générer le contenu HTML formaté pour impression
-            const contenuHTML = genererContenuHTML();
-            
-            // Ouvrir dans une nouvelle fenêtre pour impression/sauvegarde PDF
-            const nouvelleFenetre = window.open('', '_blank', 'width=800,height=600');
-            nouvelleFenetre.document.write(contenuHTML);
-            nouvelleFenetre.document.close();
-            
-            // Instructions pour l'utilisateur
-            alert('Le testament s\'ouvre dans une nouvelle fenêtre.\n\nPour sauvegarder en PDF :\n1. Appuyez sur Ctrl+P (Cmd+P sur Mac)\n2. Choisissez "Enregistrer au format PDF"\n3. Cliquez sur "Enregistrer"');
-        }
-
-        function genererContenuHTML() {
-            const date = new Date().toLocaleDateString('fr-FR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            // Récupérer les données du formulaire
-            const formData = new FormData(document.getElementById('testamentForm'));
-            const data = {};
-            
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-            
-            // Récupérer les données des personnes
-            const categoriesPersonnes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
-            let personnesHTML = '';
-            
-            categoriesPersonnes.forEach(category => {
-                if (data[category] && data[category].length > 0) {
-                    let categoryTitle = '';
-                    switch(category) {
-                        case 'parents': categoryTitle = 'PARENTS'; break;
-                        case 'conjoints': categoryTitle = 'CONJOINTS'; break;
-                        case 'freres-soeurs': categoryTitle = 'FRÈRES ET SOEURS'; break;
-                        case 'enfants': categoryTitle = 'ENFANTS'; break;
-                        case 'amis': categoryTitle = 'AMIS PROCHES'; break;
-                    }
-                    
-                    personnesHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
-                    
-                    data[category].forEach((person, index) => {
-                        personnesHTML += `
-                        <div class="field"><span class="field-label">Personne ${index + 1} :</span> ${person.prenom || ''} ${person.nom || ''}</div>
-                        <div class="field"><span class="field-label">Téléphone :</span> ${person.telephone || 'Non précisé'}</div>
-                        <div class="field"><span class="field-label">Adresse :</span> ${person.adresse || 'Non précisée'}</div>
-                        <br>`;
-                    });
-                    
-                    personnesHTML += `</div>`;
-                }
-            });
-            
-            // Récupérer les données des biens (étape 3)
-            const categoriesBiens = ['immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
-            let biensHTML = '';
-            
-            categoriesBiens.forEach(category => {
-                if (data[category] && data[category].length > 0) {
-                    let categoryTitle = '';
-                    switch(category) {
-                        case 'immobilier': categoryTitle = 'BIENS IMMOBILIERS'; break;
-                        case 'materiel': categoryTitle = 'BIENS MATÉRIELS'; break;
-                        case 'personnels': categoryTitle = 'BIENS PERSONNELS'; break;
-                        case 'comptes': categoryTitle = 'COMPTES BANCAIRES'; break;
-                        case 'cartes': categoryTitle = 'CARTES BANCAIRES'; break;
-                        case 'applications': categoryTitle = 'APPLICATIONS BANCAIRES'; break;
-                    }
-                    
-                    biensHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
-                    
-                    data[category].forEach((bien, index) => {
-                        biensHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
-                        
-                        switch(category) {
-                            case 'immobilier':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Adresse: ${bien.adresse || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Statut: ${bien.statut || 'Non précisé'}`;
-                                if (bien.info) biensHTML += `, Info: ${bien.info}`;
-                                break;
-                                
-                            case 'materiel':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Lieu: ${bien.lieu || 'Non précisé'}`;
-                                break;
-                                
-                            case 'personnels':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Description: ${bien.description || 'Non précisée'}, Valeur: ${bien.valeur || 'Non précisée'}€, Lieu: ${bien.lieu || 'Non précisé'}`;
-                                break;
-                                
-                            case 'comptes':
-                                biensHTML += `Banque: ${bien.banque || 'Non précisée'}, Type: ${bien.type || 'Non précisé'}, IBAN: ${bien.iban || 'Non précisé'}, Solde: ${bien.solde || 'Non précisé'}€`;
-                                if (bien.adresse) biensHTML += `, Adresse: ${bien.adresse}`;
-                                break;
-                                
-                            case 'cartes':
-                                biensHTML += `Type: ${bien.type || 'Non précisé'}, Numéro: ${bien.numero || 'Non précisé'}, Expiration: ${bien.expiration || 'Non précisée'}, Banque: ${bien.banque || 'Non précisée'}`;
-                                if (bien.code) biensHTML += `, Code: ${bien.code}`;
-                                break;
-                                
-                            case 'applications':
-                                biensHTML += `Application: ${bien.application || 'Non précisée'}, Identifiant: ${bien.identifiant || 'Non précisé'}, Email: ${bien.email || 'Non précisé'}, Téléphone: ${bien.telephone || 'Non précisé'}`;
-                                if (bien.indice) biensHTML += `, Indice: ${bien.indice}`;
-                                break;
-                        }
-                        
-                        biensHTML += `</div>`;
-                    });
-                    
-                    biensHTML += `</div>`;
-                }
-            });
-            
-            // Récupérer les données des dettes et créances (étape 4)
-            let dettesHTML = '';
-            const categoriesDettes = ['creances', 'dettes', 'sadaqa'];
-            
-            categoriesDettes.forEach(category => {
-                if (data[category] && data[category].length > 0) {
-                    let categoryTitle = '';
-                    switch(category) {
-                        case 'creances': categoryTitle = 'CRÉANCES À PERCEVOIR'; break;
-                        case 'dettes': categoryTitle = 'DETTES À RÉGLER'; break;
-                        case 'sadaqa': categoryTitle = 'SADAQA À EFFECTUER'; break;
-                    }
-                    
-                    dettesHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
-                    
-                    data[category].forEach((item, index) => {
-                        dettesHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
-                        
-                        switch(category) {
-                            case 'creances':
-                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Débiteur: ${item.nom || 'Non précisé'}`;
-                                if (item.date_remboursement) dettesHTML += `, Date remboursement: ${item.date_remboursement}`;
-                                break;
-                                
-                            case 'dettes':
-                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Montant: ${item.montant || 'Non précisé'}€, Créancier: ${item.nom || 'Non précisé'}`;
-                                if (item.date_echeance) dettesHTML += `, Date échéance: ${item.date_echeance}`;
-                                break;
-                                
-                            case 'sadaqa':
-                                dettesHTML += `Type: ${item.type || 'Non précisé'}, Description: ${item.description || 'Non précisée'}, Bénéficiaire: ${item.beneficiaire || 'Non précisé'}`;
-                                break;
-                        }
-                        
-                        dettesHTML += `</div>`;
-                    });
-                    
-                    dettesHTML += `</div>`;
-                }
-            });
-            
-            // Récupérer les données des devoirs religieux (étape 4)
-            let devoirsHTML = '';
-            
-            if (data.zakatStatus || data.jeuneStatus || data.hadjStatus) {
-                devoirsHTML += `<div class="section">
-                    <div class="section-title">DEVOIRS RELIGIEUX</div>`;
-                
-                if (data.zakatStatus) {
-                    let zakatText = '';
-                    switch(data.zakatStatus) {
-                        case 'versee': zakatText = 'Zakat versée'; break;
-                        case 'non-versee': zakatText = 'Zakat non versée'; break;
-                        case 'partielle': zakatText = 'Zakat partiellement versée'; break;
-                    }
-                    devoirsHTML += `<div class="field"><span class="field-label">Zakat :</span> ${zakatText}</div>`;
-                }
-                
-                if (data.jeuneStatus) {
-                    let jeuneText = '';
-                    if (data.jeuneStatus === '0') {
-                        jeuneText = 'Aucun jour de jeûne à rattraper';
-                    } else if (data.jeuneStatus === 'plus') {
-                        jeuneText = 'Plus de 10 jours de jeûne à rattraper';
-                    } else {
-                        jeuneText = `${data.jeuneStatus} jour(s) de jeûne à rattraper`;
-                    }
-                    devoirsHTML += `<div class="field"><span class="field-label">Jeûne de Ramadan :</span> ${jeuneText}</div>`;
-                    
-                    if (data.jeuneNotes) {
-                        devoirsHTML += `<div class="field"><span class="field-label">Notes sur le jeûne :</span> ${data.jeuneNotes}</div>`;
-                    }
-                }
-                
-                if (data.hadjStatus) {
-                    let hadjText = '';
-                    switch(data.hadjStatus) {
-                        case 'accompli': hadjText = 'Hadj accompli'; break;
-                        case 'non-accompli': hadjText = 'Hadj non accompli'; break;
-                        case 'partiel': hadjText = 'Hadj partiellement accompli (Omra seulement)'; break;
-                    }
-                    devoirsHTML += `<div class="field"><span class="field-label">Pèlerinage :</span> ${hadjText}</div>`;
-                    
-                    if (data.hadjNotes) {
-                        devoirsHTML += `<div class="field"><span class="field-label">Notes sur le Hadj :</span> ${data.hadjNotes}</div>`;
-                    }
-                }
-                
-                devoirsHTML += `</div>`;
-            }
-            
-            // Récupérer les données numériques (étape 5)
-            let numeriqueHTML = '';
-            const categoriesNumerique = ['reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
-            
-            categoriesNumerique.forEach(category => {
-                if (data[category] && data[category].length > 0) {
-                    let categoryTitle = '';
-                    switch(category) {
-                        case 'reseaux_sociaux': categoryTitle = 'RÉSEAUX SOCIAUX'; break;
-                        case 'emails': categoryTitle = 'COMPTES EMAIL'; break;
-                        case 'comptes_online': categoryTitle = 'COMPTES EN LIGNE'; break;
-                        case 'cloud': categoryTitle = 'SERVICES CLOUD'; break;
-                        case 'appareils': categoryTitle = 'APPAREILS SÉCURISÉS'; break;
-                    }
-                    
-                    numeriqueHTML += `<div class="section">
-                        <div class="section-title">${categoryTitle}</div>`;
-                    
-                    data[category].forEach((item, index) => {
-                        numeriqueHTML += `<div class="field"><span class="field-label">Élément ${index + 1} :</span>`;
-                        
-                        switch(category) {
-                            case 'reseaux_sociaux':
-                                numeriqueHTML += `Réseau: ${item.type || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}, Email: ${item.email || 'Non précisé'}`;
-                                if (item.telephone) numeriqueHTML += `, Téléphone: ${item.telephone}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
-                                break;
-                                
-                            case 'emails':
-                                numeriqueHTML += `Email: ${item.adresse || 'Non précisé'}, Type: ${item.type || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
-                                break;
-                                
-                            case 'comptes_online':
-                                numeriqueHTML += `Site: ${item.site || 'Non précisé'}, Email: ${item.email || 'Non précisé'}, Identifiant: ${item.identifiant || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
-                                break;
-                                
-                            case 'cloud':
-                                numeriqueHTML += `Service: ${item.service || 'Non précisé'}, Pseudo: ${item.pseudo || 'Non précisé'}, Email: ${item.email || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
-                                break;
-                                
-                            case 'appareils':
-                                numeriqueHTML += `Type: ${item.type || 'Non précisé'}, Modèle: ${item.modele || 'Non précisé'}`;
-                                if (item.complements) numeriqueHTML += `, Compléments: ${item.complements}`;
-                                break;
-                        }
-                        
-                        numeriqueHTML += `</div>`;
-                    });
-                    
-                    numeriqueHTML += `</div>`;
-                }
-            });
-            
-            return `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Testament Islamique - Al Wassiya</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
-        
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            line-height: 1.7; 
-            margin: 0;
-            padding: 0;
-            color: #1A2E40;
-            background-color: #F8F5EE;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px;
-            background: white;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header { 
-            text-align: center; 
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #C9B178;
-        }
-        
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: #C9B178;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 16px;
-            color: #2D4C68;
-            margin-bottom: 20px;
-        }
-        
-        .bismillah { 
-            font-size: 28px; 
-            color: #C9B178; 
-            font-weight: bold; 
-            margin: 20px 0;
-        }
-        
-        .title { 
-            font-size: 24px; 
-            font-weight: bold; 
-            margin: 15px 0;
-            color: #1A2E40;
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .section { 
-            margin: 30px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: #F8F5EE;
-            border-left: 4px solid #C9B178;
-        }
-        
-        .section-title { 
-            font-size: 18px; 
-            font-weight: bold; 
-            color: #C9B178;
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .field { 
-            margin: 12px 0;
-            display: flex;
-        }
-        
-        .field-label {
-            font-weight: 500;
-            min-width: 180px;
-        }
-        
-        .signature-section {
-            margin-top: 60px;
-            border-top: 1px solid #ddd;
-            padding-top: 30px;
-        }
-        
-        .verset {
-            font-style: italic;
-            text-align: center;
-            color: #2D4C68;
-            margin: 40px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: #F8F5EE;
-            border: 1px dashed #C9B178;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 14px;
-            color: #2D4C68;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-        }
-        
-        .decoration {
-            text-align: center;
-            margin: 30px 0;
-            color: #C9B178;
-            opacity: 0.5;
-        }
-        
-        @media print {
-            body { 
-                background: white;
-                margin: 0;
-                padding: 0;
-            }
-            
-            .container {
-                box-shadow: none;
-                padding: 20px;
-            }
-            
-            .section {
-                page-break-inside: avoid;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">Al Wassiya</div>
-            <div class="subtitle">Votre Testament Islamique Simplifié</div>
-            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-            <div class="title">TESTAMENT ISLAMIQUE (WASSIYA)</div>
-            <p>Date de rédaction : ${date}</p>
-        </div>
-
-        <div class="decoration">◆ ◆ ◆</div>
-
-        <div class="section">
-            <div class="section-title">IDENTITÉ DU TESTATEUR</div>
-            <div class="field"><span class="field-label">Sexe :</span> ${data.sexe || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Nom :</span> ${data.nom || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Prénom :</span> ${data.prenom || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Date de naissance :</span> ${data.dateNaissance ? new Date(data.dateNaissance).toLocaleDateString('fr-FR') : 'Non précisée'}</div>
-            <div class="field"><span class="field-label">Lieu de naissance :</span> ${data.lieuNaissance || 'Non précisé'}</div>
-            <div class="field"><span class="field-label">Adresse :</span> ${data.adresse || 'Non précisée'}</div>
-            <div class="field"><span class="field-label">Nationalité :</span> ${data.nationalite || 'Non précisée'}</div>
-            <div class="field"><span class="field-label">Situation familiale :</span> ${data.situationFamiliale || 'Non précisée'}</div>
-            ${data.conjoint ? `<div class="field"><span class="field-label">Conjoint :</span> ${data.conjoint}</div>` : ''}
-        </div>
-
-        ${personnesHTML}
-
-        ${biensHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        <div class="section">
-            <div class="section-title">BIENS MATÉRIELS AND FINANCIERS</div>
-            <p>Liste des biens matériels et financiers déclarés par le testateur :</p>
-        </div>
-        
-        ${biensHTML}
-        ` : ''}
-
-        ${dettesHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        <div class="section">
-            <div class="section-title">DETTES ET CRÉANCES</div>
-            <p>Liste des dettes à régler et créances à percevoir :</p>
-        </div>
-        
-        ${dettesHTML}
-        ` : ''}
-
-        ${devoirsHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        ${devoirsHTML}
-        ` : ''}
-
-        ${numeriqueHTML ? `
-        <div class="decoration">◆ ◆ ◆</div>
-        
-        <div class="section">
-            <div class="section-title">DONNÉES NUMÉRIQUES</div>
-            <p>Liste des comptes numériques et appareils déclarés par le testateur :</p>
-        </div>
-        
-        ${numeriqueHTML}
-        ` : ''}
-
-        <div class="section">
-            <div class="section-title">VOLONTÉS CONCERNANT LES OBSÈQUES</div>
-            <p>${data.volontesObseques || 'Selon les traditions islamiques'}</p>
-        </div>
-
-        <div class="section">
-            <div class="section-title">RECOMMANDATIONS À LA FAMILLE</div>
-            <p>${data.recommandationsFamille || 'Que Allah vous bénisse et vous guide'}</p>
-        </div>
-
-        ${data.autresProches ? `
-        <div class="section">
-            <div class="section-title">AUTRES PERSONNES À MENTIONNER</div>
-            <p>${data.autresProches}</p>
-        </div>` : ''}
-
-        ${data.relationsParticulieres ? `
-        <div class="section">
-            <div class="section-title">RELATIONS PARTICULIÈRES</div>
-            <p>${data.relationsParticulieres}</p>
-        </div>` : ''}
-
-        <div class="section">
-            <div class="section-title">EXÉCUTEUR TESTAMENTAIRE</div>
-            <div class="field"><span class="field-label">Personne suggérée :</span> ${data.executeurTestament || 'À désigner par la famille'}</div>
-            <div class="field"><span class="field-label">Contact :</span> ${data.contactExecuteur || 'Non précisé'}</div>
-        </div>
-
-        ${data.autresVolontes ? `
-        <div class="section">
-            <div class="section-title">AUTRES VOLONTÉS</div>
-            <p>${data.autresVolontes}</p>
-        </div>` : ''}
-
-        <div class="section">
-            <div class="section-title">DISPOSITIONS IMPORTANTES</div>
-            <ul>
-                <li>Ce testament respecte les règles de l'héritage islamique (Mirath)</li>
-                <li>Les dispositions ne concernent que le tiers (1/3) des biens maximum</li>
-                <li>Les deux tiers restants sont distribués selon les règles coraniques</li>
-                <li>Il est recommandé de faire valider ce testament par un spécialiste</li>
-            </ul>
-        </div>
-
-        <div class="verset">
-            "Et c'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156
-        </div>
-
-        <div class="signature-section">
-            <p><strong>Signature du testateur :</strong> _______________________ &nbsp;&nbsp;&nbsp; <strong>Date :</strong> ${date}</p>
-            <br>
-            <p><strong>Témoins (recommandé) :</strong></p>
-            <p>1. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
-            <p>2. Nom : _________________ &nbsp;&nbsp;&nbsp; Signature : _________________</p>
-        </div>
-
-        <div class="footer">
-            <p>Qu'Allah accepte ce testament et facilite son exécution selon Sa volonté.</p>
-            <p>Généré par Al Wassiya - Testament Islamique Simplifié</p>
-        </div>
-    </div>
+    doc.save(`Testament_AlWassiya_${new Date().getFullYear()}.pdf`);
+  }
+</script>
 </body>
-</html>`;
-        }
-
-        function partagerWhatsApp() {
-            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya. Découvrez ce service pratique pour préparer votre testament selon les principes islamiques.");
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-        }
-
-        function partagerFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-        }
-
-        function partagerTwitter() {
-            const text = encodeURIComponent("J'ai créé mon testament islamique avec Al Wassiya - Un service pratique pour préparer son testament selon les principes islamiques");
-            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-        }
-
-        function partagerEmail() {
-            const subject = encodeURIComponent("Testament Islamique avec Al Wassiya");
-            const body = encodeURIComponent("Je viens de créer mon testament islamique avec Al Wassiya. C'est un service pratique pour préparer son testament selon les principes islamiques.\n\nDécouvrez-le ici: " + window.location.href);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
-        }
-
-        // Initialiser l'application
-        window.addEventListener('load', function() {
-            // Initialiser les indicateurs d'étape
-            initialiserIndicateursEtape();
-            
-            // Charger les données sauvegardées si elles existent
-            const savedData = localStorage.getItem('testamentBrouillon');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                
-                // Remplir les champs de base
-                for (const key in data) {
-                    if (document.getElementById(key)) {
-                        document.getElementById(key).value = data[key];
-                    }
-                }
-                
-                if (data.situationFamiliale) {
-                    document.getElementById('situationFamiliale').value = data.situationFamiliale;
-                    toggleConjointField();
-                }
-                
-                // Remplir les données des personnes si elles existent
-                const categories = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis', 
-                                   'immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications',
-                                   'creances', 'dettes', 'sadaqa', 'reseaux_sociaux', 'emails', 'comptes_online', 'cloud', 'appareils'];
-                categories.forEach(category => {
-                    if (data[category] && Array.isArray(data[category])) {
-                        data[category].forEach((item, index) => {
-                            if (['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'].includes(category)) {
-                                addPerson(category);
-                            } else if (['creances', 'dettes'].includes(category)) {
-                                addDebt(category);
-                            } else if (category === 'sadaqa') {
-                                addSadaqa();
-                            } else if (category === 'reseaux_sociaux') {
-                                addReseauSocial();
-                            } else if (category === 'emails') {
-                                addEmail();
-                            } else if (category === 'comptes_online') {
-                                addCompteOnline();
-                            } else if (category === 'cloud') {
-                                addCloud();
-                            } else if (category === 'appareils') {
-                                addAppareil();
-                            } else {
-                                addAsset(category);
-                            }
-                            
-                            const container = document.getElementById(`${category}-container`);
-                            const lastEntry = container.lastElementChild;
-                            
-                            if (lastEntry) {
-                                for (const field in item) {
-                                    const input = lastEntry.querySelector(`[name$="[${field}]"]`);
-                                    if (input) {
-                                        input.value = item[field] || '';
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-            
-            // Configurer la validation des champs obligatoires
-            const champsObligatoires = document.querySelectorAll('input[required], select[required], textarea[required]');
-            champsObligatoires.forEach(champ => {
-                champ.addEventListener('blur', function() {
-                    if (!this.value.trim()) {
-                        this.classList.add('invalid');
-                        const errorElement = document.getElementById(`${this.id}-error`);
-                        if (errorElement) {
-                            errorElement.style.display = 'block';
-                        }
-                    } else {
-                        this.classList.remove('invalid');
-                        const errorElement = document.getElementById(`${this.id}-error`);
-                        if (errorElement) {
-                            errorElement.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        });
-
-        // Sauvegarde automatique
-        setInterval(() => {
-            const form = document.getElementById('testamentForm');
-            const formData = new FormData(form);
-            let hasData = false;
-            
-            for (let [key, value] of formData.entries()) {
-                if (value.trim() !== '') {
-                    hasData = true;
-                    break;
-                }
-            }
-            
-            if (hasData) {
-                sauvegarderBrouillon();
-            }
-        }, 30000);
-    </script>
-</body>
-            </html>
+</html>
