@@ -2567,6 +2567,276 @@ function genererPDF() {
         }
         
         // Sauvegarder le PDF dans la variable globale
+// ==================== GÉNÉRATION PDF AVEC JSPDF ====================
+
+function genererPDF() {
+    // Vérifier que jsPDF est chargé
+    if (!window.jspdf) {
+        alert('Erreur: Bibliothèque PDF non chargée. Veuillez recharger la page.');
+        console.error('jsPDF not loaded');
+        return;
+    }
+
+    const form = document.getElementById('testamentForm');
+    const formData = new FormData(form);
+    
+    // Validation finale
+    const sexe = formData.get('sexe') || document.getElementById('sexe')?.value;
+    const prenom = formData.get('prenom') || document.getElementById('prenom')?.value;
+    const nom = formData.get('nom') || document.getElementById('nom')?.value;
+    const dateNaissance = formData.get('dateNaissance') || document.getElementById('dateNaissance')?.value;
+    const adresse = formData.get('adresse') || document.getElementById('adresse')?.value;
+    
+    if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
+        alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *) dans l\'étape 1');
+        return;
+    }
+
+    try {
+        const doc = new window.jspdf.jsPDF();
+        
+        // Configuration PDF
+        const pageWidth = doc.internal.pageSize.width;
+        const pageHeight = doc.internal.pageSize.height;
+        const margin = 20;
+        const lineHeight = 7;
+        let currentY = margin;
+        
+        // Couleurs du thème
+        const primaryColor = [201, 177, 120]; // #C9B178
+        const secondaryColor = [45, 76, 104]; // #2D4C68
+        const darkColor = [30, 30, 36]; // #1E1E24
+        
+        // Fonctions utilitaires PDF
+        const addTitle = (title, fontSize = 16, color = primaryColor) => {
+            doc.setFontSize(fontSize);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(color[0], color[1], color[2]);
+            doc.text(title, pageWidth / 2, currentY, { align: 'center' });
+            currentY += lineHeight * 1.5;
+        };
+        
+        const addSection = (title, fontSize = 12, color = secondaryColor) => {
+            if (currentY > pageHeight - 30) {
+                addNewPage();
+            }
+            doc.setFontSize(fontSize);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(color[0], color[1], color[2]);
+            doc.text(title, margin, currentY);
+            currentY += lineHeight * 1.2;
+        };
+        
+        const addText = (text, fontSize = 10, color = darkColor) => {
+            if (!text) return;
+            doc.setFontSize(fontSize);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(color[0], color[1], color[2]);
+            
+            const lines = doc.splitTextToSize(text, pageWidth - (margin * 2));
+            lines.forEach(line => {
+                if (currentY > pageHeight - 20) {
+                    addNewPage();
+                }
+                doc.text(line, margin, currentY);
+                currentY += lineHeight;
+            });
+        };
+        
+        const addField = (label, value, fontSize = 10) => {
+            if (!value) return;
+            if (currentY > pageHeight - 20) {
+                addNewPage();
+            }
+            
+            doc.setFontSize(fontSize);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+            doc.text(label + ': ', margin, currentY);
+            
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+            
+            const lines = doc.splitTextToSize(String(value), pageWidth - margin - 60);
+            lines.forEach((line, index) => {
+                if (index === 0) {
+                    doc.text(line, margin + 50, currentY);
+                } else {
+                    currentY += lineHeight;
+                    if (currentY > pageHeight - 20) {
+                        addNewPage();
+                    }
+                    doc.text(line, margin + 50, currentY);
+                }
+            });
+            currentY += lineHeight;
+        };
+        
+        const addNewPage = () => {
+            doc.addPage();
+            currentY = margin;
+            addPageHeader();
+        };
+        
+        const addPageHeader = () => {
+            // Logo et titre arabe sur chaque page
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+            doc.text('Al Wassiya - الوصية', pageWidth / 2, currentY, { align: 'center' });
+            currentY += lineHeight * 2;
+        };
+        
+        const addDecorator = () => {
+            doc.setFontSize(14);
+            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+            doc.text('◆ ◆ ◆', pageWidth / 2, currentY, { align: 'center' });
+            currentY += lineHeight * 2;
+        };
+        
+        const getFieldValue = (fieldName) => {
+            const field = document.querySelector(`[name="${fieldName}"]`) || document.getElementById(fieldName);
+            return field ? field.value : '';
+        };
+        
+        const getSelectText = (fieldName) => {
+            const field = document.querySelector(`[name="${fieldName}"]`) || document.getElementById(fieldName);
+            if (field && field.value) {
+                const selectedOption = field.querySelector(`option[value="${field.value}"]`);
+                return selectedOption ? selectedOption.textContent : field.value;
+            }
+            return '';
+        };
+
+        // Génération du contenu PDF
+        
+        // En-tête principal
+        addTitle('TESTAMENT ISLAMIQUE (WASSIYA)', 18, primaryColor);
+        
+        // Bismillah en arabe
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', pageWidth / 2, currentY, { align: 'center' });
+        currentY += lineHeight * 2;
+        
+        // Titre arabe
+        doc.setFontSize(14);
+        doc.text('الوصية', pageWidth / 2, currentY, { align: 'center' });
+        currentY += lineHeight * 2;
+        
+        // Date de rédaction
+        const today = new Date().toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long', 
+            day: 'numeric'
+        });
+        addText(`Date de rédaction : ${today}`, 10, secondaryColor);
+        currentY += 10;
+        
+        addDecorator();
+
+        // Section 1: Identité du testateur
+        addSection('1. IDENTITÉ DU TESTATEUR');
+        addField('Sexe', getSelectText('sexe'));
+        addField('Prénom', getFieldValue('prenom'));
+        addField('Nom de famille', getFieldValue('nom'));
+        
+        const dateNaissanceFormatted = getFieldValue('dateNaissance');
+        if (dateNaissanceFormatted) {
+            const date = new Date(dateNaissanceFormatted);
+            addField('Date de naissance', date.toLocaleDateString('fr-FR'));
+        }
+        
+        addField('Lieu de naissance', getFieldValue('lieuNaissance'));
+        addField('Adresse actuelle', getFieldValue('adresse'));
+        addField('Nationalité', getFieldValue('nationalite'));
+        addField('Situation familiale', getSelectText('situationFamiliale'));
+        
+        const conjoint = getFieldValue('conjoint');
+        if (conjoint) {
+            addField('Conjoint', conjoint);
+        }
+        currentY += 5;
+
+        // Section 2: Volontés générales
+        addSection('2. VOLONTÉS GÉNÉRALES');
+        
+        const volontesObseques = getFieldValue('volontesObseques');
+        if (volontesObseques) {
+            addText('Volontés concernant les obsèques:');
+            addText(volontesObseques);
+            currentY += 3;
+        }
+        
+        const recommandations = getFieldValue('recommandationsFamille');
+        if (recommandations) {
+            addText('Recommandations à la famille:');
+            addText(recommandations);
+            currentY += 3;
+        }
+        
+        const executeur = getFieldValue('executeurTestament');
+        if (executeur) {
+            addField('Exécuteur testamentaire', executeur);
+            const contactExecuteur = getFieldValue('contactExecuteur');
+            if (contactExecuteur) {
+                addField('Contact exécuteur', contactExecuteur);
+            }
+        }
+        
+        const autresVolontes = getFieldValue('autresVolontes');
+        if (autresVolontes) {
+            addText('Autres volontés:');
+            addText(autresVolontes);
+        }
+        
+        currentY += 10;
+        
+        // Section finale simple
+        addSection('DISPOSITIONS IMPORTANTES');
+        addText('• Ce testament respecte les règles de l\'héritage islamique (Mirath)');
+        addText('• Les dispositions ne concernent que le tiers (1/3) des biens maximum');
+        addText('• Les deux tiers restants sont distribués selon les règles coraniques');
+        addText('• Il est recommandé de faire valider ce testament par un spécialiste');
+        
+        currentY += 10;
+        
+        // Verset coranique
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'italic');
+        doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+        const verset = '"Et c\'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156';
+        const versetLines = doc.splitTextToSize(verset, pageWidth - (margin * 2));
+        versetLines.forEach(line => {
+            doc.text(line, pageWidth / 2, currentY, { align: 'center' });
+            currentY += lineHeight;
+        });
+        
+        currentY += 15;
+        
+        // Section signature
+        addSection('SIGNATURE');
+        addField('Date', today);
+        currentY += 10;
+        addText('Signature du testateur : _________________________');
+        currentY += 10;
+        addText('Témoins (recommandé) :');
+        addText('1. Nom : _________________ Signature : _________________');
+        addText('2. Nom : _________________ Signature : _________________');
+        
+        // Footer sur toutes les pages
+        const totalPages = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8);
+            doc.setTextColor(128, 128, 128);
+            doc.text('Al Wassiya - الوصية - Testament Islamique', margin, pageHeight - 10);
+            doc.text(`Page ${i}/${totalPages}`, pageWidth - margin - 20, pageHeight - 10);
+        }
+        
+        // Sauvegarder le PDF dans la variable globale
         currentPDF = doc;
         
         // Générer le nom de fichier
@@ -2583,7 +2853,7 @@ function genererPDF() {
         
     } catch (error) {
         console.error('Erreur lors de la génération du PDF:', error);
-        alert('Erreur lors de la génération du PDF: ' + error.message);
+        alert('Erreur lors de la génération du PDF: ' + error.message + '\nVeuillez recharger la page et réessayer.');
     }
 }
 
@@ -2591,8 +2861,8 @@ function genererPDF() {
 
 function telechargerPDF() {
     if (currentPDF) {
-        const nom = document.getElementById('nom').value || 'Testament';
-        const prenom = document.getElementById('prenom').value || '';
+        const nom = document.getElementById('nom')?.value || 'Testament';
+        const prenom = document.getElementById('prenom')?.value || '';
         const date = new Date().toISOString().split('T')[0];
         const filename = `Testament_${prenom}_${nom}_${date}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '');
         
@@ -2609,8 +2879,8 @@ function envoyerParEmail() {
     }
     
     try {
-        const nom = document.getElementById('nom').value || '';
-        const prenom = document.getElementById('prenom').value || '';
+        const nom = document.getElementById('nom')?.value || '';
+        const prenom = document.getElementById('prenom')?.value || '';
         const subject = `Testament Islamique - ${prenom} ${nom}`;
         const body = `Ci-joint mon testament islamique généré avec Al Wassiya.
 
@@ -2678,6 +2948,14 @@ Cordialement`);
     
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
 }
+
+// Test jsPDF au chargement
+window.addEventListener('load', function() {
+    console.log('Vérification jsPDF:', window.jspdf ? 'Chargé' : 'Non chargé');
+    if (!window.jspdf) {
+        console.error('jsPDF non chargé. Vérifiez l\'import du script.');
+    }
+});
 </script>
 
 </body>
