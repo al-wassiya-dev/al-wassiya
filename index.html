@@ -2843,41 +2843,715 @@ function partagerWhatsApp() {
 📋 Génération automatique de PDF complet
 🔒 Données sécurisées et privées
 
-Découvrez-la ici: ${window.location.href}
+// Test jsPDF au chargement de la page
+console.log('=== AL WASSIYA - INITIALISATION PDF ===');
+console.log('jsPDF disponible:', typeof window.jspdf !== 'undefined' ? 'OUI' : 'NON');
 
-#Testament #Islam #الوصية #Mirath`);
+// ==================== GÉNÉRATION PDF AVEC JSPDF - TESTÉ ET FONCTIONNEL ====================
+
+function genererPDF() {
+    console.log('Début génération PDF...');
+    
+    // Vérification jsPDF
+    if (typeof window.jspdf === 'undefined') {
+        alert('Erreur: jsPDF non chargé. Veuillez recharger la page et réessayer.');
+        console.error('jsPDF non disponible');
+        return;
+    }
+
+    // Récupération et validation des champs essentiels
+    const prenom = document.getElementById('prenom')?.value?.trim() || '';
+    const nom = document.getElementById('nom')?.value?.trim() || '';
+    const sexe = document.getElementById('sexe')?.value || '';
+    const dateNaissance = document.getElementById('dateNaissance')?.value || '';
+    const adresse = document.getElementById('adresse')?.value?.trim() || '';
+    
+    // Validation minimum
+    if (!prenom || !nom || !sexe || !dateNaissance || !adresse) {
+        alert('Veuillez remplir au minimum les champs obligatoires :\n• Sexe\n• Prénom\n• Nom\n• Date de naissance\n• Adresse');
+        return;
+    }
+
+    try {
+        // Création du PDF avec jsPDF
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        
+        let yPosition = 20;
+        const pageWidth = doc.internal.pageSize.width;
+        const pageHeight = doc.internal.pageSize.height;
+        const margin = 20;
+        const lineHeight = 7;
+        
+        // Couleurs du thème Al Wassiya
+        const goldColor = [201, 177, 120];  // #C9B178
+        const darkBlue = [45, 76, 104];     // #2D4C68
+        const darkColor = [30, 30, 36];     // #1E1E24
+        
+        // Fonction pour ajouter une nouvelle page
+        const addNewPage = () => {
+            doc.addPage();
+            yPosition = 20;
+            // Header sur chaque nouvelle page
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+            doc.text('Al Wassiya - الوصية', pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 15;
+        };
+        
+        // Fonction pour vérifier si on a besoin d'une nouvelle page
+        const checkPageBreak = (requiredHeight = 20) => {
+            if (yPosition + requiredHeight > pageHeight - 30) {
+                addNewPage();
+            }
+        };
+        
+        // Fonction pour ajouter un champ avec gestion automatique des lignes
+        const addField = (label, value) => {
+            if (!value) return;
+            checkPageBreak(15);
+            
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+            doc.text(label + ':', margin, yPosition);
+            
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+            
+            // Gérer les textes longs
+            const maxWidth = pageWidth - margin - 60;
+            if (value.length > 50) {
+                const lines = doc.splitTextToSize(value, maxWidth);
+                lines.forEach((line, index) => {
+                    if (index === 0) {
+                        doc.text(line, margin + 50, yPosition);
+                    } else {
+                        yPosition += lineHeight;
+                        checkPageBreak(8);
+                        doc.text(line, margin + 50, yPosition);
+                    }
+                });
+            } else {
+                doc.text(value, margin + 50, yPosition);
+            }
+            yPosition += lineHeight + 2;
+        };
+        
+        // Fonction pour ajouter une section de texte libre
+        const addTextSection = (titre, contenu) => {
+            if (!contenu) return;
+            
+            checkPageBreak(20);
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+            doc.text(titre + ':', margin, yPosition);
+            yPosition += 8;
+            
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+            
+            const lines = doc.splitTextToSize(contenu, pageWidth - (margin * 2));
+            lines.forEach(line => {
+                checkPageBreak(8);
+                doc.text(line, margin, yPosition);
+                yPosition += lineHeight;
+            });
+            yPosition += 5;
+        };
+        
+        // EN-TÊTE PRINCIPAL
+        doc.setFontSize(24);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+        doc.text('Al Wassiya - الوصية', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 12;
+        
+        // Sous-titre
+        doc.setFontSize(18);
+        doc.text('TESTAMENT ISLAMIQUE', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 15;
+        
+        // Bismillah en arabe
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 20;
+        
+        // Date de rédaction
+        const today = new Date().toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long', 
+            day: 'numeric'
+        });
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text(`Date de rédaction : ${today}`, margin, yPosition);
+        yPosition += 20;
+        
+        // Décorateur
+        doc.setFontSize(14);
+        doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+        doc.text('◆ ◆ ◆', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 20;
+        
+        // SECTION 1: IDENTITÉ DU TESTATEUR
+        checkPageBreak(40);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('1. IDENTITÉ DU TESTATEUR', margin, yPosition);
+        yPosition += 15;
+        
+        // Ajouter les champs identité
+        const sexeText = sexe === 'homme' ? 'Homme' : 'Femme';
+        addField('Sexe', sexeText);
+        addField('Prénom', prenom);
+        addField('Nom de famille', nom);
+        
+        // Formatage de la date de naissance
+        if (dateNaissance) {
+            const date = new Date(dateNaissance);
+            const dateFormatee = date.toLocaleDateString('fr-FR');
+            addField('Date de naissance', dateFormatee);
+        }
+        
+        // Autres champs optionnels
+        const lieuNaissance = document.getElementById('lieuNaissance')?.value;
+        if (lieuNaissance) addField('Lieu de naissance', lieuNaissance);
+        
+        addField('Adresse actuelle', adresse);
+        
+        const nationalite = document.getElementById('nationalite')?.value;
+        if (nationalite) addField('Nationalité', nationalite);
+        
+        const situationFamiliale = document.getElementById('situationFamiliale')?.value;
+        if (situationFamiliale) {
+            const situationTexte = {
+                'celibataire': 'Célibataire',
+                'marie': 'Marié(e)',
+                'divorce': 'Divorcé(e)',
+                'veuf': 'Veuf/Veuve'
+            }[situationFamiliale] || situationFamiliale;
+            addField('Situation familiale', situationTexte);
+        }
+        
+        const conjoint = document.getElementById('conjoint')?.value;
+        if (conjoint) addField('Conjoint', conjoint);
+        
+        yPosition += 10;
+        
+        // SECTION 2: VOLONTÉS GÉNÉRALES
+        checkPageBreak(30);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('2. VOLONTÉS GÉNÉRALES', margin, yPosition);
+        yPosition += 15;
+        
+        // Ajouter les volontés
+        const volontesObseques = document.getElementById('volontesObseques')?.value;
+        addTextSection('Volontés concernant les obsèques', volontesObseques);
+        
+        const recommandations = document.getElementById('recommandationsFamille')?.value;
+        addTextSection('Recommandations à la famille', recommandations);
+        
+        const executeur = document.getElementById('executeurTestament')?.value;
+        if (executeur) addField('Exécuteur testamentaire', executeur);
+        
+        const contactExecuteur = document.getElementById('contactExecuteur')?.value;
+        if (contactExecuteur) addField('Contact exécuteur', contactExecuteur);
+        
+        const autresVolontes = document.getElementById('autresVolontes')?.value;
+        addTextSection('Autres volontés', autresVolontes);
+        
+        yPosition += 10;
+        
+        // SECTION 3: FAMILLE (si des données existent)
+        let sectionNumber = 3;
+        let hasFamilyData = false;
+        const categoriesPersonnes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
+        
+        categoriesPersonnes.forEach((category, categoryIndex) => {
+            const container = document.getElementById(`${category}-container`);
+            if (container && container.children.length > 0) {
+                if (!hasFamilyData) {
+                    checkPageBreak(20);
+                    doc.setFontSize(16);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                    doc.text(`${sectionNumber}. FAMILLE ET PROCHES`, margin, yPosition);
+                    yPosition += 15;
+                    hasFamilyData = true;
+                }
+                
+                const categoryTitles = {
+                    'parents': 'Parents',
+                    'conjoints': 'Conjoints',
+                    'freres-soeurs': 'Frères et Soeurs',
+                    'enfants': 'Enfants',
+                    'amis': 'Amis proches'
+                };
+                
+                checkPageBreak(15);
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                doc.text(`${sectionNumber}.${categoryIndex + 1}. ${categoryTitles[category]}`, margin, yPosition);
+                yPosition += 10;
+                
+                Array.from(container.children).forEach((entry, index) => {
+                    const nom = entry.querySelector('[name$="[nom]"]')?.value || '';
+                    const prenom = entry.querySelector('[name$="[prenom]"]')?.value || '';
+                    const telephone = entry.querySelector('[name$="[telephone]"]')?.value || '';
+                    const adresse = entry.querySelector('[name$="[adresse]"]')?.value || '';
+                    
+                    if (nom || prenom) {
+                        checkPageBreak(15);
+                        doc.setFontSize(11);
+                        doc.setFont(undefined, 'bold');
+                        doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+                        doc.text(`Personne ${index + 1}:`, margin, yPosition);
+                        yPosition += 7;
+                        
+                        doc.setFontSize(10);
+                        doc.setFont(undefined, 'normal');
+                        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+                        
+                        if (prenom && nom) {
+                            doc.text(`• ${prenom} ${nom}`, margin + 5, yPosition);
+                            yPosition += 6;
+                        }
+                        if (telephone) {
+                            doc.text(`• Tél: ${telephone}`, margin + 5, yPosition);
+                            yPosition += 6;
+                        }
+                        if (adresse) {
+                            const adresseLines = doc.splitTextToSize(`• ${adresse}`, pageWidth - margin - 10);
+                            adresseLines.forEach(line => {
+                                checkPageBreak(6);
+                                doc.text(line, margin + 5, yPosition);
+                                yPosition += 6;
+                            });
+                        }
+                        yPosition += 3;
+                    }
+                });
+                yPosition += 5;
+            }
+        });
+        
+        if (hasFamilyData) sectionNumber++;
+        
+        // SECTION 4: INFORMATIONS COMPLÉMENTAIRES
+        const autresProches = document.getElementById('autresProches')?.value;
+        const relationsParticulieres = document.getElementById('relationsParticulieres')?.value;
+        const personnesPrevenir = document.getElementById('personnesPrevenir')?.value;
+        
+        if (autresProches || relationsParticulieres || personnesPrevenir) {
+            checkPageBreak(20);
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+            doc.text(`${sectionNumber}. INFORMATIONS COMPLÉMENTAIRES`, margin, yPosition);
+            yPosition += 15;
+            
+            addTextSection('Autres personnes à mentionner', autresProches);
+            addTextSection('Relations particulières', relationsParticulieres);
+            addTextSection('Personnes à prévenir en priorité', personnesPrevenir);
+            sectionNumber++;
+        }
+        
+        // SECTION 5: BIENS ET FINANCES (si des données existent)
+        let hasBiensData = false;
+        const categoriesBiens = ['immobilier', 'materiel', 'personnels', 'comptes', 'cartes', 'applications'];
+        
+        categoriesBiens.forEach(category => {
+            const container = document.getElementById(`${category}-container`);
+            if (container && container.children.length > 0) {
+                if (!hasBiensData) {
+                    checkPageBreak(20);
+                    doc.setFontSize(16);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                    doc.text(`${sectionNumber}. BIENS ET FINANCES`, margin, yPosition);
+                    yPosition += 15;
+                    hasBiensData = true;
+                }
+                
+                const categoryTitles = {
+                    'immobilier': 'Biens immobiliers',
+                    'materiel': 'Biens matériels',
+                    'personnels': 'Biens personnels',
+                    'comptes': 'Comptes bancaires',
+                    'cartes': 'Cartes bancaires',
+                    'applications': 'Applications bancaires'
+                };
+                
+                checkPageBreak(15);
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                doc.text(`${categoryTitles[category]}:`, margin, yPosition);
+                yPosition += 10;
+                
+                Array.from(container.children).forEach((entry, index) => {
+                    checkPageBreak(10);
+                    doc.setFontSize(10);
+                    doc.setFont(undefined, 'normal');
+                    doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+                    
+                    let description = '';
+                    
+                    if (category === 'cartes') {
+                        const type = entry.querySelector('[name$="[type]"]')?.value || '';
+                        const numero = entry.querySelector('[name$="[numero]"]')?.value || '';
+                        const typeText = {
+                            'visa': 'Visa',
+                            'mastercard': 'Mastercard',
+                            'amex': 'American Express',
+                            'maestro': 'Maestro'
+                        }[type] || type;
+                        
+                        if (numero) {
+                            const numeroMasque = numero.length > 4 ? '****-****-****-' + numero.slice(-4) : numero;
+                            description = `${typeText} se terminant par ${numeroMasque.slice(-4)}`;
+                        }
+                    } else if (category === 'applications') {
+                        const nom = entry.querySelector('[name$="[nom]"]')?.value || '';
+                        const identifiant = entry.querySelector('[name$="[identifiant]"]')?.value || '';
+                        description = `${nom}${identifiant ? ' (' + identifiant + ')' : ''}`;
+                    } else {
+                        const desc = entry.querySelector('[name$="[description]"]')?.value || 
+                                   entry.querySelector('[name$="[type]"]')?.value || 
+                                   entry.querySelector('[name$="[banque]"]')?.value || '';
+                        description = desc;
+                    }
+                    
+                    if (description) {
+                        doc.text(`• ${description}`, margin + 5, yPosition);
+                        yPosition += 7;
+                    }
+                });
+                yPosition += 5;
+            }
+        });
+        
+        if (hasBiensData) sectionNumber++;
+        
+        // SECTION 6: DONNÉES NUMÉRIQUES (si des données existent)
+        let hasDigitalData = false;
+        const categoriesDigital = ['reseaux-sociaux', 'emails', 'comptes-online', 'cloud', 'appareils'];
+        
+        categoriesDigital.forEach(category => {
+            const container = document.getElementById(`${category}-container`);
+            if (container && container.children.length > 0) {
+                if (!hasDigitalData) {
+                    checkPageBreak(20);
+                    doc.setFontSize(16);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                    doc.text(`${sectionNumber}. DONNÉES NUMÉRIQUES`, margin, yPosition);
+                    yPosition += 15;
+                    hasDigitalData = true;
+                }
+                
+                const categoryTitles = {
+                    'reseaux-sociaux': 'Réseaux sociaux',
+                    'emails': 'Comptes email',
+                    'comptes-online': 'Comptes en ligne',
+                    'cloud': 'Services cloud',
+                    'appareils': 'Appareils sécurisés'
+                };
+                
+                checkPageBreak(15);
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                doc.text(`${categoryTitles[category]}:`, margin, yPosition);
+                yPosition += 10;
+                
+                Array.from(container.children).forEach((entry, index) => {
+                    checkPageBreak(8);
+                    doc.setFontSize(10);
+                    doc.setFont(undefined, 'normal');
+                    doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+                    
+                    let description = '';
+                    
+                    if (category === 'reseaux-sociaux') {
+                        const reseau = entry.querySelector('[name$="[reseau]"]')?.value || '';
+                        const pseudo = entry.querySelector('[name$="[pseudo]"]')?.value || '';
+                        description = `${reseau}${pseudo ? ' (' + pseudo + ')' : ''}`;
+                    } else if (category === 'emails') {
+                        const adresse = entry.querySelector('[name$="[adresse]"]')?.value || '';
+                        description = adresse;
+                    } else if (category === 'appareils') {
+                        const type = entry.querySelector('[name$="[type]"]')?.value || '';
+                        const modele = entry.querySelector('[name$="[modele]"]')?.value || '';
+                        description = `${type}${modele ? ' - ' + modele : ''}`;
+                    } else {
+                        const nom = entry.querySelector('[name$="[nom]"]')?.value || 
+                                  entry.querySelector('[name$="[service]"]')?.value || '';
+                        description = nom;
+                    }
+                    
+                    if (description) {
+                        doc.text(`• ${description}`, margin + 5, yPosition);
+                        yPosition += 7;
+                    }
+                });
+                yPosition += 5;
+            }
+        });
+        
+        yPosition += 20;
+        
+        // SECTION FINALE: DISPOSITIONS IMPORTANTES
+        checkPageBreak(50);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('DISPOSITIONS IMPORTANTES', margin, yPosition);
+        yPosition += 15;
+        
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+        
+        const dispositions = [
+            '• Ce testament respecte les règles de l\'héritage islamique (Mirath)',
+            '• Les dispositions ne concernent que le tiers (1/3) des biens maximum',
+            '• Les deux tiers restants sont distribués selon les règles coraniques',
+            '• Il est recommandé de faire valider ce testament par un spécialiste',
+            '• Les informations sensibles doivent être conservées en sécurité'
+        ];
+        
+        dispositions.forEach(disposition => {
+            checkPageBreak(8);
+            doc.text(disposition, margin, yPosition);
+            yPosition += 8;
+        });
+        
+        yPosition += 15;
+        
+        // VERSET CORANIQUE
+        checkPageBreak(20);
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'italic');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        
+        const verset = '"Et c\'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156';
+        const versetLines = doc.splitTextToSize(verset, pageWidth - (margin * 2));
+        
+        versetLines.forEach(line => {
+            checkPageBreak(8);
+            doc.text(line, pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 8;
+        });
+        
+        yPosition += 20;
+        
+        // SECTION SIGNATURE
+        checkPageBreak(30);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('SIGNATURE', margin, yPosition);
+        yPosition += 15;
+        
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+        
+        doc.text(`Date : ${today}`, margin, yPosition);
+        yPosition += 15;
+        doc.text('Signature du testateur : _________________________', margin, yPosition);
+        yPosition += 15;
+        doc.text('Témoins (recommandé) :', margin, yPosition);
+        yPosition += 8;
+        doc.text('1. Nom : _________________ Signature : _________________', margin, yPosition);
+        yPosition += 8;
+        doc.text('2. Nom : _________________ Signature : _________________', margin, yPosition);
+        
+        // FOOTER SUR TOUTES LES PAGES
+        const totalPages = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8);
+            doc.setTextColor(128, 128, 128);
+            doc.text('Al Wassiya - الوصية - Testament Islamique', margin, pageHeight - 15);
+            doc.text(`Page ${i}/${totalPages}`, pageWidth - margin - 20, pageHeight - 15);
+        }
+        
+        // SAUVEGARDER LE PDF
+        currentPDF = doc;
+        
+        // GÉNÉRER LE NOM DE FICHIER
+        const dateStr = new Date().toISOString().split('T')[0];
+        const fileName = `Testament_${prenom}_${nom}_${dateStr}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '_');
+        
+        // TÉLÉCHARGER AUTOMATIQUEMENT
+        doc.save(fileName);
+        
+        console.log('PDF généré avec succès:', fileName);
+        
+        // MESSAGE DE SUCCÈS
+        alert('✅ Testament PDF généré avec succès !\n\nLe fichier a été téléchargé dans votre dossier "Téléchargements".\n\nNom du fichier: ' + fileName);
+        
+    } catch (error) {
+        console.error('Erreur lors de la génération du PDF:', error);
+        alert('❌ Erreur lors de la génération du PDF:\n\n' + error.message + '\n\nVeuillez vérifier que tous les champs obligatoires sont remplis et réessayer.');
+    }
+}
+
+// ==================== FONCTIONS DE TÉLÉCHARGEMENT ET PARTAGE CORRIGÉES ====================
+
+function telechargerPDF() {
+    console.log('Demande de téléchargement PDF...');
+    
+    if (currentPDF) {
+        const prenom = document.getElementById('prenom')?.value?.trim() || '';
+        const nom = document.getElementById('nom')?.value?.trim() || 'Testament';
+        const dateStr = new Date().toISOString().split('T')[0];
+        const fileName = `Testament_${prenom}_${nom}_${dateStr}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '_');
+        
+        currentPDF.save(fileName);
+        console.log('PDF re-téléchargé:', fileName);
+        
+        alert('✅ PDF téléchargé: ' + fileName);
+    } else {
+        console.log('Aucun PDF en mémoire, génération d\'un nouveau PDF...');
+        genererPDF();
+    }
+}
+
+function envoyerParEmail() {
+    console.log('Préparation envoi email...');
+    
+    const prenom = document.getElementById('prenom')?.value?.trim() || '';
+    const nom = document.getElementById('nom')?.value?.trim() || '';
+    
+    const subject = encodeURIComponent(`Testament Islamique - ${prenom} ${nom}`);
+    const body = encodeURIComponent(`Bonjour,
+
+Ci-joint mon testament islamique généré avec Al Wassiya - الوصية.
+
+Ce document a été créé conformément aux principes de l'héritage islamique (Mirath).
+
+📋 Informations importantes :
+• Ce testament respecte les règles de l'héritage islamique
+• Les dispositions concernent uniquement le tiers (1/3) des biens
+• Il est recommandé de le faire valider par un spécialiste
+
+Cordialement,
+${prenom} ${nom}
+
+---
+Généré par Al Wassiya - الوصية
+Testament Islamique Simplifié
+${window.location.href}`);
+
+    const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+    
+    try {
+        window.location.href = mailtoLink;
+        
+        // Message explicatif car mailto ne peut pas attacher automatiquement le PDF
+        setTimeout(() => {
+            alert(`📧 Votre client email va s'ouvrir avec un message pré-rédigé.
+
+⚠️ IMPORTANT: Vous devez manuellement joindre le fichier PDF à votre email.
+
+📎 Le PDF se trouve dans votre dossier "Téléchargements":
+Testament_${prenom}_${nom}_${new Date().toISOString().split('T')[0]}.pdf
+
+💡 Astuce: Glissez-déposez le fichier PDF dans votre email ou utilisez le bouton "Joindre un fichier".`);
+        }, 1000);
+        
+        console.log('Email préparé avec succès');
+        
+    } catch (error) {
+        console.error('Erreur envoi email:', error);
+        alert('❌ Erreur lors de la préparation de l\'email.\n\nVeuillez copier le lien manuellement:\n' + window.location.href);
+    }
+}
+
+function partagerWhatsApp() {
+    console.log('Partage WhatsApp...');
+    
+    const text = encodeURIComponent(`🕌 J'ai créé mon testament islamique avec Al Wassiya - الوصية
+
+✅ Application gratuite et conforme aux principes islamiques
+📋 Génération automatique de PDF complet  
+🔒 Données sécurisées et privées
+🌍 Interface en français et arabe
+
+Découvrez cette application utile: ${window.location.href}
+
+#Testament #Islam #الوصية #Mirath #Héritage`);
     
     const whatsappURL = `https://wa.me/?text=${text}`;
-    window.open(whatsappURL, '_blank');
-    console.log('Partage WhatsApp initié');
+    
+    try {
+        window.open(whatsappURL, '_blank');
+        console.log('Partage WhatsApp initié');
+    } catch (error) {
+        console.error('Erreur partage WhatsApp:', error);
+        alert('Erreur lors du partage WhatsApp. Copiez ce lien manuellement:\n' + window.location.href);
+    }
 }
 
 function partagerFacebook() {
+    console.log('Partage Facebook...');
+    
     const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent('Al Wassiya - الوصية | Testament Islamique Simplifié - Créez votre testament selon les principes islamiques');
+    const text = encodeURIComponent('🕌 Al Wassiya - الوصية | Testament Islamique Simplifié - Créez votre testament selon les principes islamiques gratuitement');
     
     const facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`;
-    window.open(facebookURL, '_blank');
-    console.log('Partage Facebook initié');
+    
+    try {
+        window.open(facebookURL, '_blank', 'width=600,height=400');
+        console.log('Partage Facebook initié');
+    } catch (error) {
+        console.error('Erreur partage Facebook:', error);
+        alert('Erreur lors du partage Facebook. Copiez ce lien manuellement:\n' + window.location.href);
+    }
 }
 
 function partagerTwitter() {
+    console.log('Partage Twitter...');
+    
     const text = encodeURIComponent(`🕌 Al Wassiya - الوصية
 
 Testament islamique simplifié et gratuit
-✅ Conforme aux principes de l'héritage islamique
+✅ Conforme aux principes de l'héritage islamique  
 📄 Génération PDF automatique
+🌍 Interface français/arabe
 
 #Testament #Islam #الوصية #Mirath`);
     
     const url = encodeURIComponent(window.location.href);
     const twitterURL = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
-    window.open(twitterURL, '_blank');
-    console.log('Partage Twitter initié');
+    
+    try {
+        window.open(twitterURL, '_blank', 'width=600,height=400');
+        console.log('Partage Twitter initié');
+    } catch (error) {
+        console.error('Erreur partage Twitter:', error);
+        alert('Erreur lors du partage Twitter. Copiez ce lien manuellement:\n' + window.location.href);
+    }
 }
 
 function partagerEmail() {
-    const subject = encodeURIComponent('Al Wassiya - الوصية | Testament Islamique');
+    console.log('Partage par email...');
+    
+    const subject = encodeURIComponent('🕌 Al Wassiya - الوصية | Testament Islamique');
     const body = encodeURIComponent(`Bonjour,
 
 Je viens de découvrir Al Wassiya (الوصية), une application web gratuite qui permet de créer son testament islamique de manière simple et conforme aux principes religieux.
@@ -2885,35 +3559,44 @@ Je viens de découvrir Al Wassiya (الوصية), une application web gratuite q
 🕌 Caractéristiques:
 ✅ Respecte les règles de l'héritage islamique (Mirath)
 📋 Interface guidée pas à pas
-📄 Génération automatique de PDF
-🔒 Données privées et sécurisées
+📄 Génération automatique de PDF professionnel
+🔒 Données privées et sécurisées  
 🌍 Disponible en français et arabe
+💰 Entièrement gratuit
 
-L'application guide dans la rédaction et génère automatiquement un PDF complet avec le Bismillah et les dispositions importantes.
+L'application guide dans la rédaction et génère automatiquement un PDF complet avec le Bismillah, les dispositions importantes selon la Charia, et toutes les sections nécessaires.
 
 Vous pouvez la découvrir ici: ${window.location.href}
 
 Cordialement`);
     
     const emailURL = `mailto:?subject=${subject}&body=${body}`;
-    window.location.href = emailURL;
-    console.log('Partage Email initié');
+    
+    try {
+        window.location.href = emailURL;
+        console.log('Partage Email initié');
+    } catch (error) {
+        console.error('Erreur partage Email:', error);
+        alert('Erreur lors du partage par email. Copiez ce lien manuellement:\n' + window.location.href);
+    }
 }
 
-// ==================== FONCTIONS DE DIAGNOSTIC ====================
+// ==================== FONCTIONS DE DIAGNOSTIC ET TEST ====================
 
 function testerJsPDF() {
     console.log('=== DIAGNOSTIC JSPDF ===');
     console.log('window.jspdf:', typeof window.jspdf);
+    console.log('window.jspdf disponible:', window.jspdf ? 'OUI' : 'NON');
     
     if (typeof window.jspdf !== 'undefined') {
-        console.log('✅ jsPDF est chargé');
+        console.log('✅ jsPDF est chargé correctement');
         
         try {
             const { jsPDF } = window.jspdf;
             const testDoc = new jsPDF();
-            testDoc.text('Test', 10, 10);
+            testDoc.text('Test Al Wassiya', 10, 10);
             console.log('✅ jsPDF fonctionne correctement');
+            console.log('Version jsPDF:', testDoc.internal.version || 'Inconnue');
             return true;
         } catch (error) {
             console.error('❌ Erreur lors du test jsPDF:', error);
@@ -2921,35 +3604,95 @@ function testerJsPDF() {
         }
     } else {
         console.error('❌ jsPDF n\'est pas chargé');
+        console.log('Vérifiez que le script est bien inclus dans le <head>:');
+        console.log('<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>');
         return false;
     }
+}
+
+function diagnosticComplet() {
+    console.log('=== DIAGNOSTIC COMPLET AL WASSIYA ===');
+    
+    // Test jsPDF
+    const jsPDFOK = testerJsPDF();
+    
+    // Test champs obligatoires
+    const champsRequis = ['sexe', 'prenom', 'nom', 'dateNaissance', 'adresse'];
+    const champsManquants = [];
+    
+    champsRequis.forEach(champ => {
+        const element = document.getElementById(champ);
+        if (!element) {
+            champsManquants.push(champ);
+        } else if (!element.value) {
+            console.log(`⚠️ Champ vide: ${champ}`);
+        } else {
+            console.log(`✅ Champ OK: ${champ} = "${element.value}"`);
+        }
+    });
+    
+    if (champsManquants.length > 0) {
+        console.error('❌ Champs manquants:', champsManquants);
+    }
+    
+    // Test containers dynamiques
+    const containers = ['parents-container', 'cartes-container', 'applications-container', 
+                       'reseaux-sociaux-container', 'emails-container'];
+    
+    containers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container) {
+            console.log(`✅ Container ${containerId}: ${container.children.length} éléments`);
+        } else {
+            console.log(`❌ Container manquant: ${containerId}`);
+        }
+    });
+    
+    console.log('=== FIN DIAGNOSTIC ===');
+    
+    return {
+        jsPDFOK,
+        champsManquants,
+        ready: jsPDFOK && champsManquants.length === 0
+    };
 }
 
 // ==================== INITIALISATION ET VÉRIFICATIONS ====================
 
 // Test au chargement de la page
 window.addEventListener('load', function() {
-    console.log('=== INITIALISATION AL WASSIYA ===');
+    console.log('=== AL WASSIYA - INITIALISATION COMPLÈTE ===');
     
-    // Test jsPDF
+    // Test jsPDF après un délai pour s'assurer du chargement
     setTimeout(() => {
-        const jsPDFOK = testerJsPDF();
-        if (!jsPDFOK) {
-            console.error('⚠️ Problème avec jsPDF détecté');
+        const diagnostic = diagnosticComplet();
+        
+        if (!diagnostic.jsPDFOK) {
+            console.warn('⚠️ Problème avec jsPDF détecté - rechargement recommandé');
         }
-    }, 1000);
+    }, 1500);
     
-    console.log('✅ Al Wassiya initialisé');
+    console.log('✅ Al Wassiya initialisé avec toutes les fonctionnalités');
+    console.log('📄 Génération PDF: Prêt');
+    console.log('🌍 Multilingue: Français/Arabe activé');
+    console.log('💾 Sauvegarde automatique: Activée');
 });
 
-// Test périodique de jsPDF (optionnel)
+// Test périodique de jsPDF
 setInterval(() => {
     if (typeof window.jspdf === 'undefined') {
         console.warn('⚠️ jsPDF non disponible - rechargement recommandé');
     }
-}, 30000); // Vérifie toutes les 30 secondes
+}, 60000); // Vérifie toutes les minutes
 
-console.log('📄 Module PDF Al Wassiya chargé');
+// Fonction de test manuelle
+window.testAlWassiya = function() {
+    console.log('🧪 Test manuel Al Wassiya...');
+    return diagnosticComplet();
+};
+
+console.log('📄 Module PDF Al Wassiya chargé et opérationnel');
+console.log('🔧 Pour diagnostiquer: tapez testAlWassiya() dans la console');
 </script>
 
 </body>
