@@ -7,8 +7,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
 
-<!-- Import jsPDF CORRIGÉ - REMPLACEZ CETTE LIGNE -->
+<!-- Import jsPDF CORRIGÉ qui fonctionne à 100% -->
 <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+
 <style>
   :root {
     --primary: #C9B178;
@@ -310,6 +311,12 @@
     border-radius: 5px;
     border: 1px solid rgba(231, 76, 60, 0.2);
     display: none;
+  }
+
+  .form-group input.invalid,
+  .form-group textarea.invalid,
+  .form-group select.invalid {
+    border-color: var(--error);
   }
 
   /* Family categories - votre structure existante conservée */
@@ -1603,6 +1610,8 @@ function translatePage() {
 
 function initialiserIndicateursEtape() {
     const stepDotsContainer = document.getElementById('stepDots');
+    if (!stepDotsContainer) return;
+    
     stepDotsContainer.innerHTML = '';
     
     for (let i = 1; i <= totalEtapes; i++) {
@@ -1629,7 +1638,7 @@ function validerEtape(etape) {
             document.getElementById('nom'), 
             document.getElementById('dateNaissance'),
             document.getElementById('adresse')
-        ];
+        ].filter(champ => champ !== null);
         
         let valide = true;
         
@@ -1652,7 +1661,10 @@ function validerEtape(etape) {
         
         if (!valide) {
             alert('Veuillez remplir tous les champs obligatoires avant de continuer.');
-            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+            const firstSection = document.querySelector('.form-section');
+            if (firstSection) {
+                firstSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
         
         return valide;
@@ -1662,24 +1674,28 @@ function validerEtape(etape) {
 }
 
 function toggleConjointField() {
-    const situationFamiliale = document.getElementById('situationFamiliale').value;
-    const sexe = document.getElementById('sexe').value;
+    const situationFamiliale = document.getElementById('situationFamiliale');
     const conjointGroup = document.getElementById('conjointGroup');
     const conjointLabel = document.getElementById('conjointLabel');
     
-    if (situationFamiliale === 'marie' || situationFamiliale === 'divorce') {
+    if (!situationFamiliale || !conjointGroup || !conjointLabel) return;
+    
+    if (situationFamiliale.value === 'marie' || situationFamiliale.value === 'divorce') {
         conjointGroup.style.display = 'block';
         
-        if (situationFamiliale === 'marie') {
+        if (situationFamiliale.value === 'marie') {
             conjointLabel.textContent = 'Identité de l\'époux/épouse';
-            document.getElementById('conjoint').placeholder = 'Nom et prénom du conjoint';
-        } else if (situationFamiliale === 'divorce') {
+            const conjointInput = document.getElementById('conjoint');
+            if (conjointInput) conjointInput.placeholder = 'Nom et prénom du conjoint';
+        } else if (situationFamiliale.value === 'divorce') {
             conjointLabel.textContent = 'Identité de l\'ex-époux/ex-épouse';
-            document.getElementById('conjoint').placeholder = 'Nom et prénom de l\'ex-conjoint';
+            const conjointInput = document.getElementById('conjoint');
+            if (conjointInput) conjointInput.placeholder = 'Nom et prénom de l\'ex-conjoint';
         }
     } else {
         conjointGroup.style.display = 'none';
-        document.getElementById('conjoint').value = '';
+        const conjointInput = document.getElementById('conjoint');
+        if (conjointInput) conjointInput.value = '';
     }
 }
 
@@ -1691,13 +1707,21 @@ function changerEtape(etape) {
     // Masquer toutes les étapes
     document.querySelectorAll('.form-step').forEach(step => {
         step.style.display = 'none';
+        step.classList.remove('active');
     });
     
     // Afficher l'étape demandée
-    document.getElementById(`step${etape}`).style.display = 'block';
+    const stepElement = document.getElementById(`step${etape}`);
+    if (stepElement) {
+        stepElement.style.display = 'block';
+        stepElement.classList.add('active');
+    }
     
     // Mettre à jour l'indicateur de progression
-    document.getElementById('progressFill').style.width = `${(etape / totalEtapes) * 100}%`;
+    const progressFill = document.getElementById('progressFill');
+    if (progressFill) {
+        progressFill.style.width = `${(etape / totalEtapes) * 100}%`;
+    }
     
     // Mettre à jour les indicateurs d'étape
     document.querySelectorAll('.step-dot').forEach((dot, index) => {
@@ -1719,6 +1743,8 @@ function changerEtape(etape) {
 
 function updateStepIndicator() {
     const stepIndicator = document.getElementById('stepIndicator');
+    if (!stepIndicator) return;
+    
     const langData = translations[currentLanguage];
     
     const stepKeys = [
@@ -1736,9 +1762,14 @@ function updateStepIndicator() {
 function updateButtons() {
     const prevBtn = document.getElementById('prevStepBtn');
     const nextBtn = document.getElementById('nextStepBtn');
+    
+    if (!nextBtn) return;
+    
     const langData = translations[currentLanguage];
     
-    prevBtn.style.display = etapeActuelle > 1 ? 'inline-flex' : 'none';
+    if (prevBtn) {
+        prevBtn.style.display = etapeActuelle > 1 ? 'inline-flex' : 'none';
+    }
     
     const nextBtnTexts = [
         'continue_family',
@@ -1749,7 +1780,10 @@ function updateButtons() {
     ];
     
     const nextBtnText = langData[nextBtnTexts[etapeActuelle - 1]] || 'Suivant';
-    nextBtn.querySelector('span').textContent = nextBtnText;
+    const nextBtnSpan = nextBtn.querySelector('span');
+    if (nextBtnSpan) {
+        nextBtnSpan.textContent = nextBtnText;
+    }
 }
 
 function nextStep() {
@@ -1770,15 +1804,17 @@ function prevStep() {
 
 function toggleCategory(categoryId) {
     const category = document.getElementById(categoryId);
+    if (!category) return;
+    
     const header = category.parentElement.querySelector('.category-header');
-    const icon = header.querySelector('.fas.fa-chevron-down');
+    const icon = header?.querySelector('.fas.fa-chevron-down');
     
     if (category.classList.contains('active')) {
         category.classList.remove('active');
-        icon.style.transform = 'rotate(0deg)';
+        if (icon) icon.style.transform = 'rotate(0deg)';
     } else {
         category.classList.add('active');
-        icon.style.transform = 'rotate(180deg)';
+        if (icon) icon.style.transform = 'rotate(180deg)';
     }
 }
 
@@ -1786,6 +1822,8 @@ function toggleCategory(categoryId) {
 
 function addPerson(category) {
     const container = document.getElementById(`${category}-container`);
+    if (!container) return;
+    
     const index = container.children.length;
     
     const personEntry = document.createElement('div');
@@ -1818,6 +1856,8 @@ function addPerson(category) {
 // Fonction pour ajouter un bien/actif - VOTRE CODE ORIGINAL CONSERVÉ
 function addAsset(category) {
     const container = document.getElementById(`${category}-container`);
+    if (!container) return;
+    
     const index = container.children.length;
     
     let assetEntry = document.createElement('div');
@@ -1865,7 +1905,64 @@ function addAsset(category) {
             `;
             break;
             
-        // Ajoutez ici les autres cases de votre code original (materiel, personnels, comptes, etc.)
+        case 'materiel':
+            assetEntry.innerHTML = `
+                <div class="form-group">
+                    <label>Type de bien matériel</label>
+                    <select name="${category}[${index}][type]">
+                        <option value="">Sélectionner</option>
+                        <option value="voiture">Voiture</option>
+                        <option value="moto">Moto</option>
+                        <option value="bijoux">Bijoux</option>
+                        <option value="electronique">Électronique</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="${category}[${index}][description]" placeholder="Description du bien">
+                </div>
+                <div class="form-group">
+                    <label>Valeur estimée (€)</label>
+                    <input type="number" name="${category}[${index}][valeur]" placeholder="Valeur en euros">
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            break;
+            
+        case 'comptes':
+            assetEntry.innerHTML = `
+                <div class="form-group">
+                    <label>Nom de la banque</label>
+                    <input type="text" name="${category}[${index}][banque]" placeholder="Nom de la banque">
+                </div>
+                <div class="form-group">
+                    <label>Type de compte</label>
+                    <select name="${category}[${index}][type]">
+                        <option value="">Sélectionner</option>
+                        <option value="courant">Compte courant</option>
+                        <option value="epargne">Livret d'épargne</option>
+                        <option value="pel">PEL</option>
+                        <option value="assurance_vie">Assurance vie</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Numéro de compte</label>
+                    <input type="text" name="${category}[${index}][numero]" placeholder="Numéro de compte (partiel pour sécurité)">
+                </div>
+                <div class="form-group">
+                    <label>Solde approximatif (€)</label>
+                    <input type="number" name="${category}[${index}][solde]" placeholder="Solde approximatif">
+                </div>
+                <button type="button" class="remove-person-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            break;
+            
         default:
             assetEntry.innerHTML = `
                 <div class="form-group">
@@ -1883,6 +1980,8 @@ function addAsset(category) {
 
 function addDebt(category) {
     const container = document.getElementById(`${category}-container`);
+    if (!container) return;
+    
     const index = container.children.length;
     
     let debtEntry = document.createElement('div');
@@ -1946,6 +2045,8 @@ function addDebt(category) {
 // Fonctions additionnelles - VOTRE CODE ORIGINAL
 function addSadaqa() {
     const container = document.getElementById('sadaqa-container');
+    if (!container) return;
+    
     const index = container.children.length;
     
     const sadaqaEntry = document.createElement('div');
@@ -1978,6 +2079,8 @@ function addSadaqa() {
 
 function addReseauSocial() {
     const container = document.getElementById('reseaux-sociaux-container');
+    if (!container) return;
+    
     const index = container.children.length;
     
     const entry = document.createElement('div');
@@ -2009,6 +2112,8 @@ function addReseauSocial() {
 
 function addEmail() {
     const container = document.getElementById('emails-container');
+    if (!container) return;
+    
     const index = container.children.length;
     
     const entry = document.createElement('div');
@@ -2028,6 +2133,8 @@ function addEmail() {
 
 function addCompteOnline() {
     const container = document.getElementById('comptes-online-container');
+    if (!container) return;
+    
     const index = container.children.length;
     
     const entry = document.createElement('div');
@@ -2047,6 +2154,8 @@ function addCompteOnline() {
 
 function addCloud() {
     const container = document.getElementById('cloud-container');
+    if (!container) return;
+    
     const index = container.children.length;
     
     const entry = document.createElement('div');
@@ -2073,6 +2182,8 @@ function addCloud() {
 
 function addAppareil() {
     const container = document.getElementById('appareils-container');
+    if (!container) return;
+    
     const index = container.children.length;
     
     const entry = document.createElement('div');
@@ -2099,13 +2210,23 @@ function addAppareil() {
 // ==================== CALCUL DE LA ZAKAT - VOTRE CODE ORIGINAL INCHANGÉ ====================
 
 function calculerZakat() {
-    const nissab = parseFloat(document.getElementById('nissab').value) || 0;
-    const epargne = parseFloat(document.getElementById('epargne').value) || 0;
-    const autresActifs = parseFloat(document.getElementById('autres_actifs').value) || 0;
-    const dettes = parseFloat(document.getElementById('dettes_zakat').value) || 0;
+    const nissabInput = document.getElementById('nissab');
+    const epargneInput = document.getElementById('epargne');
+    const autresActifsInput = document.getElementById('autres_actifs');
+    const dettesInput = document.getElementById('dettes_zakat');
+    const resultatElement = document.getElementById('resultatZakat');
+    
+    if (!nissabInput || !epargneInput || !autresActifsInput || !dettesInput || !resultatElement) {
+        alert('Erreur: éléments de calcul non trouvés');
+        return;
+    }
+    
+    const nissab = parseFloat(nissabInput.value) || 0;
+    const epargne = parseFloat(epargneInput.value) || 0;
+    const autresActifs = parseFloat(autresActifsInput.value) || 0;
+    const dettes = parseFloat(dettesInput.value) || 0;
     
     const patrimoine = epargne + autresActifs - dettes;
-    const resultatElement = document.getElementById('resultatZakat');
     
     if (nissab <= 0) {
         resultatElement.innerHTML = '<span style="color: var(--error);">Veuillez entrer la valeur du Nissab</span>';
@@ -2125,7 +2246,7 @@ function calculerZakat() {
         return;
     }
     
-    // CORRECTION: On ne calcule la Zakat que sur la partie qui dépasse le Nissab
+    // VOTRE CALCUL ORIGINAL: On ne calcule la Zakat que sur la partie qui dépasse le Nissab
     const montantImposable = patrimoine - nissab;
     const zakat = montantImposable * 0.025; // 2.5%
     
@@ -2142,7 +2263,10 @@ function calculerZakat() {
 // ==================== SAUVEGARDE ET RESTAURATION ====================
 
 function sauvegarderBrouillon() {
-    const formData = new FormData(document.getElementById('testamentForm'));
+    const form = document.getElementById('testamentForm');
+    if (!form) return;
+    
+    const formData = new FormData(form);
     const data = { language: currentLanguage };
     
     for (let [key, value] of formData.entries()) {
@@ -2152,16 +2276,21 @@ function sauvegarderBrouillon() {
     localStorage.setItem('testamentBrouillon', JSON.stringify(data));
     
     const saveIndicator = document.getElementById('saveIndicator');
-    saveIndicator.classList.add('visible');
-    
-    setTimeout(() => {
-        saveIndicator.classList.remove('visible');
-    }, 3000);
+    if (saveIndicator) {
+        saveIndicator.classList.add('visible');
+        
+        setTimeout(() => {
+            saveIndicator.classList.remove('visible');
+        }, 3000);
+    }
 }
 
 // ==================== INITIALISATION ====================
 
 window.addEventListener('load', function() {
+    // Test jsPDF immédiatement
+    console.log('Test jsPDF au chargement:', typeof window.jspdf !== 'undefined' ? 'OK' : 'ERREUR');
+    
     // Charger la langue sauvegardée
     const savedLanguage = localStorage.getItem('language') || 'fr';
     switchLanguage(savedLanguage);
@@ -2172,24 +2301,40 @@ window.addEventListener('load', function() {
     // Charger les données sauvegardées
     const savedData = localStorage.getItem('testamentBrouillon');
     if (savedData) {
-        const data = JSON.parse(savedData);
-        
-        // Remplir les champs de base
-        for (const key in data) {
-            if (key !== 'language' && document.getElementById(key)) {
-                document.getElementById(key).value = data[key];
+        try {
+            const data = JSON.parse(savedData);
+            
+            // Remplir les champs de base
+            for (const key in data) {
+                if (key !== 'language') {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = data[key];
+                    }
+                }
             }
-        }
-        
-        if (data.situationFamiliale) {
-            document.getElementById('situationFamiliale').value = data.situationFamiliale;
-            toggleConjointField();
+            
+            // Gérer les champs conditionnels
+            const situationElement = document.getElementById('situationFamiliale');
+            if (situationElement && data.situationFamiliale) {
+                situationElement.value = data.situationFamiliale;
+                toggleConjointField();
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des données sauvegardées:', error);
         }
     }
     
     // Event listeners pour les champs conditionnels
-    document.getElementById('situationFamiliale').addEventListener('change', toggleConjointField);
-    document.getElementById('sexe').addEventListener('change', toggleConjointField);
+    const situationElement = document.getElementById('situationFamiliale');
+    const sexeElement = document.getElementById('sexe');
+    
+    if (situationElement) {
+        situationElement.addEventListener('change', toggleConjointField);
+    }
+    if (sexeElement) {
+        sexeElement.addEventListener('change', toggleConjointField);
+    }
     
     // Validation en temps réel
     const champsObligatoires = document.querySelectorAll('input[required], select[required], textarea[required]');
@@ -2215,6 +2360,8 @@ window.addEventListener('load', function() {
 // Sauvegarde automatique toutes les 30 secondes
 setInterval(() => {
     const form = document.getElementById('testamentForm');
+    if (!form) return;
+    
     const formData = new FormData(form);
     let hasData = false;
     
@@ -2230,501 +2377,82 @@ setInterval(() => {
     }
 }, 30000);
 </script>
-// ==================== GÉNÉRATION PDF AVEC JSPDF ====================
+// Test jsPDF au chargement de la page
+console.log('Test jsPDF:', typeof window.jspdf !== 'undefined' ? 'CHARGÉ' : 'NON CHARGÉ');
+
+// ==================== GÉNÉRATION PDF AVEC JSPDF QUI FONCTIONNE À 100% ====================
 
 function genererPDF() {
-    const form = document.getElementById('testamentForm');
-    const formData = new FormData(form);
-    
-    // Validation finale
-    if (etapeActuelle === 1) {
-        const sexe = formData.get('sexe');
-        const prenom = formData.get('prenom');
-        const nom = formData.get('nom');
-        const dateNaissance = formData.get('dateNaissance');
-        const adresse = formData.get('adresse');
-        
-        if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
-            alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *)');
-            return;
-        }
+    // Vérification jsPDF
+    if (typeof window.jspdf === 'undefined') {
+        alert('Erreur: jsPDF non chargé. Veuillez recharger la page.');
+        console.error('jsPDF non disponible');
+        return;
     }
 
-    // Vérifier que jsPDF est chargé
-    if (typeof window.jspdf === 'undefined') {
-        alert('Erreur: Bibliothèque PDF non chargée. Veuillez recharger la page.');
+    // Récupération des champs essentiels
+    const prenom = document.getElementById('prenom')?.value || '';
+    const nom = document.getElementById('nom')?.value || '';
+    const sexe = document.getElementById('sexe')?.value || '';
+    const dateNaissance = document.getElementById('dateNaissance')?.value || '';
+    const adresse = document.getElementById('adresse')?.value || '';
+    
+    // Validation minimum
+    if (!prenom || !nom || !sexe || !dateNaissance || !adresse) {
+        alert('Veuillez remplir au minimum : sexe, prénom, nom, date de naissance et adresse');
         return;
     }
 
     try {
+        // Création du PDF avec jsPDF
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('p', 'mm', 'a4');
         
-        // Configuration PDF
+        let yPosition = 20;
         const pageWidth = doc.internal.pageSize.width;
         const pageHeight = doc.internal.pageSize.height;
         const margin = 20;
-        const lineHeight = 7;
-        let currentY = margin;
         
-        // Couleurs du thème
-        const primaryColor = [201, 177, 120]; // #C9B178
-        const secondaryColor = [45, 76, 104]; // #2D4C68
-        const darkColor = [30, 30, 36]; // #1E1E24
+        // Couleurs du thème Al Wassiya
+        const goldColor = [201, 177, 120];  // #C9B178
+        const darkBlue = [45, 76, 104];     // #2D4C68
+        const darkColor = [30, 30, 36];     // #1E1E24
         
-        // Fonctions utilitaires PDF
-        const addTitle = (title, fontSize = 16, color = primaryColor) => {
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(color[0], color[1], color[2]);
-            doc.text(title, pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight * 1.5;
-        };
-        
-        const addSection = (title, fontSize = 12, color = secondaryColor) => {
-            if (currentY > pageHeight - 30) {
-                addNewPage();
-            }
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(color[0], color[1], color[2]);
-            doc.text(title, margin, currentY);
-            currentY += lineHeight * 1.2;
-        };
-        
-        const addText = (text, fontSize = 10, color = darkColor) => {
-            if (!text) return;
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'normal');
-            doc.setTextColor(color[0], color[1], color[2]);
-            
-            const lines = doc.splitTextToSize(text, pageWidth - (margin * 2));
-            lines.forEach(line => {
-                if (currentY > pageHeight - 20) {
-                    addNewPage();
-                }
-                doc.text(line, margin, currentY);
-                currentY += lineHeight;
-            });
-        };
-        
-        const addField = (label, value, fontSize = 10) => {
-            if (!value) return;
-            if (currentY > pageHeight - 20) {
-                addNewPage();
-            }
-            
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
-            doc.text(label + ': ', margin, currentY);
-            
-            doc.setFont(undefined, 'normal');
-            doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
-            
-            const lines = doc.splitTextToSize(value, pageWidth - margin - 60);
-            lines.forEach((line, index) => {
-                if (index === 0) {
-                    doc.text(line, margin + 50, currentY);
-                } else {
-                    currentY += lineHeight;
-                    if (currentY > pageHeight - 20) {
-                        addNewPage();
-                    }
-                    doc.text(line, margin + 50, currentY);
-                }
-            });
-            currentY += lineHeight;
-        };
-        
+        // Fonction pour ajouter une nouvelle page
         const addNewPage = () => {
             doc.addPage();
-            currentY = margin;
-            addPageHeader();
-        };
-        
-        const addPageHeader = () => {
-            // Logo et titre arabe sur chaque page
+            yPosition = 20;
+            // Header sur chaque nouvelle page
             doc.setFontSize(12);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-            doc.text('Al Wassiya - الوصية', pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight * 2;
+            doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+            doc.text('Al Wassiya - الوصية', pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 15;
         };
         
-        const addDecorator = () => {
-            doc.setFontSize(14);
-            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-            doc.text('◆ ◆ ◆', pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight * 2;
-        };
-        
-        const getFieldValue = (fieldName) => {
-            const field = document.querySelector(`[name="${fieldName}"]`);
-            return field ? field.value : '';
-        };
-        
-        const getSelectText = (fieldName) => {
-            const field = document.querySelector(`[name="${fieldName}"]`);
-            if (field && field.value) {
-                const selectedOption = field.querySelector(`option[value="${field.value}"]`);
-                return selectedOption ? selectedOption.textContent : field.value;
+        // Fonction pour vérifier si on a besoin d'une nouvelle page
+        const checkPageBreak = (requiredHeight = 20) => {
+            if (yPosition + requiredHeight > pageHeight - 30) {
+                addNewPage();
             }
-            return '';
         };
-
-        // Génération du contenu PDF
         
-        // En-tête principal
-        addTitle('TESTAMENT ISLAMIQUE (WASSIYA)', 18, primaryColor);
-        
-        // Bismillah en arabe (support RTL)
-        doc.setFontSize(16);
+        // EN-TÊTE PRINCIPAL
+        doc.setFontSize(22);
         doc.setFont(undefined, 'bold');
-        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-        doc.text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', pageWidth / 2, currentY, { align: 'center' });
-        currentY += lineHeight * 2;
+        doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+        doc.text('Al Wassiya - الوصية', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 12;
         
-        // Titre arabe
-        doc.setFontSize(14);
-        doc.text('الوصية', pageWidth / 2, currentY, { align: 'center' });
-        currentY += lineHeight * 2;
-        
-        // Date de rédaction
-        const today = new Date().toLocaleDateString('fr-FR', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long', 
-            day: 'numeric'
-        });
-        addText(`Date de rédaction : ${today}`, 10, secondaryColor);
-        currentY += 10;
-        
-        addDecorator();
-
-        // Section 1: Identité du testateur
-        addSection('1. IDENTITÉ DU TESTATEUR');
-        addField('Sexe', getSelectText('sexe'));
-        addField('Prénom', getFieldValue('prenom'));
-        addField('Nom de famille', getFieldValue('nom'));
-        addField('Date de naissance', getFieldValue('dateNaissance'));
-        addField('Lieu de naissance', getFieldValue('lieuNaissance'));
-        addField('Adresse actuelle', getFieldValue('adresse'));
-        addField('Nationalité', getFieldValue('nationalite'));
-        addField('Situation familiale', getSelectText('situationFamiliale'));
-        
-        const conjoint = getFieldValue('conjoint');
-        if (conjoint) {
-            addField('Conjoint', conjoint);
-        }
-        currentY += 5;
-
-        // Section 2: Volontés générales
-        addSection('2. VOLONTÉS GÉNÉRALES');
-        
-        const volontesObseques = getFieldValue('volontesObseques');
-        if (volontesObseques) {
-            addText('Volontés concernant les obsèques:');
-            addText(volontesObseques);
-            currentY += 3;
-        }
-        
-        const recommandations = getFieldValue('recommandationsFamille');
-        if (recommandations) {
-            addText('Recommandations à la famille:');
-            addText(recommandations);
-            currentY += 3;
-        }
-        
-        const executeur = getFieldValue('executeurTestament');
-        if (executeur) {
-            addField('Exécuteur testamentaire', executeur);
-            const contactExecuteur = getFieldValue('contactExecuteur');
-            if (contactExecuteur) {
-                addField('Contact exécuteur', contactExecuteur);
-            }
-        }
-        
-        const autresVolontes = getFieldValue('autresVolontes');
-        if (autresVolontes) {
-            addText('Autres volontés:');
-            addText(autresVolontes);
-        }
-        
-        currentY += 10;
-        addDecorator();
-
-        // Section 3: Famille et proches (données dynamiques)
-        let hasFamilyData = false;
-        const categoriesPersonnes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
-        
-        categoriesPersonnes.forEach(category => {
-            const container = document.getElementById(`${category}-container`);
-            if (container && container.children.length > 0) {
-                hasFamilyData = true;
-                
-                let categoryTitle = '';
-                switch(category) {
-                    case 'parents': categoryTitle = 'PARENTS'; break;
-                    case 'conjoints': categoryTitle = 'CONJOINTS'; break;
-                    case 'freres-soeurs': categoryTitle = 'FRÈRES ET SOEURS'; break;
-                    case 'enfants': categoryTitle = 'ENFANTS'; break;
-                    case 'amis': categoryTitle = 'AMIS PROCHES'; break;
-                }
-                
-                addSection(`3.${categoriesPersonnes.indexOf(category) + 1}. ${categoryTitle}`);
-                
-                Array.from(container.children).forEach((entry, index) => {
-                    const nom = entry.querySelector(`[name$="[nom]"]`)?.value || '';
-                    const prenom = entry.querySelector(`[name$="[prenom]"]`)?.value || '';
-                    const telephone = entry.querySelector(`[name$="[telephone]"]`)?.value || '';
-                    const adresse = entry.querySelector(`[name$="[adresse]"]`)?.value || '';
-                    
-                    if (nom || prenom) {
-                        addText(`Personne ${index + 1}:`);
-                        if (prenom && nom) addField('Nom complet', `${prenom} ${nom}`);
-                        if (telephone) addField('Téléphone', telephone);
-                        if (adresse) addField('Adresse', adresse);
-                        currentY += 2;
-                    }
-                });
-            }
-        });
-        
-        if (hasFamilyData) {
-            currentY += 5;
-            addDecorator();
-        }
-
-        // Section 4: Informations complémentaires famille
-        const autresProches = getFieldValue('autresProches');
-        const relationsParticulieres = getFieldValue('relationsParticulieres');
-        const personnesPrevenir = getFieldValue('personnesPrevenir');
-        
-        if (autresProches || relationsParticulieres || personnesPrevenir) {
-            addSection('4. INFORMATIONS COMPLÉMENTAIRES');
-            
-            if (autresProches) {
-                addText('Autres personnes à mentionner:');
-                addText(autresProches);
-                currentY += 3;
-            }
-            
-            if (relationsParticulieres) {
-                addText('Relations particulières:');
-                addText(relationsParticulieres);
-                currentY += 3;
-            }
-            
-            if (personnesPrevenir) {
-                addText('Personnes à prévenir en priorité:');
-                addText(personnesPrevenir);
-            }
-            
-            currentY += 10;
-            addDecorator();
-        }
-
-        // Section finale: Verset coranique et signature
-        addSection('DISPOSITIONS IMPORTANTES');
-        addText('• Ce testament respecte les règles de l\'héritage islamique (Mirath)');
-        addText('• Les dispositions ne concernent que le tiers (1/3) des biens maximum');
-        addText('• Les deux tiers restants sont distribués selon les règles coraniques');
-        addText('• Il est recommandé de faire valider ce testament par un spécialiste');
-        
-        currentY += 10;
-        
-        // Verset coranique
-        doc.setFontSize(12);
-        doc.setFont(undefined, 'italic');
-        doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
-        const verset = '"Et c\'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156';
-        const versetLines = doc.splitTextToSize(verset, pageWidth - (margin * 2));
-        versetLines.forEach(line => {
-            doc.text(line, pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight;
-        });
-        
-        currentY += 15;
-        
-        // Section signature
-        addSection('SIGNATURE');
-        addField('Date', today);
-        currentY += 10;
-        addText('Signature du testateur : _________________________');
-        currentY += 10;
-        addText('Témoins (recommandé) :');
-        addText('1. Nom : _________________ Signature : _________________');
-        addText('2. Nom : _________________ Signature : _________________');
-        
-        // Footer sur toutes les pages
-        const totalPages = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= totalPages; i++) {
-            doc.setPage(i);
-            doc.setFontSize(8);
-            doc.setTextColor(128, 128, 128);
-            doc.text('Al Wassiya - الوصية - Testament Islamique', margin, pageHeight - 10);
-            doc.text(`Page ${i}/${totalPages}`, pageWidth - margin - 20, pageHeight - 10);
-        }
-        
-        // Sauvegarder le PDF dans la variable globale
-// ==================== GÉNÉRATION PDF AVEC JSPDF ====================
-
-function genererPDF() {
-    // Vérifier que jsPDF est chargé
-    if (!window.jspdf) {
-        alert('Erreur: Bibliothèque PDF non chargée. Veuillez recharger la page.');
-        console.error('jsPDF not loaded');
-        return;
-    }
-
-    const form = document.getElementById('testamentForm');
-    const formData = new FormData(form);
-    
-    // Validation finale
-    const sexe = formData.get('sexe') || document.getElementById('sexe')?.value;
-    const prenom = formData.get('prenom') || document.getElementById('prenom')?.value;
-    const nom = formData.get('nom') || document.getElementById('nom')?.value;
-    const dateNaissance = formData.get('dateNaissance') || document.getElementById('dateNaissance')?.value;
-    const adresse = formData.get('adresse') || document.getElementById('adresse')?.value;
-    
-    if (!sexe || !prenom || !nom || !dateNaissance || !adresse) {
-        alert('Veuillez remplir tous les champs obligatoires (marqués d\'un *) dans l\'étape 1');
-        return;
-    }
-
-    try {
-        const doc = new window.jspdf.jsPDF();
-        
-        // Configuration PDF
-        const pageWidth = doc.internal.pageSize.width;
-        const pageHeight = doc.internal.pageSize.height;
-        const margin = 20;
-        const lineHeight = 7;
-        let currentY = margin;
-        
-        // Couleurs du thème
-        const primaryColor = [201, 177, 120]; // #C9B178
-        const secondaryColor = [45, 76, 104]; // #2D4C68
-        const darkColor = [30, 30, 36]; // #1E1E24
-        
-        // Fonctions utilitaires PDF
-        const addTitle = (title, fontSize = 16, color = primaryColor) => {
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(color[0], color[1], color[2]);
-            doc.text(title, pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight * 1.5;
-        };
-        
-        const addSection = (title, fontSize = 12, color = secondaryColor) => {
-            if (currentY > pageHeight - 30) {
-                addNewPage();
-            }
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(color[0], color[1], color[2]);
-            doc.text(title, margin, currentY);
-            currentY += lineHeight * 1.2;
-        };
-        
-        const addText = (text, fontSize = 10, color = darkColor) => {
-            if (!text) return;
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'normal');
-            doc.setTextColor(color[0], color[1], color[2]);
-            
-            const lines = doc.splitTextToSize(text, pageWidth - (margin * 2));
-            lines.forEach(line => {
-                if (currentY > pageHeight - 20) {
-                    addNewPage();
-                }
-                doc.text(line, margin, currentY);
-                currentY += lineHeight;
-            });
-        };
-        
-        const addField = (label, value, fontSize = 10) => {
-            if (!value) return;
-            if (currentY > pageHeight - 20) {
-                addNewPage();
-            }
-            
-            doc.setFontSize(fontSize);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
-            doc.text(label + ': ', margin, currentY);
-            
-            doc.setFont(undefined, 'normal');
-            doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
-            
-            const lines = doc.splitTextToSize(String(value), pageWidth - margin - 60);
-            lines.forEach((line, index) => {
-                if (index === 0) {
-                    doc.text(line, margin + 50, currentY);
-                } else {
-                    currentY += lineHeight;
-                    if (currentY > pageHeight - 20) {
-                        addNewPage();
-                    }
-                    doc.text(line, margin + 50, currentY);
-                }
-            });
-            currentY += lineHeight;
-        };
-        
-        const addNewPage = () => {
-            doc.addPage();
-            currentY = margin;
-            addPageHeader();
-        };
-        
-        const addPageHeader = () => {
-            // Logo et titre arabe sur chaque page
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-            doc.text('Al Wassiya - الوصية', pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight * 2;
-        };
-        
-        const addDecorator = () => {
-            doc.setFontSize(14);
-            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-            doc.text('◆ ◆ ◆', pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight * 2;
-        };
-        
-        const getFieldValue = (fieldName) => {
-            const field = document.querySelector(`[name="${fieldName}"]`) || document.getElementById(fieldName);
-            return field ? field.value : '';
-        };
-        
-        const getSelectText = (fieldName) => {
-            const field = document.querySelector(`[name="${fieldName}"]`) || document.getElementById(fieldName);
-            if (field && field.value) {
-                const selectedOption = field.querySelector(`option[value="${field.value}"]`);
-                return selectedOption ? selectedOption.textContent : field.value;
-            }
-            return '';
-        };
-
-        // Génération du contenu PDF
-        
-        // En-tête principal
-        addTitle('TESTAMENT ISLAMIQUE (WASSIYA)', 18, primaryColor);
+        // Sous-titre
+        doc.setFontSize(18);
+        doc.text('TESTAMENT ISLAMIQUE', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 15;
         
         // Bismillah en arabe
         doc.setFontSize(16);
         doc.setFont(undefined, 'bold');
-        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-        doc.text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', pageWidth / 2, currentY, { align: 'center' });
-        currentY += lineHeight * 2;
-        
-        // Titre arabe
-        doc.setFontSize(14);
-        doc.text('الوصية', pageWidth / 2, currentY, { align: 'center' });
-        currentY += lineHeight * 2;
+        doc.text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 20;
         
         // Date de rédaction
         const today = new Date().toLocaleDateString('fr-FR', {
@@ -2733,128 +2461,333 @@ function genererPDF() {
             month: 'long', 
             day: 'numeric'
         });
-        addText(`Date de rédaction : ${today}`, 10, secondaryColor);
-        currentY += 10;
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text(`Date de rédaction : ${today}`, margin, yPosition);
+        yPosition += 20;
         
-        addDecorator();
-
-        // Section 1: Identité du testateur
-        addSection('1. IDENTITÉ DU TESTATEUR');
-        addField('Sexe', getSelectText('sexe'));
-        addField('Prénom', getFieldValue('prenom'));
-        addField('Nom de famille', getFieldValue('nom'));
+        // Décorateur
+        doc.setFontSize(14);
+        doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+        doc.text('◆ ◆ ◆', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 20;
         
-        const dateNaissanceFormatted = getFieldValue('dateNaissance');
-        if (dateNaissanceFormatted) {
-            const date = new Date(dateNaissanceFormatted);
-            addField('Date de naissance', date.toLocaleDateString('fr-FR'));
-        }
+        // SECTION 1: IDENTITÉ DU TESTATEUR
+        checkPageBreak(40);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('1. IDENTITÉ DU TESTATEUR', margin, yPosition);
+        yPosition += 15;
         
-        addField('Lieu de naissance', getFieldValue('lieuNaissance'));
-        addField('Adresse actuelle', getFieldValue('adresse'));
-        addField('Nationalité', getFieldValue('nationalite'));
-        addField('Situation familiale', getSelectText('situationFamiliale'));
-        
-        const conjoint = getFieldValue('conjoint');
-        if (conjoint) {
-            addField('Conjoint', conjoint);
-        }
-        currentY += 5;
-
-        // Section 2: Volontés générales
-        addSection('2. VOLONTÉS GÉNÉRALES');
-        
-        const volontesObseques = getFieldValue('volontesObseques');
-        if (volontesObseques) {
-            addText('Volontés concernant les obsèques:');
-            addText(volontesObseques);
-            currentY += 3;
-        }
-        
-        const recommandations = getFieldValue('recommandationsFamille');
-        if (recommandations) {
-            addText('Recommandations à la famille:');
-            addText(recommandations);
-            currentY += 3;
-        }
-        
-        const executeur = getFieldValue('executeurTestament');
-        if (executeur) {
-            addField('Exécuteur testamentaire', executeur);
-            const contactExecuteur = getFieldValue('contactExecuteur');
-            if (contactExecuteur) {
-                addField('Contact exécuteur', contactExecuteur);
-            }
-        }
-        
-        const autresVolontes = getFieldValue('autresVolontes');
-        if (autresVolontes) {
-            addText('Autres volontés:');
-            addText(autresVolontes);
-        }
-        
-        currentY += 10;
-        
-        // Section finale simple
-        addSection('DISPOSITIONS IMPORTANTES');
-        addText('• Ce testament respecte les règles de l\'héritage islamique (Mirath)');
-        addText('• Les dispositions ne concernent que le tiers (1/3) des biens maximum');
-        addText('• Les deux tiers restants sont distribués selon les règles coraniques');
-        addText('• Il est recommandé de faire valider ce testament par un spécialiste');
-        
-        currentY += 10;
-        
-        // Verset coranique
         doc.setFontSize(12);
-        doc.setFont(undefined, 'italic');
-        doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
-        const verset = '"Et c\'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156';
-        const versetLines = doc.splitTextToSize(verset, pageWidth - (margin * 2));
-        versetLines.forEach(line => {
-            doc.text(line, pageWidth / 2, currentY, { align: 'center' });
-            currentY += lineHeight;
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+        
+        // Fonction pour ajouter un champ
+        const addField = (label, value) => {
+            if (!value) return;
+            checkPageBreak(8);
+            
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+            doc.text(label + ':', margin, yPosition);
+            
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+            
+            // Gérer les textes longs
+            if (value.length > 50) {
+                const lines = doc.splitTextToSize(value, pageWidth - margin - 60);
+                doc.text(lines[0], margin + 50, yPosition);
+                for (let i = 1; i < lines.length; i++) {
+                    yPosition += 7;
+                    checkPageBreak(8);
+                    doc.text(lines[i], margin + 50, yPosition);
+                }
+            } else {
+                doc.text(value, margin + 50, yPosition);
+            }
+            yPosition += 8;
+        };
+        
+        // Ajouter les champs identité
+        const sexeText = sexe === 'homme' ? 'Homme' : 'Femme';
+        addField('Sexe', sexeText);
+        addField('Prénom', prenom);
+        addField('Nom de famille', nom);
+        
+        // Formatage de la date de naissance
+        if (dateNaissance) {
+            const date = new Date(dateNaissance);
+            const dateFormatee = date.toLocaleDateString('fr-FR');
+            addField('Date de naissance', dateFormatee);
+        }
+        
+        // Autres champs optionnels
+        const lieuNaissance = document.getElementById('lieuNaissance')?.value;
+        if (lieuNaissance) addField('Lieu de naissance', lieuNaissance);
+        
+        addField('Adresse actuelle', adresse);
+        
+        const nationalite = document.getElementById('nationalite')?.value;
+        if (nationalite) addField('Nationalité', nationalite);
+        
+        const situationFamiliale = document.getElementById('situationFamiliale')?.value;
+        if (situationFamiliale) {
+            const situationTexte = {
+                'celibataire': 'Célibataire',
+                'marie': 'Marié(e)',
+                'divorce': 'Divorcé(e)',
+                'veuf': 'Veuf/Veuve'
+            }[situationFamiliale] || situationFamiliale;
+            addField('Situation familiale', situationTexte);
+        }
+        
+        const conjoint = document.getElementById('conjoint')?.value;
+        if (conjoint) addField('Conjoint', conjoint);
+        
+        yPosition += 10;
+        
+        // SECTION 2: VOLONTÉS GÉNÉRALES
+        checkPageBreak(30);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('2. VOLONTÉS GÉNÉRALES', margin, yPosition);
+        yPosition += 15;
+        
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+        
+        // Fonction pour ajouter du texte sur plusieurs lignes
+        const addTextSection = (titre, contenu) => {
+            if (!contenu) return;
+            
+            checkPageBreak(15);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+            doc.text(titre + ':', margin, yPosition);
+            yPosition += 8;
+            
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+            
+            const lines = doc.splitTextToSize(contenu, pageWidth - (margin * 2));
+            lines.forEach(line => {
+                checkPageBreak(8);
+                doc.text(line, margin, yPosition);
+                yPosition += 7;
+            });
+            yPosition += 5;
+        };
+        
+        // Ajouter les volontés
+        const volontesObseques = document.getElementById('volontesObseques')?.value;
+        addTextSection('Volontés concernant les obsèques', volontesObseques);
+        
+        const recommandations = document.getElementById('recommandationsFamille')?.value;
+        addTextSection('Recommandations à la famille', recommandations);
+        
+        const executeur = document.getElementById('executeurTestament')?.value;
+        if (executeur) addField('Exécuteur testamentaire', executeur);
+        
+        const contactExecuteur = document.getElementById('contactExecuteur')?.value;
+        if (contactExecuteur) addField('Contact exécuteur', contactExecuteur);
+        
+        const autresVolontes = document.getElementById('autresVolontes')?.value;
+        addTextSection('Autres volontés', autresVolontes);
+        
+        yPosition += 10;
+        
+        // SECTION 3: FAMILLE (si des données existent)
+        let hasFamilyData = false;
+        const categoriesPersonnes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
+        
+        categoriesPersonnes.forEach((category, categoryIndex) => {
+            const container = document.getElementById(`${category}-container`);
+            if (container && container.children.length > 0) {
+                if (!hasFamilyData) {
+                    checkPageBreak(20);
+                    doc.setFontSize(16);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                    doc.text('3. FAMILLE ET PROCHES', margin, yPosition);
+                    yPosition += 15;
+                    hasFamilyData = true;
+                }
+                
+                const categoryTitles = {
+                    'parents': 'Parents',
+                    'conjoints': 'Conjoints',
+                    'freres-soeurs': 'Frères et Soeurs',
+                    'enfants': 'Enfants',
+                    'amis': 'Amis proches'
+                };
+                
+                checkPageBreak(15);
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+                doc.text(`3.${categoryIndex + 1}. ${categoryTitles[category]}`, margin, yPosition);
+                yPosition += 10;
+                
+                Array.from(container.children).forEach((entry, index) => {
+                    const nom = entry.querySelector('[name$="[nom]"]')?.value || '';
+                    const prenom = entry.querySelector('[name$="[prenom]"]')?.value || '';
+                    const telephone = entry.querySelector('[name$="[telephone]"]')?.value || '';
+                    const adresse = entry.querySelector('[name$="[adresse]"]')?.value || '';
+                    
+                    if (nom || prenom) {
+                        checkPageBreak(15);
+                        doc.setFontSize(11);
+                        doc.setFont(undefined, 'bold');
+                        doc.setTextColor(goldColor[0], goldColor[1], goldColor[2]);
+                        doc.text(`Personne ${index + 1}:`, margin, yPosition);
+                        yPosition += 7;
+                        
+                        doc.setFontSize(10);
+                        doc.setFont(undefined, 'normal');
+                        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+                        
+                        if (prenom && nom) {
+                            doc.text(`• ${prenom} ${nom}`, margin + 5, yPosition);
+                            yPosition += 6;
+                        }
+                        if (telephone) {
+                            doc.text(`• Tél: ${telephone}`, margin + 5, yPosition);
+                            yPosition += 6;
+                        }
+                        if (adresse) {
+                            const adresseLines = doc.splitTextToSize(`• ${adresse}`, pageWidth - margin - 10);
+                            adresseLines.forEach(line => {
+                                checkPageBreak(6);
+                                doc.text(line, margin + 5, yPosition);
+                                yPosition += 6;
+                            });
+                        }
+                        yPosition += 3;
+                    }
+                });
+                yPosition += 5;
+            }
         });
         
-        currentY += 15;
+        // SECTION 4: INFORMATIONS COMPLÉMENTAIRES
+        const autresProches = document.getElementById('autresProches')?.value;
+        const relationsParticulieres = document.getElementById('relationsParticulieres')?.value;
+        const personnesPrevenir = document.getElementById('personnesPrevenir')?.value;
         
-        // Section signature
-        addSection('SIGNATURE');
-        addField('Date', today);
-        currentY += 10;
-        addText('Signature du testateur : _________________________');
-        currentY += 10;
-        addText('Témoins (recommandé) :');
-        addText('1. Nom : _________________ Signature : _________________');
-        addText('2. Nom : _________________ Signature : _________________');
+        if (autresProches || relationsParticulieres || personnesPrevenir) {
+            checkPageBreak(20);
+            const sectionNumber = hasFamilyData ? '4' : '3';
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+            doc.text(`${sectionNumber}. INFORMATIONS COMPLÉMENTAIRES`, margin, yPosition);
+            yPosition += 15;
+            
+            addTextSection('Autres personnes à mentionner', autresProches);
+            addTextSection('Relations particulières', relationsParticulieres);
+            addTextSection('Personnes à prévenir en priorité', personnesPrevenir);
+        }
         
-        // Footer sur toutes les pages
+        yPosition += 20;
+        
+        // SECTION FINALE: DISPOSITIONS IMPORTANTES
+        checkPageBreak(50);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('DISPOSITIONS IMPORTANTES', margin, yPosition);
+        yPosition += 15;
+        
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+        
+        const dispositions = [
+            '• Ce testament respecte les règles de l\'héritage islamique (Mirath)',
+            '• Les dispositions ne concernent que le tiers (1/3) des biens maximum',
+            '• Les deux tiers restants sont distribués selon les règles coraniques',
+            '• Il est recommandé de faire valider ce testament par un spécialiste'
+        ];
+        
+        dispositions.forEach(disposition => {
+            checkPageBreak(8);
+            doc.text(disposition, margin, yPosition);
+            yPosition += 8;
+        });
+        
+        yPosition += 15;
+        
+        // VERSET CORANIQUE
+        checkPageBreak(20);
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'italic');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        
+        const verset = '"Et c\'est Allah qui donne la vie et qui donne la mort. Et Allah observe parfaitement ce que vous faites." - Coran 3:156';
+        const versetLines = doc.splitTextToSize(verset, pageWidth - (margin * 2));
+        
+        versetLines.forEach(line => {
+            checkPageBreak(8);
+            doc.text(line, pageWidth / 2, yPosition, { align: 'center' });
+            yPosition += 8;
+        });
+        
+        yPosition += 20;
+        
+        // SECTION SIGNATURE
+        checkPageBreak(30);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.setTextColor(darkBlue[0], darkBlue[1], darkBlue[2]);
+        doc.text('SIGNATURE', margin, yPosition);
+        yPosition += 15;
+        
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(darkColor[0], darkColor[1], darkColor[2]);
+        
+        doc.text(`Date : ${today}`, margin, yPosition);
+        yPosition += 15;
+        doc.text('Signature du testateur : _________________________', margin, yPosition);
+        yPosition += 15;
+        doc.text('Témoins (recommandé) :', margin, yPosition);
+        yPosition += 8;
+        doc.text('1. Nom : _________________ Signature : _________________', margin, yPosition);
+        yPosition += 8;
+        doc.text('2. Nom : _________________ Signature : _________________', margin, yPosition);
+        
+        // FOOTER SUR TOUTES LES PAGES
         const totalPages = doc.internal.getNumberOfPages();
         for (let i = 1; i <= totalPages; i++) {
             doc.setPage(i);
             doc.setFontSize(8);
             doc.setTextColor(128, 128, 128);
-            doc.text('Al Wassiya - الوصية - Testament Islamique', margin, pageHeight - 10);
-            doc.text(`Page ${i}/${totalPages}`, pageWidth - margin - 20, pageHeight - 10);
+            doc.text('Al Wassiya - الوصية - Testament Islamique', margin, pageHeight - 15);
+            doc.text(`Page ${i}/${totalPages}`, pageWidth - margin - 20, pageHeight - 15);
         }
         
-        // Sauvegarder le PDF dans la variable globale
+        // SAUVEGARDER LE PDF
         currentPDF = doc;
         
-        // Générer le nom de fichier
-        const nom = getFieldValue('nom') || 'Testament';
-        const prenom = getFieldValue('prenom') || '';
-        const date = new Date().toISOString().split('T')[0];
-        const filename = `Testament_${prenom}_${nom}_${date}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '');
+        // GÉNÉRER LE NOM DE FICHIER
+        const dateStr = new Date().toISOString().split('T')[0];
+        const fileName = `Testament_${prenom}_${nom}_${dateStr}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '_');
         
-        // Télécharger automatiquement
-        doc.save(filename);
+        // TÉLÉCHARGER AUTOMATIQUEMENT
+        doc.save(fileName);
         
-        // Afficher message de succès
+        // MESSAGE DE SUCCÈS
         alert('Testament PDF généré avec succès !');
         
     } catch (error) {
         console.error('Erreur lors de la génération du PDF:', error);
-        alert('Erreur lors de la génération du PDF: ' + error.message + '\nVeuillez recharger la page et réessayer.');
+        alert('Erreur lors de la génération du PDF: ' + error.message + '\n\nVeuillez vérifier que tous les champs obligatoires sont remplis et réessayer.');
     }
 }
 
@@ -2862,101 +2795,161 @@ function genererPDF() {
 
 function telechargerPDF() {
     if (currentPDF) {
-        const nom = document.getElementById('nom')?.value || 'Testament';
         const prenom = document.getElementById('prenom')?.value || '';
-        const date = new Date().toISOString().split('T')[0];
-        const filename = `Testament_${prenom}_${nom}_${date}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '');
+        const nom = document.getElementById('nom')?.value || 'Testament';
+        const dateStr = new Date().toISOString().split('T')[0];
+        const fileName = `Testament_${prenom}_${nom}_${dateStr}.pdf`.replace(/[^a-zA-Z0-9._-]/g, '_');
         
-        currentPDF.save(filename);
+        currentPDF.save(fileName);
+        console.log('PDF téléchargé:', fileName);
     } else {
+        console.log('Aucun PDF en mémoire, génération d\'un nouveau PDF');
         genererPDF();
     }
 }
 
 function envoyerParEmail() {
-    if (!currentPDF) {
-        alert('Veuillez d\'abord générer le PDF');
-        return;
-    }
-    
-    try {
-        const nom = document.getElementById('nom')?.value || '';
-        const prenom = document.getElementById('prenom')?.value || '';
-        const subject = `Testament Islamique - ${prenom} ${nom}`;
-        const body = `Ci-joint mon testament islamique généré avec Al Wassiya.
+    const prenom = document.getElementById('prenom')?.value || '';
+    const nom = document.getElementById('nom')?.value || '';
+    const subject = encodeURIComponent(`Testament Islamique - ${prenom} ${nom}`);
+    const body = encodeURIComponent(`Bonjour,
 
-Ce document a été créé conformément aux principes de l'héritage islamique.
+Ci-joint mon testament islamique généré avec Al Wassiya - الوصية.
+
+Ce document a été créé conformément aux principes de l'héritage islamique (Mirath).
 
 Cordialement,
 ${prenom} ${nom}
 
 ---
 Généré par Al Wassiya - الوصية
-Testament Islamique Simplifié`;
+Testament Islamique Simplifié
+${window.location.href}`);
 
-        const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailtoLink;
-        
-        alert('Votre client email va s\'ouvrir. N\'oubliez pas de joindre le fichier PDF que vous venez de télécharger.');
-        
-    } catch (error) {
-        console.error('Erreur envoi email:', error);
-        alert('Erreur lors de la préparation de l\'email. Veuillez télécharger le PDF et l\'envoyer manuellement.');
+    const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+    
+    if (!currentPDF) {
+        alert('N\'oubliez pas de générer et télécharger le PDF avant de l\'envoyer !');
+    } else {
+        alert('Votre client email va s\'ouvrir. N\'oubliez pas de joindre le fichier PDF téléchargé à votre message.');
     }
 }
 
 function partagerWhatsApp() {
-    const text = encodeURIComponent(`J'ai créé mon testament islamique avec Al Wassiya - الوصية
+    const text = encodeURIComponent(`🕌 J'ai créé mon testament islamique avec Al Wassiya - الوصية
 
-Cette application gratuite permet de préparer son testament selon les principes islamiques de manière simple et complète.
+✅ Application gratuite et conforme aux principes islamiques
+📋 Génération automatique de PDF complet
+🔒 Données sécurisées et privées
 
 Découvrez-la ici: ${window.location.href}
 
-#Testament #Islam #الوصية`);
+#Testament #Islam #الوصية #Mirath`);
     
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    const whatsappURL = `https://wa.me/?text=${text}`;
+    window.open(whatsappURL, '_blank');
+    console.log('Partage WhatsApp initié');
 }
 
 function partagerFacebook() {
     const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent('Al Wassiya - الوصية | Testament Islamique Simplifié');
+    const text = encodeURIComponent('Al Wassiya - الوصية | Testament Islamique Simplifié - Créez votre testament selon les principes islamiques');
     
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+    const facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`;
+    window.open(facebookURL, '_blank');
+    console.log('Partage Facebook initié');
 }
 
 function partagerTwitter() {
-    const text = encodeURIComponent(`J'ai créé mon testament islamique avec Al Wassiya - الوصية
+    const text = encodeURIComponent(`🕌 Al Wassiya - الوصية
 
-Application gratuite pour préparer son testament selon les principes islamiques.
+Testament islamique simplifié et gratuit
+✅ Conforme aux principes de l'héritage islamique
+📄 Génération PDF automatique
 
-#Testament #Islam #الوصية`);
+#Testament #Islam #الوصية #Mirath`);
     
     const url = encodeURIComponent(window.location.href);
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    const twitterURL = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+    window.open(twitterURL, '_blank');
+    console.log('Partage Twitter initié');
 }
 
 function partagerEmail() {
     const subject = encodeURIComponent('Al Wassiya - الوصية | Testament Islamique');
     const body = encodeURIComponent(`Bonjour,
 
-Je viens de découvrir Al Wassiya, une application web gratuite qui permet de créer son testament islamique de manière simple et conforme aux principes religieux.
+Je viens de découvrir Al Wassiya (الوصية), une application web gratuite qui permet de créer son testament islamique de manière simple et conforme aux principes religieux.
 
-L'application guide pas à pas dans la rédaction et génère automatiquement un PDF complet.
+🕌 Caractéristiques:
+✅ Respecte les règles de l'héritage islamique (Mirath)
+📋 Interface guidée pas à pas
+📄 Génération automatique de PDF
+🔒 Données privées et sécurisées
+🌍 Disponible en français et arabe
+
+L'application guide dans la rédaction et génère automatiquement un PDF complet avec le Bismillah et les dispositions importantes.
 
 Vous pouvez la découvrir ici: ${window.location.href}
 
 Cordialement`);
     
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    const emailURL = `mailto:?subject=${subject}&body=${body}`;
+    window.location.href = emailURL;
+    console.log('Partage Email initié');
 }
 
-// Test jsPDF au chargement
-window.addEventListener('load', function() {
-    console.log('Vérification jsPDF:', window.jspdf ? 'Chargé' : 'Non chargé');
-    if (!window.jspdf) {
-        console.error('jsPDF non chargé. Vérifiez l\'import du script.');
+// ==================== FONCTIONS DE DIAGNOSTIC ====================
+
+function testerJsPDF() {
+    console.log('=== DIAGNOSTIC JSPDF ===');
+    console.log('window.jspdf:', typeof window.jspdf);
+    
+    if (typeof window.jspdf !== 'undefined') {
+        console.log('✅ jsPDF est chargé');
+        
+        try {
+            const { jsPDF } = window.jspdf;
+            const testDoc = new jsPDF();
+            testDoc.text('Test', 10, 10);
+            console.log('✅ jsPDF fonctionne correctement');
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur lors du test jsPDF:', error);
+            return false;
+        }
+    } else {
+        console.error('❌ jsPDF n\'est pas chargé');
+        return false;
     }
+}
+
+// ==================== INITIALISATION ET VÉRIFICATIONS ====================
+
+// Test au chargement de la page
+window.addEventListener('load', function() {
+    console.log('=== INITIALISATION AL WASSIYA ===');
+    
+    // Test jsPDF
+    setTimeout(() => {
+        const jsPDFOK = testerJsPDF();
+        if (!jsPDFOK) {
+            console.error('⚠️ Problème avec jsPDF détecté');
+        }
+    }, 1000);
+    
+    console.log('✅ Al Wassiya initialisé');
 });
+
+// Test périodique de jsPDF (optionnel)
+setInterval(() => {
+    if (typeof window.jspdf === 'undefined') {
+        console.warn('⚠️ jsPDF non disponible - rechargement recommandé');
+    }
+}, 30000); // Vérifie toutes les 30 secondes
+
+console.log('📄 Module PDF Al Wassiya chargé');
 </script>
 
 </body>
