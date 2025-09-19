@@ -59,6 +59,13 @@
             letter-spacing: 1px;
         }
 
+        .arabic-subtitle {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
         .subtitle {
             font-size: 1.2rem;
             color: var(--secondary);
@@ -717,6 +724,7 @@
     <div class="container">
         <div class="header">
             <div class="logo">Al Wassiya</div>
+            <div class="arabic-subtitle">الوصية</div>
             <div class="subtitle">Votre Testament Islamique Simplifié</div>
             <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
             <p>Créez facilement un testament islamique respectant le Coran et la Sunna</p>
@@ -859,9 +867,45 @@
                                     <i class="fas fa-chevron-down"></i>
                                 </div>
                                 <div id="parents" class="category-content">
+                                    <div class="form-group">
+                                        <label for="pere">Père</label>
+                                        <select id="pere" name="pere">
+                                            <option value="">Sélectionner le statut du père</option>
+                                            <option value="vivant">Père vivant</option>
+                                            <option value="decede">Père décédé</option>
+                                            <option value="inconnu">Statut inconnu</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="pereDetails" style="display: none;">
+                                        <label for="prenomPere">Prénom et nom du père</label>
+                                        <input type="text" id="prenomPere" name="prenomPere" placeholder="Prénom et nom complet du père">
+                                        <label for="contactPere">Contact du père</label>
+                                        <input type="text" id="contactPere" name="contactPere" placeholder="Téléphone ou email">
+                                        <label for="adressePere">Adresse du père</label>
+                                        <textarea id="adressePere" name="adressePere" placeholder="Adresse complète du père"></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="mere">Mère</label>
+                                        <select id="mere" name="mere">
+                                            <option value="">Sélectionner le statut de la mère</option>
+                                            <option value="vivante">Mère vivante</option>
+                                            <option value="decedee">Mère décédée</option>
+                                            <option value="inconnu">Statut inconnu</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="mereDetails" style="display: none;">
+                                        <label for="prenomMere">Prénom et nom de la mère</label>
+                                        <input type="text" id="prenomMere" name="prenomMere" placeholder="Prénom et nom complet de la mère">
+                                        <label for="contactMere">Contact de la mère</label>
+                                        <input type="text" id="contactMere" name="contactMere" placeholder="Téléphone ou email">
+                                        <label for="adresseMere">Adresse de la mère</label>
+                                        <textarea id="adresseMere" name="adresseMere" placeholder="Adresse complète de la mère"></textarea>
+                                    </div>
+                                    
                                     <div id="parents-container"></div>
                                     <button type="button" class="add-person-btn" onclick="addPerson('parents')">
-                                        <i class="fas fa-plus"></i> Ajouter un parent
+                                        <i class="fas fa-plus"></i> Ajouter un autre parent
                                     </button>
                                 </div>
                             </div>
@@ -889,6 +933,34 @@
                                     <i class="fas fa-chevron-down"></i>
                                 </div>
                                 <div id="freres-soeurs" class="category-content">
+                                    <div class="form-group">
+                                        <label for="nombreFreres">Nombre de frères</label>
+                                        <select id="nombreFreres" name="nombreFreres" onchange="generateSiblings('freres')">
+                                            <option value="">Sélectionner</option>
+                                            <option value="0">Aucun frère</option>
+                                            <option value="1">1 frère</option>
+                                            <option value="2">2 frères</option>
+                                            <option value="3">3 frères</option>
+                                            <option value="4">4 frères</option>
+                                            <option value="5">5 frères ou plus</option>
+                                        </select>
+                                    </div>
+                                    <div id="freresDetails"></div>
+                                    
+                                    <div class="form-group">
+                                        <label for="nombreSoeurs">Nombre de soeurs</label>
+                                        <select id="nombreSoeurs" name="nombreSoeurs" onchange="generateSiblings('soeurs')">
+                                            <option value="">Sélectionner</option>
+                                            <option value="0">Aucune soeur</option>
+                                            <option value="1">1 soeur</option>
+                                            <option value="2">2 soeurs</option>
+                                            <option value="3">3 soeurs</option>
+                                            <option value="4">4 soeurs</option>
+                                            <option value="5">5 soeurs ou plus</option>
+                                        </select>
+                                    </div>
+                                    <div id="soeursDetails"></div>
+                                    
                                     <div id="freres-soeurs-container"></div>
                                     <button type="button" class="add-person-btn" onclick="addPerson('freres-soeurs')">
                                         <i class="fas fa-plus"></i> Ajouter un frère/une soeur
@@ -904,6 +976,21 @@
                                     <i class="fas fa-chevron-down"></i>
                                 </div>
                                 <div id="enfants" class="category-content">
+                                    <div class="form-group">
+                                        <label for="nombreEnfants">Nombre d'enfants</label>
+                                        <select id="nombreEnfants" name="nombreEnfants" onchange="generateChildren()">
+                                            <option value="">Sélectionner</option>
+                                            <option value="0">Aucun enfant</option>
+                                            <option value="1">1 enfant</option>
+                                            <option value="2">2 enfants</option>
+                                            <option value="3">3 enfants</option>
+                                            <option value="4">4 enfants</option>
+                                            <option value="5">5 enfants</option>
+                                            <option value="6">6 enfants ou plus</option>
+                                        </select>
+                                    </div>
+                                    <div id="enfantsDetails"></div>
+                                    
                                     <div id="enfants-container"></div>
                                     <button type="button" class="add-person-btn" onclick="addPerson('enfants')">
                                         <i class="fas fa-plus"></i> Ajouter un enfant
@@ -1066,6 +1153,11 @@
                         <h3 class="section-title">
                             <i class="fas fa-calculator"></i> Calculateur de Zakat
                         </h3>
+                        <div class="form-group">
+                            <label for="nissab">Nisâb (seuil d'imposition) en euros</label>
+                            <input type="number" id="nissab" name="nissab" value="4265" placeholder="4265" oninput="calculateZakat()">
+                            <small>Le Nisâb actuel est d'environ 4265€ (85g d'or). Vous pouvez l'ajuster selon la valeur actuelle de l'or.</small>
+                        </div>
                         <div class="form-group">
                             <label for="montantZakat">Total de vos biens imposables (en €)</label>
                             <input type="number" id="montantZakat" name="montantZakat" placeholder="Montant en euros" oninput="calculateZakat()">
@@ -1285,15 +1377,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="actions">
-                        <button type="button" class="btn btn-secondary" onclick="previousStep()">
-                            <i class="fas fa-arrow-left"></i> Précédent
-                        </button>
-                        <button type="button" class="btn btn-primary" onclick="generatePDF()">
-                            <i class="fas fa-file-pdf"></i> Générer le PDF
-                        </button>
-                    </div>
                 </div>
             </form>
 
@@ -1303,7 +1386,7 @@
                     <i class="fas fa-arrow-left"></i> Précédent
                 </button>
                 <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
-                    Suivant <i class="fas fa-arrow-right"></i>
+                    Étape suivante: Famille et proches <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </main>
@@ -1341,8 +1424,13 @@
     <script>
         // Variables globales
         let currentStep = 1;
-        let totalSteps = 6;
+        const totalSteps = 6;
         let formData = {};
+        let personCounter = 0;
+        let assetCounter = 0;
+        let debtCounter = 0;
+        let legacyCounter = 0;
+        let digitalAccountCounter = 0;
 
         // Données pour le calcul de l'héritage
         let familyData = {
@@ -1352,16 +1440,90 @@
             siblings: 0
         };
 
-        // Initialisation de la page
+        // Initialisation au chargement de la page
         document.addEventListener('DOMContentLoaded', function() {
-            showStep(1);
             loadFormData();
             setupAutoSave();
+            updateStepNavigation();
+            
+            // Gestion des champs père/mère
+            document.getElementById('pere').addEventListener('change', function() {
+                toggleParentDetails('pere', 'pereDetails');
+            });
+            
+            document.getElementById('mere').addEventListener('change', function() {
+                toggleParentDetails('mere', 'mereDetails');
+            });
         });
 
-        // Affichage des étapes
+        // Gestion du champ conjoint
+        function toggleConjointField() {
+            const situationFamiliale = document.getElementById('situationFamiliale').value;
+            const conjointGroup = document.getElementById('conjointGroup');
+            const conjointLabel = document.getElementById('conjointLabel');
+            
+            if (situationFamiliale === 'marie') {
+                conjointGroup.style.display = 'block';
+                conjointLabel.textContent = 'Identité de l\'époux/épouse';
+            } else if (situationFamiliale === 'divorce' || situationFamiliale === 'veuf') {
+                conjointGroup.style.display = 'block';
+                conjointLabel.textContent = 'Identité de l\'ex-conjoint ou conjoint décédé';
+            } else {
+                conjointGroup.style.display = 'none';
+                document.getElementById('conjoint').value = '';
+            }
+        }
+
+        // Gestion des détails parents
+        function toggleParentDetails(parentType, detailsId) {
+            const parentSelect = document.getElementById(parentType);
+            const detailsDiv = document.getElementById(detailsId);
+            
+            if (parentSelect.value === 'vivant' || parentSelect.value === 'decede') {
+                detailsDiv.style.display = 'block';
+            } else {
+                detailsDiv.style.display = 'none';
+            }
+        }
+
+        // Navigation entre étapes
+        function nextStep() {
+            // Validation uniquement pour l'étape 1
+            if (currentStep === 1) {
+                const requiredFields = document.querySelectorAll('#step1 input[required], #step1 select[required], #step1 textarea[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    const errorElement = document.getElementById(field.id + '-error');
+                    if (!field.value.trim()) {
+                        if (errorElement) errorElement.style.display = 'block';
+                        field.style.borderColor = 'var(--error)';
+                        isValid = false;
+                    } else {
+                        if (errorElement) errorElement.style.display = 'none';
+                        field.style.borderColor = '';
+                    }
+                });
+                
+                if (!isValid) {
+                    alert('Veuillez remplir tous les champs obligatoires avant de continuer.');
+                    return;
+                }
+            }
+            
+            if (currentStep < totalSteps) {
+                showStep(currentStep + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                showStep(currentStep - 1);
+            }
+        }
+
         function showStep(step) {
-            // Cacher toutes les étapes
+            // Masquer toutes les étapes
             document.querySelectorAll('.form-step').forEach(stepElement => {
                 stepElement.style.display = 'none';
             });
@@ -1394,82 +1556,39 @@
             ];
             document.getElementById('stepIndicator').textContent = stepTexts[step - 1];
             
-            // Gérer les boutons de navigation
+            currentStep = step;
+            updateStepNavigation();
+            window.scrollTo(0, 0);
+        }
+
+        function updateStepNavigation() {
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             
-            if (step === 1) {
+            if (currentStep === 1) {
                 prevBtn.style.display = 'none';
             } else {
                 prevBtn.style.display = 'inline-flex';
             }
             
-            if (step === totalSteps) {
-                nextBtn.textContent = 'Générer le PDF';
+            // Boutons avec intitulés spécifiques
+            const stepButtons = {
+                1: 'Étape suivante: Famille et proches <i class="fas fa-arrow-right"></i>',
+                2: 'Étape suivante: Biens et patrimoine <i class="fas fa-arrow-right"></i>',
+                3: 'Étape suivante: Dettes et obligations <i class="fas fa-arrow-right"></i>',
+                4: 'Étape suivante: Héritage et legs <i class="fas fa-arrow-right"></i>',
+                5: 'Étape suivante: Comptes numériques <i class="fas fa-arrow-right"></i>',
+                6: '<i class="fas fa-file-pdf"></i> Générer le testament PDF'
+            };
+            
+            nextBtn.innerHTML = stepButtons[currentStep];
+            
+            if (currentStep === totalSteps) {
                 nextBtn.onclick = generatePDF;
+                nextBtn.className = 'btn btn-primary';
             } else {
-                nextBtn.innerHTML = 'Suivant <i class="fas fa-arrow-right"></i>';
                 nextBtn.onclick = nextStep;
-            }
-            
-            currentStep = step;
-            window.scrollTo(0, 0);
-        }
-
-        // Navigation
-        function nextStep() {
-            if (validateCurrentStep()) {
-                if (currentStep < totalSteps) {
-                    showStep(currentStep + 1);
-                }
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 1) {
-                showStep(currentStep - 1);
-            }
-        }
-
-        // Validation des étapes
-        function validateCurrentStep() {
-            const requiredFields = document.querySelectorAll(`#step${currentStep} input[required], #step${currentStep} select[required], #step${currentStep} textarea[required]`);
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                const errorElement = document.getElementById(field.id + '-error');
-                if (!field.value.trim()) {
-                    if (errorElement) errorElement.style.display = 'block';
-                    field.style.borderColor = 'var(--error)';
-                    isValid = false;
-                } else {
-                    if (errorElement) errorElement.style.display = 'none';
-                    field.style.borderColor = '';
-                }
-            });
-            
-            if (!isValid) {
-                alert('Veuillez remplir tous les champs obligatoires avant de continuer.');
-            }
-            
-            return isValid;
-        }
-
-        // Toggle du champ conjoint
-        function toggleConjointField() {
-            const situationFamiliale = document.getElementById('situationFamiliale').value;
-            const conjointGroup = document.getElementById('conjointGroup');
-            const conjointLabel = document.getElementById('conjointLabel');
-            
-            if (situationFamiliale === 'marie') {
-                conjointGroup.style.display = 'block';
-                conjointLabel.textContent = 'Identité de l\'époux/épouse';
-            } else if (situationFamiliale === 'divorce' || situationFamiliale === 'veuf') {
-                conjointGroup.style.display = 'block';
-                conjointLabel.textContent = 'Identité de l\'ex-conjoint ou conjoint décédé';
-            } else {
-                conjointGroup.style.display = 'none';
-                document.getElementById('conjoint').value = '';
+                nextBtn.className = 'btn btn-primary';
             }
         }
 
@@ -1488,12 +1607,89 @@
             }
         }
 
-        // Compteurs pour les IDs uniques
-        let personCounter = 0;
-        let assetCounter = 0;
-        let debtCounter = 0;
-        let legacyCounter = 0;
-        let digitalAccountCounter = 0;
+        // Génération automatique des frères/sœurs
+        function generateSiblings(type) {
+            const nombre = document.getElementById('nombre' + type.charAt(0).toUpperCase() + type.slice(1)).value;
+            const container = document.getElementById(type + 'Details');
+            container.innerHTML = '';
+            
+            if (nombre && nombre > 0 && nombre <= 10) {
+                for (let i = 1; i <= nombre; i++) {
+                    const siblingDiv = document.createElement('div');
+                    siblingDiv.className = 'person-entry';
+                    siblingDiv.innerHTML = `
+                        <h4>${type.slice(0, -1).charAt(0).toUpperCase() + type.slice(0, -1).slice(1)} ${i}</h4>
+                        <div class="form-group">
+                            <label>Nom et prénom</label>
+                            <input type="text" name="${type}_${i}_nom" placeholder="Nom complet">
+                        </div>
+                        <div class="form-group">
+                            <label>Âge</label>
+                            <input type="number" name="${type}_${i}_age" placeholder="Âge">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact</label>
+                            <input type="text" name="${type}_${i}_contact" placeholder="Téléphone ou email">
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            <textarea name="${type}_${i}_adresse" placeholder="Adresse complète"></textarea>
+                        </div>
+                    `;
+                    container.appendChild(siblingDiv);
+                }
+            }
+            updateFamilyData();
+        }
+
+        // Génération automatique des enfants
+        function generateChildren() {
+            const nombre = document.getElementById('nombreEnfants').value;
+            const container = document.getElementById('enfantsDetails');
+            container.innerHTML = '';
+            
+            if (nombre && nombre > 0 && nombre <= 15) {
+                for (let i = 1; i <= nombre; i++) {
+                    const childDiv = document.createElement('div');
+                    childDiv.className = 'person-entry';
+                    childDiv.innerHTML = `
+                        <h4>Enfant ${i}</h4>
+                        <div class="form-group">
+                            <label>Nom et prénom</label>
+                            <input type="text" name="enfant_${i}_nom" placeholder="Nom complet" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Sexe</label>
+                            <select name="enfant_${i}_sexe" required>
+                                <option value="">Sélectionner</option>
+                                <option value="masculin">Masculin</option>
+                                <option value="feminin">Féminin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date de naissance</label>
+                            <input type="date" name="enfant_${i}_naissance">
+                        </div>
+                        <div class="form-group">
+                            <label>Situation</label>
+                            <select name="enfant_${i}_situation">
+                                <option value="">Sélectionner</option>
+                                <option value="mineur">Mineur</option>
+                                <option value="majeur">Majeur</option>
+                                <option value="marie">Marié</option>
+                                <option value="etudiant">Étudiant</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact/Adresse</label>
+                            <textarea name="enfant_${i}_contact" placeholder="Contact et adresse si applicable"></textarea>
+                        </div>
+                    `;
+                    container.appendChild(childDiv);
+                }
+            }
+            updateFamilyData();
+        }
 
         // Ajout de personnes
         function addPerson(type) {
@@ -1511,7 +1707,7 @@
                 </div>
                 <div class="form-group">
                     <label>Relation</label>
-                    <input type="text" name="${personId}_relation" placeholder="Ex: Père, Mère, Frère, etc.">
+                    <input type="text" name="${personId}_relation" placeholder="Ex: Oncle, Tante, Cousin, etc.">
                 </div>
                 <div class="form-group">
                     <label>Contact</label>
@@ -1555,12 +1751,17 @@
                             <option value="appartement">Appartement</option>
                             <option value="terrain">Terrain</option>
                             <option value="local-commercial">Local commercial</option>
+                            <option value="garage">Garage/Parking</option>
                             <option value="autre">Autre</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Adresse du bien</label>
                         <textarea name="${assetId}_adresse" placeholder="Adresse complète du bien"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Surface (m²)</label>
+                        <input type="number" name="${assetId}_surface" placeholder="Surface en m²">
                     </div>`;
             } else if (type === 'comptes') {
                 specificFields = `
@@ -1574,13 +1775,15 @@
                             <option value="">Sélectionner</option>
                             <option value="courant">Compte courant</option>
                             <option value="epargne">Compte épargne</option>
-                            <option value="livret">Livret</option>
+                            <option value="livret">Livret A/LDDS</option>
+                            <option value="pea">PEA</option>
+                            <option value="assurance-vie">Assurance vie</option>
                             <option value="autre">Autre</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Numéro de compte</label>
-                        <input type="text" name="${assetId}_numero" placeholder="Numéro de compte (optionnel)">
+                        <label>Numéro de compte (optionnel)</label>
+                        <input type="text" name="${assetId}_numero" placeholder="Numéro de compte">
                     </div>`;
             } else if (type === 'cartes') {
                 specificFields = `
@@ -1598,8 +1801,8 @@
                         <input type="text" name="${assetId}_banque" placeholder="Nom de la banque">
                     </div>
                     <div class="form-group">
-                        <label>Code PIN (optionnel)</label>
-                        <input type="password" name="${assetId}_pin" placeholder="Code confidentiel">
+                        <label>4 derniers chiffres</label>
+                        <input type="text" name="${assetId}_numero" placeholder="**** **** **** 1234" maxlength="4">
                     </div>`;
             } else if (type === 'applications') {
                 specificFields = `
@@ -1608,18 +1811,44 @@
                         <select name="${assetId}_type">
                             <option value="">Sélectionner</option>
                             <option value="bancaire">Application bancaire</option>
-                            <option value="paiement">Application de paiement</option>
+                            <option value="paiement">Application de paiement (PayPal, etc.)</option>
                             <option value="crypto">Portefeuille crypto</option>
+                            <option value="investissement">Application d'investissement</option>
                             <option value="autre">Autre</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Nom d'utilisateur</label>
+                        <label>Nom d'utilisateur/Email</label>
                         <input type="text" name="${assetId}_username" placeholder="Identifiant de connexion">
-                    </div>
+                    </div>`;
+            } else if (type === 'materiel') {
+                specificFields = `
                     <div class="form-group">
-                        <label>Mot de passe</label>
-                        <input type="password" name="${assetId}_password" placeholder="Mot de passe">
+                        <label>Catégorie</label>
+                        <select name="${assetId}_categorie">
+                            <option value="">Sélectionner</option>
+                            <option value="vehicule">Véhicule</option>
+                            <option value="bijoux">Bijoux</option>
+                            <option value="electronique">Électronique</option>
+                            <option value="mobilier">Mobilier</option>
+                            <option value="art">Œuvre d'art</option>
+                            <option value="collection">Collection</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>`;
+            } else if (type === 'personnels') {
+                specificFields = `
+                    <div class="form-group">
+                        <label>Type de bien personnel</label>
+                        <select name="${assetId}_type">
+                            <option value="">Sélectionner</option>
+                            <option value="vetements">Vêtements</option>
+                            <option value="livres">Livres</option>
+                            <option value="photos">Photos/Souvenirs</option>
+                            <option value="documents">Documents personnels</option>
+                            <option value="religieux">Objets religieux</option>
+                            <option value="autre">Autre</option>
+                        </select>
                     </div>`;
             }
             
@@ -1632,6 +1861,16 @@
                 <div class="form-group">
                     <label>Valeur estimée (€)</label>
                     <input type="number" name="${assetId}_valeur" placeholder="Valeur en euros">
+                </div>
+                <div class="form-group">
+                    <label>État/Condition</label>
+                    <select name="${assetId}_etat">
+                        <option value="">Sélectionner</option>
+                        <option value="excellent">Excellent</option>
+                        <option value="bon">Bon</option>
+                        <option value="moyen">Moyen</option>
+                        <option value="mauvais">Mauvais</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Notes</label>
@@ -1663,6 +1902,26 @@
             
             debtDiv.innerHTML = `
                 <div class="form-group">
+                    <label>Type de ${title}</label>
+                    <select name="${debtId}_type">
+                        <option value="">Sélectionner</option>
+                        ${isDebt ? `
+                            <option value="pret">Prêt bancaire</option>
+                            <option value="credit">Crédit à la consommation</option>
+                            <option value="hypotheque">Hypothèque</option>
+                            <option value="personnel">Dette personnelle</option>
+                            <option value="impots">Impôts</option>
+                            <option value="factures">Factures impayées</option>
+                        ` : `
+                            <option value="pret">Prêt accordé</option>
+                            <option value="salaire">Salaire dû</option>
+                            <option value="remboursement">Remboursement attendu</option>
+                            <option value="depot">Dépôt de garantie</option>
+                        `}
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Description de la ${title}</label>
                     <input type="text" name="${debtId}_description" placeholder="Description" required>
                 </div>
@@ -1673,6 +1932,10 @@
                 <div class="form-group">
                     <label>Montant (€)</label>
                     <input type="number" name="${debtId}_montant" placeholder="Montant en euros">
+                </div>
+                <div class="form-group">
+                    <label>Échéance</label>
+                    <input type="date" name="${debtId}_echeance">
                 </div>
                 <div class="form-group">
                     <label>Contact</label>
@@ -1709,19 +1972,33 @@
                     <input type="text" name="${legacyId}_beneficiaire" placeholder="Nom du bénéficiaire" required>
                 </div>
                 <div class="form-group">
+                    <label>Relation avec le bénéficiaire</label>
+                    <input type="text" name="${legacyId}_relation" placeholder="Ex: Ami, Association, Mosquée">
+                </div>
+                <div class="form-group">
+                    <label>Type de legs</label>
+                    <select name="${legacyId}_type">
+                        <option value="">Sélectionner</option>
+                        <option value="argent">Somme d'argent</option>
+                        <option value="bien">Bien matériel spécifique</option>
+                        <option value="pourcentage">Pourcentage du tiers</option>
+                        <option value="usufruit">Usufruit</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Objet du legs</label>
-                    <textarea name="${legacyId}_objet" placeholder="Description de ce qui est légué" required></textarea>
+                    <textarea name="${legacyId}_objet" placeholder="Description détaillée de ce qui est légué" required></textarea>
                 </div>
                 <div class="form-group">
                     <label>Valeur estimée (€)</label>
-                    <input type="number" name="${legacyId}_valeur" placeholder="Valeur en euros">
+                    <input type="number" name="${legacyId}_valeur" placeholder="Valeur en euros" oninput="calculateLegacySummary()">
                 </div>
                 <div class="form-group">
                     <label>Conditions particulières</label>
-                    <textarea name="${legacyId}_conditions" placeholder="Conditions d'attribution du legs"></textarea>
+                    <textarea name="${legacyId}_conditions" placeholder="Conditions d'attribution du legs (âge, situation, etc.)"></textarea>
                 </div>
                 <div class="leg-amount">
-                    Rappel : Ce legs sera déduit du tiers disponible
+                    Rappel : Ce legs sera déduit du tiers disponible (maximum 1/3 du patrimoine)
                 </div>
                 <button type="button" class="remove-person-btn" onclick="removeLegacy('${legacyId}')">
                     <i class="fas fa-trash"></i> Supprimer
@@ -1755,9 +2032,11 @@
                             <option value="">Sélectionner</option>
                             <option value="facebook">Facebook</option>
                             <option value="instagram">Instagram</option>
-                            <option value="twitter">Twitter</option>
+                            <option value="twitter">Twitter/X</option>
                             <option value="linkedin">LinkedIn</option>
                             <option value="tiktok">TikTok</option>
+                            <option value="snapchat">Snapchat</option>
+                            <option value="youtube">YouTube</option>
                             <option value="autre">Autre</option>
                         </select>
                     </div>`;
@@ -1768,9 +2047,11 @@
                         <select name="${accountId}_fournisseur">
                             <option value="">Sélectionner</option>
                             <option value="gmail">Gmail</option>
-                            <option value="outlook">Outlook</option>
+                            <option value="outlook">Outlook/Hotmail</option>
                             <option value="yahoo">Yahoo</option>
                             <option value="icloud">iCloud</option>
+                            <option value="orange">Orange</option>
+                            <option value="free">Free</option>
                             <option value="autre">Autre</option>
                         </select>
                     </div>`;
@@ -1787,12 +2068,23 @@
                     <input type="text" name="${accountId}_username" placeholder="Identifiant de connexion">
                 </div>
                 <div class="form-group">
-                    <label>Mot de passe</label>
-                    <input type="password" name="${accountId}_password" placeholder="Mot de passe">
+                    <label>Instructions particulières</label>
+                    <select name="${accountId}_action">
+                        <option value="">Que faire de ce compte ?</option>
+                        <option value="supprimer">Supprimer le compte</option>
+                        <option value="memorial">Transformer en mémorial</option>
+                        <option value="transferer">Transférer à la famille</option>
+                        <option value="conserver">Conserver tel quel</option>
+                        <option value="autre">Autre instruction</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label>Instructions particulières</label>
-                    <textarea name="${accountId}_instructions" placeholder="Ce qu'il faut faire de ce compte (supprimer, conserver, etc.)"></textarea>
+                    <label>Personne de confiance</label>
+                    <input type="text" name="${accountId}_contact" placeholder="Personne qui peut gérer ce compte">
+                </div>
+                <div class="form-group">
+                    <label>Notes supplémentaires</label>
+                    <textarea name="${accountId}_notes" placeholder="Informations importantes concernant ce compte"></textarea>
                 </div>
                 <button type="button" class="remove-person-btn" onclick="removeDigitalAccount('${accountId}')">
                     <i class="fas fa-trash"></i> Supprimer
@@ -1808,23 +2100,37 @@
 
         // Calculateur de Zakat
         function calculateZakat() {
+            const nissab = parseFloat(document.getElementById('nissab').value) || 4265;
             const montant = parseFloat(document.getElementById('montantZakat').value) || 0;
             const result = document.getElementById('zakatResult');
             
             if (montant > 0) {
-                const nisab = 4265; // Nisab approximatif en euros (peut varier)
-                const zakatAmount = montant * 0.025; // 2.5%
-                
                 result.style.display = 'block';
-                if (montant >= nisab) {
+                
+                if (montant >= nissab) {
+                    const exceeding = montant - nissab;
+                    const zakatAmount = exceeding * 0.025; // 2.5% sur ce qui dépasse le nisab
+                    
                     result.innerHTML = `
-                        <strong>Zakat obligatoire :</strong> ${zakatAmount.toFixed(2)} €<br>
-                        <small>Votre patrimoine dépasse le Nisab (${nisab} €). La Zakat est obligatoire.</small>
+                        <div style="background: var(--success); color: white; padding: 15px; border-radius: var(--radius); margin-bottom: 10px;">
+                            <strong>Zakat obligatoire</strong>
+                        </div>
+                        <p><strong>Montant du patrimoine :</strong> ${montant.toFixed(2)} €</p>
+                        <p><strong>Nisâb (seuil) :</strong> ${nissab.toFixed(2)} €</p>
+                        <p><strong>Montant dépassant le Nisâb :</strong> ${exceeding.toFixed(2)} €</p>
+                        <p><strong>Zakat à verser (2,5%) :</strong> <span style="color: var(--primary); font-weight: bold; font-size: 1.2em;">${zakatAmount.toFixed(2)} €</span></p>
+                        <small style="color: var(--secondary);">La Zakat est calculée sur le montant qui dépasse le Nisâb.</small>
                     `;
                 } else {
+                    const manquant = nissab - montant;
                     result.innerHTML = `
-                        <strong>Zakat non obligatoire</strong><br>
-                        <small>Votre patrimoine ne dépasse pas le Nisab (${nisab} €). La Zakat n'est pas obligatoire.</small>
+                        <div style="background: var(--secondary); color: white; padding: 15px; border-radius: var(--radius); margin-bottom: 10px;">
+                            <strong>Zakat non obligatoire</strong>
+                        </div>
+                        <p><strong>Montant du patrimoine :</strong> ${montant.toFixed(2)} €</p>
+                        <p><strong>Nisâb (seuil) :</strong> ${nissab.toFixed(2)} €</p>
+                        <p><strong>Il manque :</strong> ${manquant.toFixed(2)} € pour atteindre le Nisâb</p>
+                        <small style="color: var(--secondary);">Votre patrimoine ne dépasse pas le seuil du Nisâb. La Zakat n'est pas obligatoire.</small>
                     `;
                 }
             } else {
@@ -1835,10 +2141,14 @@
         // Mise à jour des données familiales
         function updateFamilyData() {
             // Compter les membres de la famille
-            familyData.spouse = document.querySelectorAll('#conjoints-container .person-entry').length > 0;
-            familyData.children = document.querySelectorAll('#enfants-container .person-entry').length;
-            familyData.parents = document.querySelectorAll('#parents-container .person-entry').length;
-            familyData.siblings = document.querySelectorAll('#freres-soeurs-container .person-entry').length;
+            familyData.spouse = document.querySelectorAll('#conjoints-container .person-entry').length > 0 || 
+                               document.getElementById('situationFamiliale').value === 'marie';
+            familyData.children = document.querySelectorAll('#enfants-container .person-entry').length + 
+                                 (parseInt(document.getElementById('nombreEnfants').value) || 0);
+            familyData.parents = (document.getElementById('pere').value === 'vivant' ? 1 : 0) + 
+                                (document.getElementById('mere').value === 'vivante' ? 1 : 0);
+            familyData.siblings = (parseInt(document.getElementById('nombreFreres').value) || 0) + 
+                                 (parseInt(document.getElementById('nombreSoeurs').value) || 0);
         }
 
         // Calculateur d'héritage
@@ -1851,26 +2161,47 @@
                 updateFamilyData();
                 
                 const shares = calculateIslamicInheritance(totalValue, familyData);
-                result.innerHTML = `<strong>Patrimoine total :</strong> ${totalValue.toFixed(2)} €`;
+                result.innerHTML = `
+                    <strong>Patrimoine total :</strong> ${totalValue.toFixed(2)} €<br>
+                    <small>Répartition selon les règles coraniques de l'héritage</small>
+                `;
                 
                 // Afficher la répartition
                 grid.innerHTML = '';
+                let totalDistributed = 0;
+                
                 shares.forEach(share => {
                     const shareDiv = document.createElement('div');
                     shareDiv.className = 'heritage-item';
                     shareDiv.innerHTML = `
                         <div class="heritage-item-title">${share.heir}</div>
-                        <div class="heritage-share">${share.fraction} - ${share.amount.toFixed(2)} €</div>
+                        <div class="heritage-share">${share.fraction} = ${share.amount.toFixed(2)} €</div>
+                        <small>${share.description || ''}</small>
                     `;
                     grid.appendChild(shareDiv);
+                    totalDistributed += share.amount;
                 });
+                
+                // Ajouter une note si il reste un résidu
+                const remaining = totalValue - totalDistributed;
+                if (remaining > 1) {
+                    const remainingDiv = document.createElement('div');
+                    remainingDiv.className = 'heritage-item';
+                    remainingDiv.style.borderLeft = '4px solid var(--accent)';
+                    remainingDiv.innerHTML = `
+                        <div class="heritage-item-title">Résidu (Radd)</div>
+                        <div class="heritage-share">${remaining.toFixed(2)} €</div>
+                        <small>À répartir entre les héritiers selon les règles du Radd</small>
+                    `;
+                    grid.appendChild(remainingDiv);
+                }
             } else {
                 result.innerHTML = '';
-                grid.innerHTML = '';
+                grid.innerHTML = '<p style="text-align: center; color: var(--secondary);">Saisissez la valeur de votre patrimoine pour voir la répartition</p>';
             }
         }
 
-        // Calcul de l'héritage selon les règles islamiques (simplifié)
+        // Calcul simplifié de l'héritage selon les règles islamiques
         function calculateIslamicInheritance(totalValue, family) {
             const shares = [];
             let remainingFraction = 1; // 100%
@@ -1879,16 +2210,18 @@
             if (family.spouse) {
                 if (family.children > 0) {
                     shares.push({
-                        heir: 'Conjoint',
+                        heir: 'Conjoint survivant',
                         fraction: '1/8',
-                        amount: totalValue / 8
+                        amount: totalValue / 8,
+                        description: 'Part du conjoint en présence d\'enfants'
                     });
                     remainingFraction -= 1/8;
                 } else {
                     shares.push({
-                        heir: 'Conjoint',
+                        heir: 'Conjoint survivant',
                         fraction: '1/4',
-                        amount: totalValue / 4
+                        amount: totalValue / 4,
+                        description: 'Part du conjoint sans enfant'
                     });
                     remainingFraction -= 1/4;
                 }
@@ -1897,19 +2230,34 @@
             // Parents
             if (family.parents > 0) {
                 if (family.children > 0) {
-                    shares.push({
-                        heir: 'Parents (chacun)',
-                        fraction: '1/6',
-                        amount: totalValue / 6
-                    });
-                    remainingFraction -= 1/3; // Les deux parents ensemble
+                    const parentShare = totalValue / 6;
+                    if (family.parents === 2) {
+                        shares.push({
+                            heir: 'Père et Mère (chacun)',
+                            fraction: '1/6 chacun',
+                            amount: parentShare * 2,
+                            description: 'Part des parents en présence d\'enfants'
+                        });
+                        remainingFraction -= 1/3;
+                    } else {
+                        shares.push({
+                            heir: family.parents === 1 ? 'Parent survivant' : 'Parents',
+                            fraction: '1/6',
+                            amount: parentShare,
+                            description: 'Part du parent en présence d\'enfants'
+                        });
+                        remainingFraction -= 1/6;
+                    }
                 } else {
-                    shares.push({
-                        heir: 'Parents',
-                        fraction: '1/3',
-                        amount: totalValue / 3
-                    });
-                    remainingFraction -= 1/3;
+                    if (family.parents === 2) {
+                        shares.push({
+                            heir: 'Mère',
+                            fraction: '1/3',
+                            amount: totalValue / 3,
+                            description: 'Part de la mère sans enfant'
+                        });
+                        remainingFraction -= 1/3;
+                    }
                 }
             }
             
@@ -1918,19 +2266,23 @@
                 const childrenAmount = totalValue * remainingFraction;
                 shares.push({
                     heir: `Enfants (${family.children})`,
-                    fraction: 'Reste',
-                    amount: childrenAmount
+                    fraction: 'Reste (Asaba)',
+                    amount: childrenAmount,
+                    description: 'Les fils héritent le double des filles'
                 });
                 remainingFraction = 0;
             }
             
-            // Note explicative
-            if (remainingFraction > 0) {
+            // Frères et sœurs (si pas d'enfants ni de père)
+            if (family.children === 0 && family.siblings > 0 && remainingFraction > 0) {
+                const siblingsAmount = totalValue * remainingFraction;
                 shares.push({
-                    heir: 'Autres héritiers',
-                    fraction: 'Selon règles coraniques',
-                    amount: totalValue * remainingFraction
+                    heir: `Frères et Sœurs (${family.siblings})`,
+                    fraction: 'Reste (Asaba)',
+                    amount: siblingsAmount,
+                    description: 'Héritent en l\'absence d\'enfants et de père'
                 });
+                remainingFraction = 0;
             }
             
             return shares;
@@ -1938,12 +2290,12 @@
 
         // Calcul du résumé des legs
         function calculateLegacySummary() {
-            const legacyInputs = document.querySelectorAll('input[name*="_valeur"]');
+            const legacyInputs = document.querySelectorAll('input[name*="legs_"][name*="_valeur"]');
             let totalLegacies = 0;
             const totalValue = parseFloat(document.getElementById('totalPatrimoine').value) || 0;
             
             legacyInputs.forEach(input => {
-                if (input.name.includes('legs_') && input.value) {
+                if (input.value) {
                     totalLegacies += parseFloat(input.value) || 0;
                 }
             });
@@ -1951,21 +2303,23 @@
             const summary = document.getElementById('legsSummary');
             const content = document.getElementById('legsSummaryContent');
             
-            if (totalLegacies > 0) {
+            if (totalLegacies > 0 && totalValue > 0) {
                 summary.style.display = 'block';
                 const maxLegacy = totalValue / 3;
+                const percentage = (totalLegacies / totalValue * 100).toFixed(1);
                 const isValid = totalLegacies <= maxLegacy;
                 
                 content.innerHTML = `
-                    <p><strong>Total des legs :</strong> ${totalLegacies.toFixed(2)} €</p>
+                    <p><strong>Total des legs :</strong> ${totalLegacies.toFixed(2)} € (${percentage}% du patrimoine)</p>
                     <p><strong>Maximum autorisé (1/3) :</strong> ${maxLegacy.toFixed(2)} €</p>
-                    ${!isValid ? `<p class="warning">⚠️ Attention : Le total des legs dépasse le tiers autorisé !</p>` : ''}
+                    <p><strong>Restant disponible :</strong> ${Math.max(0, maxLegacy - totalLegacies).toFixed(2)} €</p>
+                    ${!isValid ? `<p class="warning">⚠️ Attention : Le total des legs dépasse le tiers autorisé de ${(totalLegacies - maxLegacy).toFixed(2)} € !</p>` : 
+                      `<p style="color: var(--success);">✓ Les legs respectent la limite du tiers</p>`}
                 `;
             } else {
                 summary.style.display = 'none';
             }
         }
-
         // Sauvegarde automatique
         function setupAutoSave() {
             const form = document.getElementById('testamentForm');
@@ -2018,7 +2372,7 @@
 
         // Fonctions de partage
         function shareOnWhatsApp() {
-            const text = "Découvrez Al Wassiya, un outil pour créer facilement votre testament islamique selon le Coran et la Sunna.";
+            const text = "Découvrez Al Wassiya (الوصية), un outil pour créer facilement votre testament islamique selon le Coran et la Sunna.";
             const url = window.location.href;
             window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
         }
@@ -2029,17 +2383,18 @@
         }
 
         function shareOnTwitter() {
-            const text = "Créez votre testament islamique avec Al Wassiya";
+            const text = "Créez votre testament islamique avec Al Wassiya (الوصية)";
             const url = window.location.href;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
         }
 
         function shareByEmail() {
-            const subject = "Al Wassiya - Testament Islamique";
+            const subject = "Al Wassiya (الوصية) - Testament Islamique";
             const body = "Découvrez Al Wassiya, un outil pour créer facilement votre testament islamique selon le Coran et la Sunna.\n\n" + window.location.href;
             window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
-        // Fonction de génération PDF intégrée du code 2
+
+        // Fonction de génération PDF adaptée du code 2
         function generatePDF() {
             // Sauvegarder les données avant génération
             saveFormData();
@@ -2085,6 +2440,10 @@
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
                 doc.text('AL WASSIYA', 105, yPosition, { align: 'center' });
+                yPosition += 8;
+                
+                doc.setFontSize(16);
+                doc.text('الوصية', 105, yPosition, { align: 'center' });
                 yPosition += 10;
                 
                 doc.setFontSize(16);
@@ -2200,14 +2559,92 @@
                 doc.setFontSize(11);
                 doc.setFont(undefined, 'normal');
                 
-                // Récupérer et afficher les informations des personnes ajoutées
-                const personTypes = ['parents', 'conjoints', 'freres-soeurs', 'enfants', 'amis'];
+                // Parents
+                if (data.pere || data.mere) {
+                    doc.setFont(undefined, 'bold');
+                    yPosition = addWrappedText(doc, 'Parents :', margin, yPosition, 170);
+                    doc.setFont(undefined, 'normal');
+                    
+                    if (data.pere) {
+                        yPosition = addWrappedText(doc, `Père : ${data.pere}`, margin + 10, yPosition, 160);
+                        if (data.prenomPere) {
+                            yPosition = addWrappedText(doc, `  Nom : ${data.prenomPere}`, margin + 10, yPosition, 160);
+                        }
+                        if (data.contactPere) {
+                            yPosition = addWrappedText(doc, `  Contact : ${data.contactPere}`, margin + 10, yPosition, 160);
+                        }
+                    }
+                    
+                    if (data.mere) {
+                        yPosition = addWrappedText(doc, `Mère : ${data.mere}`, margin + 10, yPosition, 160);
+                        if (data.prenomMere) {
+                            yPosition = addWrappedText(doc, `  Nom : ${data.prenomMere}`, margin + 10, yPosition, 160);
+                        }
+                        if (data.contactMere) {
+                            yPosition = addWrappedText(doc, `  Contact : ${data.contactMere}`, margin + 10, yPosition, 160);
+                        }
+                    }
+                    yPosition += 5;
+                }
+                
+                // Frères et sœurs
+                if (data.nombreFreres || data.nombreSoeurs) {
+                    doc.setFont(undefined, 'bold');
+                    yPosition = addWrappedText(doc, 'Frères et Sœurs :', margin, yPosition, 170);
+                    doc.setFont(undefined, 'normal');
+                    
+                    if (data.nombreFreres) {
+                        yPosition = addWrappedText(doc, `Nombre de frères : ${data.nombreFreres}`, margin + 10, yPosition, 160);
+                    }
+                    if (data.nombreSoeurs) {
+                        yPosition = addWrappedText(doc, `Nombre de sœurs : ${data.nombreSoeurs}`, margin + 10, yPosition, 160);
+                    }
+                    
+                    // Détails des frères/sœurs
+                    Object.keys(data).forEach(key => {
+                        if ((key.startsWith('freres_') || key.startsWith('soeurs_')) && key.endsWith('_nom') && data[key]) {
+                            const baseId = key.replace('_nom', '');
+                            yPosition = addWrappedText(doc, `- ${data[baseId + '_nom']}`, margin + 10, yPosition, 160);
+                            if (data[baseId + '_contact']) {
+                                yPosition = addWrappedText(doc, `  Contact : ${data[baseId + '_contact']}`, margin + 10, yPosition, 160);
+                            }
+                        }
+                    });
+                    yPosition += 5;
+                }
+                
+                // Enfants
+                if (data.nombreEnfants) {
+                    doc.setFont(undefined, 'bold');
+                    yPosition = addWrappedText(doc, `Enfants (${data.nombreEnfants}) :`, margin, yPosition, 170);
+                    doc.setFont(undefined, 'normal');
+                    
+                    Object.keys(data).forEach(key => {
+                        if (key.startsWith('enfant_') && key.endsWith('_nom') && data[key]) {
+                            const baseId = key.replace('_nom', '');
+                            let enfantInfo = `- ${data[baseId + '_nom']}`;
+                            if (data[baseId + '_sexe']) {
+                                enfantInfo += ` (${data[baseId + '_sexe']})`;
+                            }
+                            yPosition = addWrappedText(doc, enfantInfo, margin + 10, yPosition, 160);
+                            if (data[baseId + '_naissance']) {
+                                const dateNaissance = new Date(data[baseId + '_naissance']).toLocaleDateString('fr-FR');
+                                yPosition = addWrappedText(doc, `  Né(e) le : ${dateNaissance}`, margin + 10, yPosition, 160);
+                            }
+                            if (data[baseId + '_situation']) {
+                                yPosition = addWrappedText(doc, `  Situation : ${data[baseId + '_situation']}`, margin + 10, yPosition, 160);
+                            }
+                        }
+                    });
+                    yPosition += 5;
+                }
+                
+                // Autres personnes ajoutées dynamiquement
+                const personTypes = ['conjoints', 'amis', 'parents'];
                 const typeLabels = {
-                    'parents': 'Parents',
                     'conjoints': 'Conjoints',
-                    'freres-soeurs': 'Frères et Soeurs',
-                    'enfants': 'Enfants',
-                    'amis': 'Amis proches'
+                    'amis': 'Amis proches',
+                    'parents': 'Autres parents'
                 };
                 
                 personTypes.forEach(type => {
@@ -2218,8 +2655,7 @@
                             persons.push({
                                 nom: data[baseId + '_nom'] || '',
                                 relation: data[baseId + '_relation'] || '',
-                                contact: data[baseId + '_contact'] || '',
-                                adresse: data[baseId + '_adresse'] || ''
+                                contact: data[baseId + '_contact'] || ''
                             });
                         }
                     });
@@ -2229,15 +2665,11 @@
                         yPosition = addWrappedText(doc, typeLabels[type] + ':', margin, yPosition, 170);
                         doc.setFont(undefined, 'normal');
                         
-                        persons.forEach((person, index) => {
+                        persons.forEach(person => {
                             yPosition = addWrappedText(doc, `- ${person.nom}${person.relation ? ' (' + person.relation + ')' : ''}`, margin + 10, yPosition, 160);
                             if (person.contact) {
                                 yPosition = addWrappedText(doc, `  Contact : ${person.contact}`, margin + 10, yPosition, 160);
                             }
-                            if (person.adresse) {
-                                yPosition = addWrappedText(doc, `  Adresse : ${person.adresse}`, margin + 10, yPosition, 160);
-                            }
-                            yPosition += 3;
                         });
                         yPosition += 5;
                     }
@@ -2248,20 +2680,6 @@
                     yPosition = addWrappedText(doc, 'Autres personnes à mentionner :', margin, yPosition, 170);
                     doc.setFont(undefined, 'normal');
                     yPosition = addWrappedText(doc, data.autresProches, margin, yPosition, 170);
-                }
-                
-                if (data.relationsParticulieres) {
-                    doc.setFont(undefined, 'bold');
-                    yPosition = addWrappedText(doc, 'Relations particulières :', margin, yPosition, 170);
-                    doc.setFont(undefined, 'normal');
-                    yPosition = addWrappedText(doc, data.relationsParticulieres, margin, yPosition, 170);
-                }
-                
-                if (data.personnesPrevenir) {
-                    doc.setFont(undefined, 'bold');
-                    yPosition = addWrappedText(doc, 'Personnes à prévenir en priorité :', margin, yPosition, 170);
-                    doc.setFont(undefined, 'normal');
-                    yPosition = addWrappedText(doc, data.personnesPrevenir, margin, yPosition, 170);
                 }
                 
                 yPosition += 10;
@@ -2297,8 +2715,8 @@
                                 valeur: data[baseId + '_valeur'] || '',
                                 type: data[baseId + '_type'] || '',
                                 notes: data[baseId + '_notes'] || '',
-                                adresse: data[baseId + '_adresse'] || '',
-                                banque: data[baseId + '_banque'] || ''
+                                banque: data[baseId + '_banque'] || '',
+                                surface: data[baseId + '_surface'] || ''
                             });
                         }
                     });
@@ -2319,8 +2737,8 @@
                             if (asset.banque) {
                                 yPosition = addWrappedText(doc, `  Banque : ${asset.banque}`, margin + 10, yPosition, 160);
                             }
-                            if (asset.adresse) {
-                                yPosition = addWrappedText(doc, `  Adresse : ${asset.adresse}`, margin + 10, yPosition, 160);
+                            if (asset.surface) {
+                                yPosition = addWrappedText(doc, `  Surface : ${asset.surface} m²`, margin + 10, yPosition, 160);
                             }
                             if (asset.notes) {
                                 yPosition = addWrappedText(doc, `  Notes : ${asset.notes}`, margin + 10, yPosition, 160);
@@ -2330,6 +2748,30 @@
                         yPosition += 5;
                     }
                 });
+                
+                // Zakat
+                if (data.montantZakat) {
+                    yPosition = checkPageBreak(doc, yPosition, 15);
+                    doc.setFont(undefined, 'bold');
+                    yPosition = addWrappedText(doc, 'Calcul de la Zakat :', margin, yPosition, 170);
+                    doc.setFont(undefined, 'normal');
+                    
+                    const nissab = parseFloat(data.nissab) || 4265;
+                    const montant = parseFloat(data.montantZakat);
+                    
+                    if (montant >= nissab) {
+                        const exceeding = montant - nissab;
+                        const zakatAmount = exceeding * 0.025;
+                        yPosition = addWrappedText(doc, `Patrimoine imposable : ${montant} €`, margin + 10, yPosition, 160);
+                        yPosition = addWrappedText(doc, `Nisâb : ${nissab} €`, margin + 10, yPosition, 160);
+                        yPosition = addWrappedText(doc, `Montant dépassant le Nisâb : ${exceeding.toFixed(2)} €`, margin + 10, yPosition, 160);
+                        yPosition = addWrappedText(doc, `Zakat à verser : ${zakatAmount.toFixed(2)} €`, margin + 10, yPosition, 160);
+                    } else {
+                        yPosition = addWrappedText(doc, `Patrimoine : ${montant} € (inférieur au Nisâb de ${nissab} €)`, margin + 10, yPosition, 160);
+                        yPosition = addWrappedText(doc, `Zakat non obligatoire`, margin + 10, yPosition, 160);
+                    }
+                    yPosition += 5;
+                }
                 
                 yPosition += 10;
                 
@@ -2359,8 +2801,7 @@
                                 description: data[baseId + '_description'] || '',
                                 montant: data[baseId + '_montant'] || '',
                                 personne: data[baseId + '_personne'] || '',
-                                contact: data[baseId + '_contact'] || '',
-                                notes: data[baseId + '_notes'] || ''
+                                contact: data[baseId + '_contact'] || ''
                             });
                         }
                     });
@@ -2381,10 +2822,6 @@
                             if (debt.contact) {
                                 yPosition = addWrappedText(doc, `  Contact : ${debt.contact}`, margin + 10, yPosition, 160);
                             }
-                            if (debt.notes) {
-                                yPosition = addWrappedText(doc, `  Notes : ${debt.notes}`, margin + 10, yPosition, 160);
-                            }
-                            yPosition += 3;
                         });
                         yPosition += 5;
                     }
@@ -2463,19 +2900,6 @@
                     yPosition = addWrappedText(doc, `Valeur totale du patrimoine : ${data.totalPatrimoine} €`, margin, yPosition, 170);
                 }
                 
-                if (data.executeur) {
-                    yPosition = addWrappedText(doc, `Exécuteur testamentaire : ${data.executeur}`, margin, yPosition, 170);
-                }
-                
-                if (data.instructionsSpeciales) {
-                    doc.setFont(undefined, 'bold');
-                    yPosition = addWrappedText(doc, 'Instructions spéciales :', margin, yPosition, 170);
-                    doc.setFont(undefined, 'normal');
-                    yPosition = addWrappedText(doc, data.instructionsSpeciales, margin, yPosition, 170);
-                }
-                
-                yPosition += 10;
-                
                 // Section 7: Comptes numériques
                 yPosition = checkPageBreak(doc, yPosition, 20);
                 doc.setFontSize(14);
@@ -2502,7 +2926,8 @@
                             accounts.push({
                                 service: data[baseId + '_service'] || '',
                                 username: data[baseId + '_username'] || '',
-                                instructions: data[baseId + '_instructions'] || ''
+                                action: data[baseId + '_action'] || '',
+                                contact: data[baseId + '_contact'] || ''
                             });
                         }
                     });
@@ -2517,10 +2942,12 @@
                             if (account.username) {
                                 yPosition = addWrappedText(doc, `  Utilisateur : ${account.username}`, margin + 10, yPosition, 160);
                             }
-                            if (account.instructions) {
-                                yPosition = addWrappedText(doc, `  Instructions : ${account.instructions}`, margin + 10, yPosition, 160);
+                            if (account.action) {
+                                yPosition = addWrappedText(doc, `  Instruction : ${account.action}`, margin + 10, yPosition, 160);
                             }
-                            yPosition += 3;
+                            if (account.contact) {
+                                yPosition = addWrappedText(doc, `  Personne de confiance : ${account.contact}`, margin + 10, yPosition, 160);
+                            }
                         });
                         yPosition += 5;
                     }
@@ -2563,7 +2990,7 @@
                 
                 doc.setFontSize(10);
                 doc.setFont(undefined, 'italic');
-                yPosition = addWrappedText(doc, 'Ce testament a été généré par Al Wassiya. Pour être juridiquement valable, il doit être écrit, daté et signé de votre main selon les lois en vigueur dans votre pays de résidence.', margin, yPosition, 170);
+                yPosition = addWrappedText(doc, 'Ce testament a été généré par Al Wassiya (الوصية). Pour être juridiquement valable, il doit être écrit, daté et signé de votre main selon les lois en vigueur dans votre pays de résidence.', margin, yPosition, 170);
                 
                 yPosition += 20;
                 doc.setFont(undefined, 'normal');
@@ -2571,7 +2998,7 @@
                 doc.text('Date :', margin + 100, yPosition);
                 
                 // Sauvegarder le PDF
-                const fileName = `Testament_${data.prenom || 'AlWassiya'}_${today.replace(/\//g, '-')}.pdf`;
+                const fileName = `Testament_AlWassiya_${data.prenom || 'Document'}_${today.replace(/\//g, '-')}.pdf`;
                 doc.save(fileName);
                 
                 // Afficher un message de succès
@@ -2585,14 +3012,8 @@
 
         // Initialisation au chargement de la page
         window.addEventListener('load', function() {
-            // Auto-ouvrir la première catégorie de chaque section
-            const firstCategories = ['parents', 'immobilier'];
-            firstCategories.forEach(categoryId => {
-                const element = document.getElementById(categoryId);
-                if (element && !element.classList.contains('active')) {
-                    toggleCategory(categoryId);
-                }
-            });
+            // Auto-ouvrir certaines catégories par défaut
+            toggleCategory('parents');
         });
     </script>
 </body>
